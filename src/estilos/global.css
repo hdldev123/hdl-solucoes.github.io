@@ -1,0 +1,157 @@
+/* Reset e configurações globais */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Paleta de cores profissional */
+  --cor-primaria: #1a365d;
+  --cor-secundaria: #2d5a87;
+  --cor-destaque: #ff6b35;
+  --cor-destaque-hover: #e55a2b;
+  --cor-clara: #f7fafc;
+  --cor-branca: #ffffff;
+  --cor-texto-escuro: #2d3748;
+  --cor-texto-claro: #718096;
+  --cor-gradiente-inicio: #1a365d;
+  --cor-gradiente-fim: #2d5a87;
+  
+  /* Tipografia */
+  --fonte-principal: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --fonte-titulo: 'Poppins', 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--fonte-principal);
+  line-height: 1.6;
+  color: var(--cor-texto-escuro);
+  overflow-x: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Utilitários gerais */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.secao {
+  padding: 80px 0;
+  position: relative;
+}
+
+.titulo-secao {
+  font-family: var(--fonte-titulo);
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: var(--cor-primaria);
+}
+
+.subtitulo-secao {
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--cor-texto-claro);
+  margin-bottom: 3rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Botões */
+.botao-primario {
+  background: linear-gradient(135deg, var(--cor-destaque), var(--cor-destaque-hover));
+  color: var(--cor-branca);
+  padding: 15px 30px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.botao-primario:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+}
+
+.botao-primario::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.botao-primario:hover::before {
+  left: 100%;
+}
+
+/* Cartões */
+.cartao {
+  background: var(--cor-branca);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cartao:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Animações personalizadas */
+@keyframes flutuacao {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.flutuando {
+  animation: flutuacao 4s ease-in-out infinite;
+}
+
+/* Gradientes de fundo */
+.fundo-gradiente {
+  background: linear-gradient(135deg, var(--cor-gradiente-inicio), var(--cor-gradiente-fim));
+}
+
+.fundo-claro {
+  background: var(--cor-clara);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .titulo-secao {
+    font-size: 2rem;
+  }
+  
+  .secao {
+    padding: 60px 0;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+}

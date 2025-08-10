@@ -1,0 +1,250 @@
+.equipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.cartao-membro {
+  background: var(--cor-branca);
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.cartao-membro:hover {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+.foto-container {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.foto-membro {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.4s ease;
+}
+
+.cartao-membro:hover .foto-membro {
+  transform: scale(1.1);
+}
+
+.overlay-foto {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cartao-membro:hover .overlay-foto {
+  opacity: 1;
+}
+
+.icone-especialidade {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--cor-branca);
+  transform: translateY(-100px);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.cartao-membro:hover .icone-especialidade {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.info-membro {
+  padding: 2rem;
+}
+
+.nome-membro {
+  font-family: var(--fonte-titulo);
+  font-size: 1.8rem;
+  color: var(--cor-primaria);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.cargo-membro {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.descricao-membro {
+  color: var(--cor-texto-claro);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.especialidades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-badge {
+  background: transparent;
+  border: 2px solid;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.tech-badge:hover {
+  background: currentColor;
+  color: var(--cor-branca) !important;
+  transform: scale(1.05);
+}
+
+.redes-sociais {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.link-social {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-branca);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.link-social:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.efeito-borda {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: 25px;
+}
+
+.cartao-membro:hover .efeito-borda {
+  opacity: 1;
+}
+
+.valores-equipe {
+  background: var(--cor-branca);
+  border-radius: 25px;
+  padding: 3rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.valores-equipe::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #3b82f6, #10b981, #8b5cf6);
+}
+
+.container-valores h3 {
+  font-family: var(--fonte-titulo);
+  font-size: 2rem;
+  color: var(--cor-primaria);
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.valores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.valor-equipe {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 15px;
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.05), rgba(26, 54, 93, 0.05));
+  transition: all 0.3s ease;
+}
+
+.valor-equipe:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.icone-valor {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.valor-equipe h4 {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-primaria);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.valor-equipe p {
+  color: var(--cor-texto-claro);
+  line-height: 1.6;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .equipe-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .valores-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .foto-container {
+    height: 200px;
+  }
+  
+  .info-membro {
+    padding: 1.5rem;
+  }
+  
+  .valores-equipe {
+    padding: 2rem;
+  }
+}
