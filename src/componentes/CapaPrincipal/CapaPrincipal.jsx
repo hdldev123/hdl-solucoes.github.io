@@ -49,7 +49,7 @@ const CapaPrincipal = () => {
               className="subtitulo-principal"
               variants={variantesTexto}
             >
-              TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE
+              Somos a HDL Soluções, especialistas em desenvolvimento web com soluções personalizadas para impulsionar seu negócio no mundo digital.
             </motion.p>
             
             <motion.div 
