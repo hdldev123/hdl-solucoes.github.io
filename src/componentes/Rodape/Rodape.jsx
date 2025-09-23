@@ -153,14 +153,7 @@ const Rodape = () => {
           </div>
         </div>
 
-        <motion.div 
-          className="botao-voltar-topo"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        >
-          ⬆️
-        </motion.div>
+        
       </div>
     </footer>
   );

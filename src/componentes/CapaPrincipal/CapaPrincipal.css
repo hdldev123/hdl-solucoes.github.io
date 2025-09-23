@@ -196,4 +196,8 @@
   .capa-visual {
     height: 300px;
   }
+
+  .indicador-scroll {
+    left: 40%;
+  }
 }

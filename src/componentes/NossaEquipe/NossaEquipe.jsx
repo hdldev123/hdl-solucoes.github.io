@@ -2,6 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import './NossaEquipe.css';
+import fotoHugo from '../../assets/hugo-perf.jpeg'; 
+import fotoLucas from '../../assets/lucas-perf.jpeg'; 
+import fotoHigor from '../../assets/higor-perf.jfif'; 
+import fotoDavydson from '../../assets/dav-perf.jpeg';
+import defaultProfileImage from '../../assets/default-profile.js';
 
 const NossaEquipe = () => {
   const { ref, inView } = useInView({
@@ -15,7 +20,7 @@ const NossaEquipe = () => {
       cargo: "Desenvolvedor Full-Stack JAVA",
       descricao: "Programador de sistemas em multinacional de energia, amplo conhecimento em Java, React e SQL.",
       especialidades: ["Java", "React", "SQL", "Spring Boot"],
-      foto: "",
+      foto: fotoHugo,
       corDestaque: "#3b82f6"
     },
     {
@@ -23,7 +28,7 @@ const NossaEquipe = () => {
       cargo: "Desenvolvedor Full-Stack TypeScript",
       descricao: "Programador de sistemas em fintech do ramo financeiro, amplo conhecimento em TypeScript, React e NestJS.",
       especialidades: ["TypeScript", "React", "NestJS", "Node.js"],
-      foto: "",
+      foto: fotoDavydson,
       corDestaque: "#10b981"
     },
     {
@@ -31,8 +36,16 @@ const NossaEquipe = () => {
       cargo: "Desenvolvedor Full-Stack .NET",
       descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em C# e .NET Framework.",
       especialidades: ["C#", ".NET", "ASP.NET", "Azure"],
-      foto: "",
+      foto: fotoLucas,
       corDestaque: "#8b5cf6"
+    },
+    {
+      nome: "Higor Benevenuto",
+      cargo: "Desenvolvedor Full-Stack Javascript",
+      descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em Javascript, React e Node.js.",
+      especialidades: ["Javascript", "React", "Node.js", "Express"],
+      foto: fotoHigor,
+      corDestaque: "#dfd008ff"
     }
   ];
 
@@ -86,11 +99,15 @@ const NossaEquipe = () => {
                   transition: { duration: 0.3 }
                 }}
               >
-                <div className="foto-container">
+                <div className="foto-container" style={{ backgroundColor: `${membro.corDestaque}20` }}>
                   <img 
                     src={membro.foto} 
                     alt={membro.nome}
                     className="foto-membro"
+                    onError={(e) => {
+                      e.target.src = defaultProfileImage;
+                      e.target.onerror = null;
+                    }}
                   />
                   <div className="overlay-foto"></div>
                   <div className="icone-especialidade" style={{ background: membro.corDestaque }}>
