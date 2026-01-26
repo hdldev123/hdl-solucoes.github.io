@@ -2,6 +2,10 @@
   color: var(--cor-branca);
 }
 
+.titulo-contato-2 {
+  color: var(--cor-branca);
+}
+
 .subtitulo-contato {
   color: rgba(255, 255, 255, 0.9);
 }
