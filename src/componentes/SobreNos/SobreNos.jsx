@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Target, Zap, Wrench } from 'lucide-react';
 import './SobreNos.css';
 
 const SobreNos = () => {
@@ -9,12 +10,14 @@ const SobreNos = () => {
     triggerOnce: true
   });
 
+  const transitionSuave = { duration: 0.9, ease: [0.25, 0.4, 0.25, 1] };
+
   const variantesCard = {
     oculto: { opacity: 0, y: 50 },
     visivel: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: transitionSuave
     }
   };
 
@@ -27,7 +30,7 @@ const SobreNos = () => {
           variants={{
             visivel: {
               transition: {
-                staggerChildren: 0.2
+                staggerChildren: 0.15
               }
             }
           }}
@@ -54,7 +57,7 @@ const SobreNos = () => {
               <div className="cartao cartao-sobre">
                 <h3>Nossa Missão</h3>
                 <p>
-                  Somos a HDL Soluções, um trio de desenvolvedores web apaixonados por tecnologia 
+                  Somos a HDL Soluções, um time de desenvolvedores web apaixonados por tecnologia 
                   e prontos para transformar suas ideias em realidade digital. Com experiência 
                   sólida em diferentes setores do mercado, criamos soluções robustas e 
                   personalizadas para impulsionar o seu negócio.
@@ -66,7 +69,7 @@ const SobreNos = () => {
                     <span className="label">Projetos Entregues</span>
                   </div>
                   <div className="estatistica-item">
-                    <span className="numero">3</span>
+                    <span className="numero">5</span>
                     <span className="label">Especialistas</span>
                   </div>
                   <div className="estatistica-item">
@@ -114,17 +117,17 @@ const SobreNos = () => {
             variants={variantesCard}
           >
             <div className="valor-item">
-              <div className="valor-icone">🎯</div>
+              <div className="valor-icone"><Target size={40} /></div>
               <h4>Foco no Cliente</h4>
               <p>Suas necessidades são nossa prioridade. Trabalhamos junto com você para criar soluções que realmente fazem a diferença.</p>
             </div>
             <div className="valor-item">
-              <div className="valor-icone">⚡</div>
+              <div className="valor-icone"><Zap size={40} /></div>
               <h4>Agilidade</h4>
               <p>Utilizamos metodologias ágeis para entregar resultados rápidos sem comprometer a qualidade do produto final.</p>
             </div>
             <div className="valor-item">
-              <div className="valor-icone">🔧</div>
+              <div className="valor-icone"><Wrench size={40} /></div>
               <h4>Tecnologia Avançada</h4>
               <p>Sempre atualizados com as últimas tendências e tecnologias do mercado para oferecer soluções modernas.</p>
             </div>

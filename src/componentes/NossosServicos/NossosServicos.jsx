@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Globe, Target, Settings, Check } from 'lucide-react';
 import './NossosServicos.css';
 
 const NossosServicos = () => {
@@ -13,25 +14,27 @@ const NossosServicos = () => {
     {
       titulo: "Criação de Sites",
       descricao: "Sites institucionais modernos e responsivos que destacam sua marca no mercado digital.",
-      icone: "🌐",
+      icone: Globe,
       recursos: ["Design Responsivo", "SEO Otimizado", "Carregamento Rápido", "CMS Intuitivo"],
       cor: "gradiente-azul"
     },
     {
       titulo: "Landing Pages",
       descricao: "Páginas de conversão otimizadas para transformar visitantes em clientes efetivos.",
-      icone: "🎯",
+      icone: Target,
       recursos: ["Alta Conversão", "A/B Testing", "Analytics Integrado", "Mobile First"],
       cor: "gradiente-laranja"
     },
     {
       titulo: "Sistemas Web",
       descricao: "Aplicações web robustas e escaláveis para automatizar processos do seu negócio.",
-      icone: "⚙️",
+      icone: Settings,
       recursos: ["Arquitetura Escalável", "Segurança Avançada", "API Integration", "Dashboard Completo"],
       cor: "gradiente-verde"
     }
   ];
+
+  const transitionSuave = { duration: 0.9, ease: [0.25, 0.4, 0.25, 1] };
 
   const variantesCard = {
     oculto: { opacity: 0, y: 50, scale: 0.9 },
@@ -39,7 +42,7 @@ const NossosServicos = () => {
       opacity: 1, 
       y: 0,
       scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: transitionSuave
     }
   };
 
@@ -52,7 +55,7 @@ const NossosServicos = () => {
           variants={{
             visivel: {
               transition: {
-                staggerChildren: 0.2
+                staggerChildren: 0.15
               }
             }
           }}
@@ -83,7 +86,7 @@ const NossosServicos = () => {
                 }}
               >
                 <div className="servico-header">
-                  <div className="servico-icone">{servico.icone}</div>
+                  <div className="servico-icone">{React.createElement(servico.icone, { size: 32 })}</div>
                   <h3>{servico.titulo}</h3>
                 </div>
                 
@@ -92,7 +95,7 @@ const NossosServicos = () => {
                 <ul className="recursos-lista">
                   {servico.recursos.map((recurso, idx) => (
                     <li key={idx} className="recurso-item">
-                      <span className="check-mark">✓</span>
+                      <span className="check-mark"><Check size={12} /></span>
                       {recurso}
                     </li>
                   ))}

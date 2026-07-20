@@ -8,7 +8,7 @@ const CapaPrincipal = () => {
     visivel: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
+      transition: { duration: 1, ease: [0.25, 0.4, 0.25, 1] }
     }
   };
 
@@ -17,7 +17,7 @@ const CapaPrincipal = () => {
     visivel: { 
       opacity: 1, 
       scale: 1,
-      transition: { delay: 1, duration: 0.5, type: "spring" }
+      transition: { delay: 1.2, duration: 0.7, ease: [0.25, 0.4, 0.25, 1] }
     }
   };
 
@@ -33,7 +33,7 @@ const CapaPrincipal = () => {
             variants={{
               visivel: {
                 transition: {
-                  staggerChildren: 0.3
+                  staggerChildren: 0.25
                 }
               }
             }}
@@ -83,7 +83,7 @@ const CapaPrincipal = () => {
             className="capa-visual"
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
+            transition={{ delay: 0.5, duration: 1.2, ease: [0.25, 0.4, 0.25, 1] }}
           >
             <div className="elemento-flutuante elemento-1"></div>
             <div className="elemento-flutuante elemento-2"></div>
@@ -103,7 +103,7 @@ const CapaPrincipal = () => {
       <motion.div 
         className="indicador-scroll"
         animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
+        transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
       >
         <span>Role para baixo</span>
         <div className="seta-scroll"></div>

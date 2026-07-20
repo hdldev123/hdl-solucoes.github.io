@@ -36,7 +36,7 @@ const Cabecalho = () => {
       className="cabecalho"
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 1, ease: [0.25, 0.4, 0.25, 1] }}
     >
       <div className="container">
         <div className="cabecalho-conteudo">

@@ -1,11 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Code, Briefcase, Mail, Link2, Target, Zap, Handshake } from 'lucide-react';
 import './NossaEquipe.css';
 import fotoHugo from '../../assets/hugo-perf.jpeg'; 
 import fotoLucas from '../../assets/lucas-perf.jpeg'; 
-import fotoHigor from '../../assets/higor-perf.jfif'; 
 import fotoDavydson from '../../assets/dav-perf.jpeg';
+import fotoMatheus from '../../assets/matheus-perf.png';
+import fotoPhablo from '../../assets/phablo-perf.jfif';
 import defaultProfileImage from '../../assets/default-profile.js';
 
 const NossaEquipe = () => {
@@ -39,15 +41,25 @@ const NossaEquipe = () => {
       foto: fotoLucas,
       corDestaque: "#8b5cf6"
     },
+        {
+      nome: "Matheus Meigre",
+      cargo: "Desenvolvedor Full-Stack .NET / Infra",
+      descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em C#, .NET Framework, Mensageria com RabbitMQ e Monitoramento.",
+      especialidades: ["C#", ".NET", "RabbitMQ", "ELK", "Datadog", "Openshift"],
+      foto: fotoMatheus,
+      corDestaque: "#06b6d4"
+    },
     {
-      nome: "Higor Benevenuto",
+      nome: "Phablo Ribeiro",
       cargo: "Desenvolvedor Full-Stack Javascript",
-      descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em Javascript, React e Node.js.",
-      especialidades: ["Javascript", "React", "Node.js", "Express"],
-      foto: fotoHigor,
-      corDestaque: "#dfd008ff"
-    }
+      descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em PowerBuilder, lógica de programação e desenvolvimento de sistemas.",
+      especialidades: ["PowerBuilder", "React", "Node.js", "Express"],
+      foto: fotoPhablo,
+      corDestaque: "#f59e0b"
+    },
   ];
+
+  const transitionSuave = { duration: 0.9, ease: [0.25, 0.4, 0.25, 1] };
 
   const variantesCard = {
     oculto: { opacity: 0, y: 50, rotateY: -15 },
@@ -55,7 +67,7 @@ const NossaEquipe = () => {
       opacity: 1, 
       y: 0,
       rotateY: 0,
-      transition: { duration: 0.7, ease: "easeOut" }
+      transition: transitionSuave
     }
   };
 
@@ -68,7 +80,7 @@ const NossaEquipe = () => {
           variants={{
             visivel: {
               transition: {
-                staggerChildren: 0.3
+                staggerChildren: 0.15
               }
             }
           }}
@@ -111,7 +123,7 @@ const NossaEquipe = () => {
                   />
                   <div className="overlay-foto"></div>
                   <div className="icone-especialidade" style={{ background: membro.corDestaque }}>
-                    👨‍💻
+                    <Code size={22} />
                   </div>
                 </div>
                 
@@ -136,13 +148,13 @@ const NossaEquipe = () => {
                   
                   <div className="redes-sociais">
                     <a href="#" className="link-social" style={{ background: membro.corDestaque }}>
-                      💼
+                      <Briefcase size={18} />
                     </a>
                     <a href="#" className="link-social" style={{ background: membro.corDestaque }}>
-                      📧
+                      <Mail size={18} />
                     </a>
                     <a href="#" className="link-social" style={{ background: membro.corDestaque }}>
-                      🔗
+                      <Link2 size={18} />
                     </a>
                   </div>
                 </div>
@@ -160,17 +172,17 @@ const NossaEquipe = () => {
               <h3>Por que escolher nossa equipe?</h3>
               <div className="valores-grid">
                 <div className="valor-equipe">
-                  <div className="icone-valor">🎯</div>
+                  <div className="icone-valor"><Target size={40} /></div>
                   <h4>Experiência Diversificada</h4>
                   <p>Cada membro traz experiência única de diferentes setores do mercado</p>
                 </div>
                 <div className="valor-equipe">
-                  <div className="icone-valor">⚡</div>
+                  <div className="icone-valor"><Zap size={40} /></div>
                   <h4>Tecnologias Modernas</h4>
                   <p>Dominamos as principais tecnologias e frameworks do mercado atual</p>
                 </div>
                 <div className="valor-equipe">
-                  <div className="icone-valor">🤝</div>
+                  <div className="icone-valor"><Handshake size={40} /></div>
                   <h4>Trabalho em Equipe</h4>
                   <p>Colaboração eficiente para entregar os melhores resultados</p>
                 </div>

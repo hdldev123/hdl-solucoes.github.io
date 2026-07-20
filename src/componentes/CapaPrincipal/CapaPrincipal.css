@@ -22,8 +22,8 @@
 
 @keyframes particulas-movimento {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-30px) rotate(2deg); }
-  66% { transform: translateY(30px) rotate(-2deg); }
+  33% { transform: translateY(-20px) rotate(1deg); }
+  66% { transform: translateY(20px) rotate(-1deg); }
 }
 
 .capa-conteudo {
@@ -119,7 +119,7 @@
   height: 100px;
   top: 10%;
   left: 10%;
-  animation: flutuacao 6s ease-in-out infinite;
+  animation: flutuacao 8s ease-in-out infinite;
 }
 
 .elemento-2 {
@@ -127,7 +127,7 @@
   height: 80px;
   top: 60%;
   right: 10%;
-  animation: flutuacao 8s ease-in-out infinite reverse;
+  animation: flutuacao 10s ease-in-out infinite reverse;
 }
 
 .elemento-3 {
@@ -136,7 +136,7 @@
   bottom: 20%;
   left: 50%;
   transform: translateX(-50%);
-  animation: flutuacao 7s ease-in-out infinite;
+  animation: flutuacao 9s ease-in-out infinite;
 }
 
 .codigo-animado {

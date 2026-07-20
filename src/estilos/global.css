@@ -133,12 +133,12 @@ html {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-15px);
   }
 }
 
 .flutuando {
-  animation: flutuacao 4s ease-in-out infinite;
+  animation: flutuacao 6s ease-in-out infinite;
 }
 
 /* Gradientes de fundo */
