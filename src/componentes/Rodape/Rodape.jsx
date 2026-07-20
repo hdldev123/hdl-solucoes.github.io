@@ -144,7 +144,7 @@ const Rodape = () => {
 
         <div className="rodape-bottom">
           <div className="copyright">
-            <p>&copy; 2024 HDL Soluções. Todos os direitos reservados.</p>
+            <p>&copy; 2026 HDL Soluções. Todos os direitos reservados.</p>
           </div>
           
           <div className="links-legais">

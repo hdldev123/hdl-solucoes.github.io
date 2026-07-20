@@ -77,10 +77,10 @@ const FormularioContato = () => {
           }}
         >
           <motion.h2 
-            className="titulo-secao titulo-contato"
+            className="titulo-secao-contato titulo-contato-2"
             variants={variantesCard}
           >
-            Entre em Contato
+            Entre em Contato teste
           </motion.h2>
           
           <motion.p 
