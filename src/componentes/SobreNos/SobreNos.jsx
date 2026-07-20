@@ -54,7 +54,7 @@ const SobreNos = () => {
               <div className="cartao cartao-sobre">
                 <h3>Nossa Missão</h3>
                 <p>
-                  Somos a HDL Soluções, um trio de desenvolvedores web apaixonados por tecnologia 
+                  Somos a HDL Soluções, um time de desenvolvedores web apaixonados por tecnologia 
                   e prontos para transformar suas ideias em realidade digital. Com experiência 
                   sólida em diferentes setores do mercado, criamos soluções robustas e 
                   personalizadas para impulsionar o seu negócio.
@@ -66,7 +66,7 @@ const SobreNos = () => {
                     <span className="label">Projetos Entregues</span>
                   </div>
                   <div className="estatistica-item">
-                    <span className="numero">3</span>
+                    <span className="numero">5</span>
                     <span className="label">Especialistas</span>
                   </div>
                   <div className="estatistica-item">

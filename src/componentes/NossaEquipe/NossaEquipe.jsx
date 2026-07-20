@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer';
 import './NossaEquipe.css';
 import fotoHugo from '../../assets/hugo-perf.jpeg'; 
 import fotoLucas from '../../assets/lucas-perf.jpeg'; 
-import fotoHigor from '../../assets/higor-perf.jfif'; 
 import fotoDavydson from '../../assets/dav-perf.jpeg';
 import defaultProfileImage from '../../assets/default-profile.js';
 
@@ -40,12 +39,20 @@ const NossaEquipe = () => {
       corDestaque: "#8b5cf6"
     },
     {
-      nome: "Higor Benevenuto",
+      nome: "Phablo Ribeiro",
       cargo: "Desenvolvedor Full-Stack Javascript",
       descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em Javascript, React e Node.js.",
       especialidades: ["Javascript", "React", "Node.js", "Express"],
-      foto: fotoHigor,
-      corDestaque: "#dfd008ff"
+      foto: defaultProfileImage,
+      corDestaque: "#f59e0b"
+    },
+    {
+      nome: "Matheus Meigre",
+      cargo: "Desenvolvedor Full-Stack Javascript",
+      descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em Javascript, React e Node.js.",
+      especialidades: ["Javascript", "React", "Node.js", "Express"],
+      foto: defaultProfileImage,
+      corDestaque: "#06b6d4"
     }
   ];
 
