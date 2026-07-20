@@ -5,6 +5,8 @@ import './NossaEquipe.css';
 import fotoHugo from '../../assets/hugo-perf.jpeg'; 
 import fotoLucas from '../../assets/lucas-perf.jpeg'; 
 import fotoDavydson from '../../assets/dav-perf.jpeg';
+import fotoMatheus from '../../assets/matheus-perf.png';
+import fotoPhablo from '../../assets/phablo-perf.jfif';
 import defaultProfileImage from '../../assets/default-profile.js';
 
 const NossaEquipe = () => {
@@ -38,22 +40,22 @@ const NossaEquipe = () => {
       foto: fotoLucas,
       corDestaque: "#8b5cf6"
     },
+        {
+      nome: "Matheus Meigre",
+      cargo: "Desenvolvedor Full-Stack .NET / Infra",
+      descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em C#, .NET Framework, Mensageria com RabbitMQ e Monitoramento.",
+      especialidades: ["C#", ".NET", "RabbitMQ", "ELK", "Datadog", "Openshift"],
+      foto: fotoMatheus,
+      corDestaque: "#06b6d4"
+    },
     {
       nome: "Phablo Ribeiro",
       cargo: "Desenvolvedor Full-Stack Javascript",
-      descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em Javascript, React e Node.js.",
-      especialidades: ["Javascript", "React", "Node.js", "Express"],
-      foto: defaultProfileImage,
+      descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em PowerBuilder, lógica de programação e desenvolvimento de sistemas.",
+      especialidades: ["PowerBuilder", "React", "Node.js", "Express"],
+      foto: fotoPhablo,
       corDestaque: "#f59e0b"
     },
-    {
-      nome: "Matheus Meigre",
-      cargo: "Desenvolvedor Full-Stack Javascript",
-      descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em Javascript, React e Node.js.",
-      especialidades: ["Javascript", "React", "Node.js", "Express"],
-      foto: defaultProfileImage,
-      corDestaque: "#06b6d4"
-    }
   ];
 
   const variantesCard = {
