@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Mail, Phone, MapPin, Clock, Facebook, Instagram, Twitter, Linkedin, CheckCircle } from 'lucide-react';
 import './FormularioContato.css';
 
 const FormularioContato = () => {
@@ -43,20 +44,22 @@ const FormularioContato = () => {
     }, 2000);
   };
 
+  const transitionSuave = { duration: 0.9, ease: [0.25, 0.4, 0.25, 1] };
+
   const variantesCard = {
     oculto: { opacity: 0, y: 50 },
     visivel: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: transitionSuave
     }
   };
 
   const informacoesContato = [
-    { icone: "📧", titulo: "Email", valor: "contato@hdlsolucoes.com", link: "mailto:contato@hdlsolucoes.com" },
-    { icone: "📱", titulo: "WhatsApp", valor: "(11) 99999-9999", link: "https://wa.me/5511999999999" },
-    { icone: "📍", titulo: "Localização", valor: "São Paulo - SP", link: "#" },
-    { icone: "🕒", titulo: "Horário", valor: "Seg - Sex: 9h às 18h", link: "#" }
+    { icone: Mail, titulo: "Email", valor: "contato@hdlsolucoes.com", link: "mailto:contato@hdlsolucoes.com" },
+    { icone: Phone, titulo: "WhatsApp", valor: "(11) 99999-9999", link: "https://wa.me/5511999999999" },
+    { icone: MapPin, titulo: "Localização", valor: "Cataguases - MG", link: "#" },
+    { icone: Clock, titulo: "Horário", valor: "Seg - Sex: 9h às 18h", link: "#" }
   ];
 
   return (
@@ -68,7 +71,7 @@ const FormularioContato = () => {
           variants={{
             visivel: {
               transition: {
-                staggerChildren: 0.2
+                staggerChildren: 0.15
               }
             }
           }}
@@ -107,7 +110,7 @@ const FormularioContato = () => {
                     whileHover={{ scale: 1.05, x: 10 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <div className="info-icone">{info.icone}</div>
+                    <div className="info-icone">{React.createElement(info.icone, { size: 24 })}</div>
                     <div className="info-texto">
                       <h4>{info.titulo}</h4>
                       <span>{info.valor}</span>
@@ -119,10 +122,10 @@ const FormularioContato = () => {
               <div className="redes-sociais-contato">
                 <h4>Nos siga nas redes</h4>
                 <div className="redes-links">
-                  <a href="#" className="rede-link">📘</a>
-                  <a href="#" className="rede-link">📸</a>
-                  <a href="#" className="rede-link">🐦</a>
-                  <a href="#" className="rede-link">💼</a>
+                  <a href="#" className="rede-link"><Facebook size={20} /></a>
+                  <a href="#" className="rede-link"><Instagram size={20} /></a>
+                  <a href="#" className="rede-link"><Twitter size={20} /></a>
+                  <a href="#" className="rede-link"><Linkedin size={20} /></a>
                 </div>
               </div>
             </motion.div>
@@ -138,7 +141,7 @@ const FormularioContato = () => {
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.5, type: "spring" }}
                 >
-                  <div className="icone-sucesso">✅</div>
+                  <div className="icone-sucesso"><CheckCircle size={64} /></div>
                   <h3>Mensagem enviada com sucesso!</h3>
                   <p>Entraremos em contato em até 24 horas.</p>
                 </motion.div>

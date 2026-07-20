@@ -1,9 +1,9 @@
-.titulo-contato {
+.secao .titulo-contato {
   color: var(--cor-branca);
 }
 
-.subtitulo-contato {
-  color: rgba(255, 255, 255, 0.9);
+.secao .subtitulo-contato {
+  color: var(--cor-branca);
 }
 
 .contato-conteudo {
@@ -64,6 +64,7 @@
   justify-content: center;
   background: rgba(255, 107, 53, 0.2);
   border-radius: 12px;
+  color: var(--cor-destaque);
 }
 
 .info-texto h4 {
@@ -139,6 +140,9 @@
 .icone-sucesso {
   font-size: 4rem;
   margin-bottom: 1rem;
+  color: #38a169;
+  display: flex;
+  justify-content: center;
 }
 
 .mensagem-sucesso h3 {

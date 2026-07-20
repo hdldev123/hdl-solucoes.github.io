@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Code, Briefcase, Mail, Link2, Target, Zap, Handshake } from 'lucide-react';
 import './NossaEquipe.css';
 import fotoHugo from '../../assets/hugo-perf.jpeg'; 
 import fotoLucas from '../../assets/lucas-perf.jpeg'; 
@@ -58,13 +59,15 @@ const NossaEquipe = () => {
     },
   ];
 
+  const transitionSuave = { duration: 0.9, ease: [0.25, 0.4, 0.25, 1] };
+
   const variantesCard = {
     oculto: { opacity: 0, y: 50, rotateY: -15 },
     visivel: { 
       opacity: 1, 
       y: 0,
       rotateY: 0,
-      transition: { duration: 0.7, ease: "easeOut" }
+      transition: transitionSuave
     }
   };
 
@@ -77,7 +80,7 @@ const NossaEquipe = () => {
           variants={{
             visivel: {
               transition: {
-                staggerChildren: 0.3
+                staggerChildren: 0.15
               }
             }
           }}
@@ -120,7 +123,7 @@ const NossaEquipe = () => {
                   />
                   <div className="overlay-foto"></div>
                   <div className="icone-especialidade" style={{ background: membro.corDestaque }}>
-                    👨‍💻
+                    <Code size={22} />
                   </div>
                 </div>
                 
@@ -145,13 +148,13 @@ const NossaEquipe = () => {
                   
                   <div className="redes-sociais">
                     <a href="#" className="link-social" style={{ background: membro.corDestaque }}>
-                      💼
+                      <Briefcase size={18} />
                     </a>
                     <a href="#" className="link-social" style={{ background: membro.corDestaque }}>
-                      📧
+                      <Mail size={18} />
                     </a>
                     <a href="#" className="link-social" style={{ background: membro.corDestaque }}>
-                      🔗
+                      <Link2 size={18} />
                     </a>
                   </div>
                 </div>
@@ -169,17 +172,17 @@ const NossaEquipe = () => {
               <h3>Por que escolher nossa equipe?</h3>
               <div className="valores-grid">
                 <div className="valor-equipe">
-                  <div className="icone-valor">🎯</div>
+                  <div className="icone-valor"><Target size={40} /></div>
                   <h4>Experiência Diversificada</h4>
                   <p>Cada membro traz experiência única de diferentes setores do mercado</p>
                 </div>
                 <div className="valor-equipe">
-                  <div className="icone-valor">⚡</div>
+                  <div className="icone-valor"><Zap size={40} /></div>
                   <h4>Tecnologias Modernas</h4>
                   <p>Dominamos as principais tecnologias e frameworks do mercado atual</p>
                 </div>
                 <div className="valor-equipe">
-                  <div className="icone-valor">🤝</div>
+                  <div className="icone-valor"><Handshake size={40} /></div>
                   <h4>Trabalho em Equipe</h4>
                   <p>Colaboração eficiente para entregar os melhores resultados</p>
                 </div>
