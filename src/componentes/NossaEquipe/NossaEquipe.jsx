@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Code, Briefcase, Mail, Link2, Target, Zap, Handshake } from 'lucide-react';
+import { Code, Briefcase, Mail, Target, Zap, Handshake, Github, Instagram } from 'lucide-react';
 import './NossaEquipe.css';
 import fotoHugo from '../../assets/hugo-perf.jpeg'; 
 import fotoLucas from '../../assets/lucas-perf.jpeg'; 
@@ -23,7 +23,10 @@ const NossaEquipe = () => {
       descricao: "Programador de sistemas em multinacional de energia, amplo conhecimento em Java, React e SQL.",
       especialidades: ["Java", "React", "SQL", "Spring Boot"],
       foto: fotoHugo,
-      corDestaque: "#3b82f6"
+      corDestaque: "#3b82f6",
+      linkedin: "https://www.linkedin.com/in/hugorsgarcia/",
+      email: "mailto:hhugokta@hotmail.com",
+      github: "https://github.com/hugorsgarcia"
     },
     {
       nome: "Davydson Maciel",
@@ -31,7 +34,10 @@ const NossaEquipe = () => {
       descricao: "Programador de sistemas em fintech do ramo financeiro, amplo conhecimento em TypeScript, React e NestJS.",
       especialidades: ["TypeScript", "React", "NestJS", "Node.js"],
       foto: fotoDavydson,
-      corDestaque: "#10b981"
+      corDestaque: "#10b981",
+      linkedin: "https://www.linkedin.com/in/davydsonmaciel/",
+      email: "mailto:davydsonmr1@gmail.com",
+      github: "https://github.com/davydsonmr1"
     },
     {
       nome: "Lucas Araújo Ramos",
@@ -39,15 +45,21 @@ const NossaEquipe = () => {
       descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em C# e .NET Framework.",
       especialidades: ["C#", ".NET", "ASP.NET", "Azure"],
       foto: fotoLucas,
-      corDestaque: "#8b5cf6"
+      corDestaque: "#8b5cf6",
+      linkedin: "https://www.instagram.com/lucasramos1._/",
+      email: "mailto:pclucas0412@gmail.com",
+      instagram: "https://www.instagram.com/lucasramos1._/"
     },
-        {
+    {
       nome: "Matheus Meigre",
       cargo: "Desenvolvedor Full-Stack .NET / Infra",
       descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em C#, .NET Framework, Mensageria com RabbitMQ e Monitoramento.",
       especialidades: ["C#", ".NET", "RabbitMQ", "ELK", "Datadog", "Openshift"],
       foto: fotoMatheus,
-      corDestaque: "#06b6d4"
+      corDestaque: "#06b6d4",
+      linkedin: "https://www.linkedin.com/in/matheus-meigre/",
+      email: "mailto:matheusmeigre@gmail.com",
+      github: "https://github.com/matheusmeigre"
     },
     {
       nome: "Phablo Ribeiro",
@@ -55,7 +67,10 @@ const NossaEquipe = () => {
       descricao: "Programador de sistemas em multinacional do ramo de energia, amplo conhecimento em PowerBuilder, lógica de programação e desenvolvimento de sistemas.",
       especialidades: ["PowerBuilder", "React", "Node.js", "Express"],
       foto: fotoPhablo,
-      corDestaque: "#f59e0b"
+      corDestaque: "#f59e0b",
+      linkedin: "https://www.linkedin.com/in/phablo-oliveira-89a020251/",
+      email: "mailto:phablor97@gmail.com",
+      instagram: "https://www.instagram.com/phablo.oliveira7/"
     },
   ];
 
@@ -147,15 +162,26 @@ const NossaEquipe = () => {
                   </div>
                   
                   <div className="redes-sociais">
-                    <a href="#" className="link-social" style={{ background: membro.corDestaque }}>
-                      <Briefcase size={18} />
-                    </a>
-                    <a href="#" className="link-social" style={{ background: membro.corDestaque }}>
-                      <Mail size={18} />
-                    </a>
-                    <a href="#" className="link-social" style={{ background: membro.corDestaque }}>
-                      <Link2 size={18} />
-                    </a>
+                    {membro.linkedin && (
+                      <a href={membro.linkedin} target="_blank" rel="noopener noreferrer" className="link-social" style={{ background: membro.corDestaque }}>
+                        <Briefcase size={18} />
+                      </a>
+                    )}
+                    {membro.email && (
+                      <a href={membro.email} target="_blank" rel="noopener noreferrer" className="link-social" style={{ background: membro.corDestaque }}>
+                        <Mail size={18} />
+                      </a>
+                    )}
+                    {membro.github && (
+                      <a href={membro.github} target="_blank" rel="noopener noreferrer" className="link-social" style={{ background: membro.corDestaque }}>
+                        <Github size={18} />
+                      </a>
+                    )}
+                    {membro.instagram && (
+                      <a href={membro.instagram} target="_blank" rel="noopener noreferrer" className="link-social" style={{ background: membro.corDestaque }}>
+                        <Instagram size={18} />
+                      </a>
+                    )}
                   </div>
                 </div>
                 
