@@ -80,7 +80,7 @@ const FormularioContato = () => {
             className="titulo-secao-contato titulo-contato-2"
             variants={variantesCard}
           >
-            Entre em Contato teste
+            Entre em Contato
           </motion.h2>
           
           <motion.p 
