@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -13,6 +13,7 @@ import {
   Moon,
   Smartphone,
   Sun,
+  X,
   Utensils,
   Wind,
 } from 'lucide-react';
@@ -167,8 +168,228 @@ function ProjectVisual({ type }) {
   );
 }
 
+function BrevoContactForm({ isReady }) {
+  const formRef = useRef(null);
+  const recaptchaRef = useRef(null);
+  const widgetIdRef = useRef(null);
+  const [submitState, setSubmitState] = useState('idle');
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+
+  const submitToBrevo = async (token) => {
+    if (!formRef.current) {
+      setSubmitState('error');
+      setFeedbackMessage('Nao foi possivel preparar o envio do formulario.');
+      return;
+    }
+
+    try {
+      const formData = new FormData(formRef.current);
+      formData.set('g-recaptcha-response', token);
+
+      const response = await fetch(`${formRef.current.action}?isAjax=1`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        },
+        body: new URLSearchParams(Array.from(formData.entries())),
+      });
+
+      const responseText = await response.text();
+      const result = responseText ? JSON.parse(responseText) : {};
+
+      if (!response.ok || !result.success) {
+        const fieldErrors = result.errors ? Object.values(result.errors).join(' ') : '';
+        throw new Error(fieldErrors || result.message || 'Sua mensagem nao pode ser enviada.');
+      }
+
+      setSubmitState('success');
+      setFeedbackMessage('Sua mensagem para contato foi enviada com sucesso. Em breve entraremos em contato.');
+      formRef.current.reset();
+    } catch (error) {
+      setSubmitState('error');
+      setFeedbackMessage(error instanceof Error && error.message
+        ? error.message
+        : 'Sua mensagem nao pode ser enviada.');
+    }
+  };
+
+  useEffect(() => {
+    if (!isReady || !window.grecaptcha || !recaptchaRef.current || widgetIdRef.current !== null) {
+      return;
+    }
+
+    widgetIdRef.current = window.grecaptcha.render(recaptchaRef.current, {
+      sitekey: '6LelGXQtAAAAAENeVrTnvxegZQN6D1Sz8IfWq8XU',
+      size: 'invisible',
+      callback: submitToBrevo,
+      'error-callback': () => {
+        setSubmitState('error');
+        setFeedbackMessage('Nao foi possivel validar o reCAPTCHA. Tente novamente.');
+      },
+    });
+  }, [isReady]);
+
+  const handleSend = () => {
+    if (!formRef.current) {
+      return;
+    }
+
+    if (!formRef.current.reportValidity()) {
+      return;
+    }
+
+    if (widgetIdRef.current === null || !window.grecaptcha) {
+      setSubmitState('error');
+      setFeedbackMessage('O formulario ainda esta carregando. Aguarde alguns segundos e tente novamente.');
+      return;
+    }
+
+    setSubmitState('loading');
+    setFeedbackMessage('');
+    window.grecaptcha.reset(widgetIdRef.current);
+    window.grecaptcha.execute(widgetIdRef.current);
+  };
+
+  return (
+    <div className="sib-form contact-brevo-form">
+      <div id="sib-form-container" className="sib-form-container">
+        <div
+          id="error-message"
+          className={`sib-form-message-panel${submitState === 'error' ? ' sib-form-message-panel-visible' : ''}`}
+          role="alert"
+        >
+          <div className="sib-form-message-panel__text sib-form-message-panel__text--center">
+            <span className="sib-form-message-panel__icon" aria-hidden="true">!</span>
+            <span className="sib-form-message-panel__inner-text">
+              {feedbackMessage || 'Sua mensagem nao pode ser enviada.'}
+            </span>
+          </div>
+        </div>
+
+        <div
+          id="success-message"
+          className={`sib-form-message-panel sib-form-message-panel-success${submitState === 'success' ? ' sib-form-message-panel-visible' : ''}`}
+          role="status"
+        >
+          <div className="sib-form-message-panel__text sib-form-message-panel__text--center">
+            <span className="sib-form-message-panel__icon" aria-hidden="true">OK</span>
+            <span className="sib-form-message-panel__inner-text">
+              {feedbackMessage || 'Sua mensagem para contato foi enviada com sucesso. Em breve entraremos em contato.'}
+            </span>
+          </div>
+        </div>
+
+        <div id="sib-container" className="sib-container--large sib-container--vertical">
+          <form
+            id="sib-form"
+            ref={formRef}
+            method="POST"
+            action="https://3040d3ef.sibforms.com/serve/MUIFAE0ROVDslblzfMzwKpXtNHwMeYIoR-sbE3pY7YxSglkpmvhJYo_7F0tfj3e27S9XrqoWoD8NhBnmyHMkvVP0Kq6hQDEAv_Gp0o5C-sEG1pjoZRtG_4jGBNGkN3BrRyal4zVDv4btVYnirZiVCcDBl67CsiJn5zXIUV-V9JU0mCh7NmA7zcV3V6l5jM7mkkFaJt8vKkQlK9qf_g=="
+            data-type="subscription"
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <div className="sib-form-block sib-form-block-captcha" aria-hidden="true">
+              <div ref={recaptchaRef} className="g-recaptcha" />
+            </div>
+
+            <div className="sib-form-block sib-form-block-title">
+              <p>Fale com a HDL</p>
+            </div>
+
+            <div className="sib-form-block sib-form-block-copy">
+              <div className="sib-text-form-block">
+                <p>Conte-nos sobre sua ideia e entraremos em contato em breve.</p>
+              </div>
+            </div>
+
+            <div className="sib-input sib-form-block">
+              <div className="form__entry entry_block">
+                <div className="form__label-row">
+                  <label className="entry__label" htmlFor="JOB_TITLE" data-required="*">
+                    Breve descricao
+                  </label>
+                  <div className="entry__field">
+                    <input
+                      className="input"
+                      maxLength="200"
+                      type="text"
+                      id="JOB_TITLE"
+                      name="JOB_TITLE"
+                      autoComplete="off"
+                      placeholder="Conte-nos um pouco mais para acelerarmos o contato"
+                      data-required="true"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <label className="entry__error entry__error--primary" />
+
+                <label className="entry__specification">
+                  Descreva rapidamente sua necessidade para direcionarmos o primeiro retorno.
+                </label>
+              </div>
+            </div>
+
+            <div className="sib-input sib-form-block">
+              <div className="form__entry entry_block">
+                <div className="form__label-row">
+                  <label className="entry__label" htmlFor="EMAIL" data-required="*">
+                    Insira seu e-mail para contato
+                  </label>
+                  <div className="entry__field">
+                    <input
+                      className="input"
+                      type="email"
+                      id="EMAIL"
+                      name="EMAIL"
+                      autoComplete="email"
+                      defaultValue=""
+                      placeholder="Digite aqui seu e-mail"
+                      data-required="true"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <label className="entry__error entry__error--primary" />
+
+                <label className="entry__specification">
+                  Forneca um e-mail valido para entrarmos em contato com voce.
+                </label>
+              </div>
+            </div>
+
+            <div className="sib-form-block sib-form-block-submit">
+              <button
+                className="sib-form-block__button sib-form-block__button-with-loader"
+                type="button"
+                disabled={!isReady || submitState === 'loading'}
+                onClick={handleSend}
+              >
+                <span>
+                  {submitState === 'loading'
+                    ? 'Enviando...'
+                    : isReady
+                      ? 'Enviar'
+                      : 'Carregando formulario...'}
+                </span>
+              </button>
+            </div>
+
+            <input type="text" name="email_address_check" value="" className="input--hidden" readOnly />
+            <input type="hidden" name="locale" value="pt" />
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [theme, setTheme] = useState(getInitialTheme);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isBrevoReady, setIsBrevoReady] = useState(false);
   const activeTheme = themeOptions.find(({ value }) => value === theme) ?? themeOptions[2];
   const ActiveThemeIcon = activeTheme.icon;
 
@@ -202,6 +423,60 @@ function App() {
 
     return undefined;
   }, [theme]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const markReadyWhenAvailable = () => {
+      if (!cancelled && window.grecaptcha && typeof window.grecaptcha.render === 'function') {
+        setIsBrevoReady(true);
+      }
+    };
+
+    if (document.querySelector('script[data-brevo-recaptcha="true"]')) {
+      const readinessTimer = window.setInterval(markReadyWhenAvailable, 250);
+      return () => {
+        cancelled = true;
+        window.clearInterval(readinessTimer);
+      };
+    }
+
+    const recaptchaScript = document.createElement('script');
+    recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?hl=pt&render=explicit';
+    recaptchaScript.async = true;
+    recaptchaScript.defer = true;
+    recaptchaScript.dataset.brevoRecaptcha = 'true';
+    recaptchaScript.addEventListener('load', markReadyWhenAvailable, { once: true });
+    document.body.appendChild(recaptchaScript);
+
+    const readinessTimer = window.setInterval(markReadyWhenAvailable, 250);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(readinessTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isContactModalOpen) {
+      return undefined;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setIsContactModalOpen(false);
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isContactModalOpen]);
 
   return (
     <div className="site-shell">
@@ -246,9 +521,9 @@ function App() {
             </div>
           </details>
 
-          <a className="header-contact" href="mailto:contato@hdlsolucoes.com">
+          <button className="header-contact" type="button" onClick={() => setIsContactModalOpen(true)}>
             <span>Fale com a HDL</span> <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
+          </button>
         </div>
       </header>
 
@@ -265,7 +540,7 @@ function App() {
               <a className="button button-primary" href="#projetos">
                 Ver projetos <ArrowRight size={18} aria-hidden="true" />
               </a>
-              <a className="text-link" href="mailto:contato@hdlsolucoes.com?subject=Quero%20conversar%20com%20a%20HDL">
+              <a className="text-link" href="mailto:hdlgithub@gmail.com?subject=Quero%20conversar%20com%20a%20HDL">
                 Tenho uma ideia <ArrowUpRight size={17} aria-hidden="true" />
               </a>
             </div>
@@ -449,7 +724,7 @@ function App() {
             <span className="eyebrow eyebrow-light">Trabalhe com a gente</span>
             <h2>Gosta de transformar problemas em produto?</h2>
           </div>
-          <a href="mailto:contato@hdlsolucoes.com?subject=Quero%20trabalhar%20com%20a%20HDL">
+          <a href="mailto:hdlgithub@gmail.com?subject=Quero%20trabalhar%20com%20a%20HDL">
             Apresente-se <ArrowUpRight size={18} aria-hidden="true" />
           </a>
         </section>
@@ -457,10 +732,15 @@ function App() {
         <section className="contact" id="contato">
           <div className="contact-kicker"><Mail size={18} /> Um canal direto, sem etapas desnecessárias.</div>
           <h2>Tem um problema que merece uma boa solução?</h2>
-          <p>Conte o contexto. A conversa começa direto com o time da HDL.</p>
-          <a className="contact-email" href="mailto:contato@hdlsolucoes.com?subject=Novo%20projeto%20com%20a%20HDL">
-            contato@hdlsolucoes.com <ArrowUpRight size={30} aria-hidden="true" />
-          </a>
+          <p>Abra o formulário e deixe seu e-mail para contato ou fale direto com o time da HDL.</p>
+          <div className="contact-actions">
+            <button className="contact-cta" type="button" onClick={() => setIsContactModalOpen(true)}>
+              Abrir formulário <ArrowUpRight size={22} aria-hidden="true" />
+            </button>
+            <a className="contact-email" href="mailto:hdlgithub@gmail.com?subject=Novo%20projeto%20com%20a%20HDL">
+              hdlgithub@gmail.com <ArrowUpRight size={30} aria-hidden="true" />
+            </a>
+          </div>
         </section>
       </main>
 
@@ -471,6 +751,45 @@ function App() {
         <p>Produtos digitais pensados para funcionar.</p>
         <span>© {new Date().getFullYear()} HDL Soluções</span>
       </footer>
+
+      <div
+        className={`contact-modal-backdrop${isContactModalOpen ? ' is-open' : ''}`}
+        role="presentation"
+        aria-hidden={isContactModalOpen ? 'false' : 'true'}
+        onClick={() => setIsContactModalOpen(false)}
+      >
+        <section
+          className="contact-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="contact-modal-title"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className="contact-modal-head">
+            <div>
+              <span className="contact-modal-kicker">Fale com a HDL</span>
+              <h2 id="contact-modal-title">Vamos entender o seu projeto.</h2>
+              <p>Preencha o formulário para deixarmos o retorno no seu melhor e-mail.</p>
+            </div>
+            <button
+              className="contact-modal-close"
+              type="button"
+              aria-label="Fechar formulário de contato"
+              onClick={() => setIsContactModalOpen(false)}
+            >
+              <X size={18} aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="contact-modal-frame">
+            <BrevoContactForm isReady={isBrevoReady} />
+          </div>
+
+          <a className="contact-modal-email" href="mailto:hdlgithub@gmail.com?subject=Novo%20projeto%20com%20a%20HDL">
+            Ou fale direto: hdlgithub@gmail.com <ArrowUpRight size={18} aria-hidden="true" />
+          </a>
+        </section>
+      </div>
     </div>
   );
 }
