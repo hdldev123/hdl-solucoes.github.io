@@ -1,10 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <script>
+      try {
+        const preference = localStorage.getItem('hdl-theme') || 'system';
+        const isDark = preference === 'dark' || (preference === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+      } catch {}
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Landing Page HDL Soluções - Completa com Animações</title>
+    <meta name="theme-color" content="#f6f2ea" />
+    <meta name="description" content="A HDL cria produtos digitais web e mobile, da estratégia ao software em operação." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f26a3d'/%3E%3Cpath d='M17 15h8v13h14V15h8v34h-8V36H25v13h-8z' fill='white'/%3E%3C/svg%3E" />
+    <title>HDL Soluções | Produtos digitais que funcionam</title>
   </head>
   <body>
     <div id="root"></div>
