@@ -47,7 +47,7 @@ const Rodape = () => {
             <div className="contato-rapido">
               <div className="contato-item">
                 <span className="icone"><Mail size={18} /></span>
-                <a href="mailto:contato@hdlsolucoes.com">contato@hdlsolucoes.com</a>
+                <a href="mailto:hdlgithub@gmail.com">hdlgithub@gmail.com</a>
               </div>
               <div className="contato-item">
                 <span className="icone"><Phone size={18} /></span>
