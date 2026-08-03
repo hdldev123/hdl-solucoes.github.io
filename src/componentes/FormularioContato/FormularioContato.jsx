@@ -56,7 +56,7 @@ const FormularioContato = () => {
   };
 
   const informacoesContato = [
-    { icone: Mail, titulo: "Email", valor: "contato@hdlsolucoes.com", link: "mailto:contato@hdlsolucoes.com" },
+    { icone: Mail, titulo: "Email", valor: "hdlgithub@gmail.com", link: "mailto:hdlgithub@gmail.com" },
     { icone: Phone, titulo: "WhatsApp", valor: "(11) 99999-9999", link: "https://wa.me/5511999999999" },
     { icone: MapPin, titulo: "Localização", valor: "Cataguases - MG", link: "#" },
     { icone: Clock, titulo: "Horário", valor: "Seg - Sex: 9h às 18h", link: "#" }
