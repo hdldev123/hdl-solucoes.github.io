@@ -305,7 +305,7 @@ function BrevoContactForm({ isReady }) {
             <div className="sib-input sib-form-block">
               <div className="form__entry entry_block">
                 <div className="form__label-row">
-                  <label className="entry__label" htmlFor="JOB_TITLE" data-required="*">
+                  <label className="entry__label" htmlFor="BREVE_DESCRICAO" data-required="*">
                     Breve descricao
                   </label>
                   <div className="entry__field">
@@ -313,8 +313,8 @@ function BrevoContactForm({ isReady }) {
                       className="input"
                       maxLength="200"
                       type="text"
-                      id="JOB_TITLE"
-                      name="JOB_TITLE"
+                      id="BREVE_DESCRICAO"
+                      name="BREVE_DESCRICAO"
                       autoComplete="off"
                       placeholder="Conte-nos um pouco mais para acelerarmos o contato"
                       data-required="true"
