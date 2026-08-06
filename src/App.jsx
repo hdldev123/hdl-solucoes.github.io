@@ -37,12 +37,12 @@ const projects = [
     status: 'Web + mobile',
   },
   {
-    name: 'Respire',
+    name: 'Respiro App',
     description:
-      'Uma experiência digital para transformar pequenas pausas em cuidado diário.',
+      'Meditação e exercícios respiratórios com a técnica 4-7-8 para alívio rápido da ansiedade e relaxamento.',
     icon: Wind,
     visual: 'breathe',
-    status: 'Conteúdo provisório',
+    status: 'React Native + Expo',
   },
   {
     name: 'Rota Luz de Minas',
