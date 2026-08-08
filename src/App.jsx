@@ -37,12 +37,12 @@ const projects = [
     status: 'Web + mobile',
   },
   {
-    name: 'Respiro App',
+    name: 'Respire',
     description:
       'Meditação e exercícios respiratórios com a técnica 4-7-8 para alívio rápido da ansiedade e relaxamento.',
     icon: Wind,
     visual: 'breathe',
-    status: 'React Native + Expo',
+    status: 'App mobile',
   },
   {
     name: 'Rota Luz de Minas',
@@ -50,7 +50,7 @@ const projects = [
       'Rotas e pontos de atendimento organizados para apoiar decisões em campo.',
     icon: Map,
     visual: 'routes',
-    status: 'Conteúdo provisório',
+    status: 'App mobile',
   },
   {
     name: 'Rangô',
@@ -58,7 +58,7 @@ const projects = [
       'Descoberta de comida e conexão local em uma jornada simples e rápida.',
     icon: Utensils,
     visual: 'food',
-    status: 'Conteúdo provisório',
+    status: 'App mobile',
   },
 ];
 
@@ -80,27 +80,27 @@ function getInitialTheme() {
 const team = [
   {
     name: 'Hugo Garcia',
-    role: 'Full-stack · Java',
+    role: 'CFO',
     photo: hugoPhoto,
   },
   {
     name: 'Davydson Maciel',
-    role: 'Full-stack · TypeScript',
+    role: 'CTO',
     photo: davydsonPhoto,
   },
   {
     name: 'Lucas Araújo Ramos',
-    role: 'Full-stack · .NET',
+    role: 'COO',
     photo: lucasPhoto,
   },
   {
     name: 'Matheus Meigre',
-    role: 'Full-stack · .NET & Infra',
+    role: 'CEO',
     photo: matheusPhoto,
   },
   {
     name: 'Phablo Ribeiro',
-    role: 'Full-stack · JavaScript',
+    role: 'CMO',
     photo: phabloPhoto,
   },
 ];
@@ -137,7 +137,7 @@ function ProjectVisual({ type }) {
         <div className="breath-orbit breath-orbit-inner" />
         <div className="breath-core">
           <Wind size={26} strokeWidth={1.5} />
-          <span>inspire</span>
+          <span>respire</span>
         </div>
         <span className="breath-time">02:00</span>
       </div>
@@ -148,7 +148,6 @@ function ProjectVisual({ type }) {
     return (
       <div className="mockup mockup-routes" aria-hidden="true">
         <img className="routes-artwork" src={routesArtwork} alt="" />
-        <span className="artwork-label">Identidade do projeto</span>
       </div>
     );
   }
@@ -163,7 +162,6 @@ function ProjectVisual({ type }) {
         <div><i className="food-picture food-picture-one" /><span>Almoço<br /><small>25 min</small></span></div>
         <div><i className="food-picture food-picture-two" /><span>Lanches<br /><small>18 min</small></span></div>
       </div>
-      <span className="food-action">ver cardápio</span>
     </div>
   );
 }
