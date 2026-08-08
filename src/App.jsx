@@ -55,10 +55,10 @@ const projects = [
   {
     name: 'Rangô',
     description:
-      'Descoberta de comida e conexão local em uma jornada simples e rápida.',
+      'Gestão completa para fábrica de salgados com pedidos via WhatsApp, IA de negócios e logística inteligente.',
     icon: Utensils,
     visual: 'food',
-    status: 'App mobile',
+    status: 'Web + WhatsApp',
   },
 ];
 
