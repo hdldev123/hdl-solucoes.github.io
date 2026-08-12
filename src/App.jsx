@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -788,6 +789,7 @@ function App() {
           </a>
         </section>
       </div>
+      <Analytics />
     </div>
   );
 }
