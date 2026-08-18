@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#102a43" />
+    <title>Resetar Senha | Rota Luz de Minas | HDL Soluções</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #102a43;
+        --ink-soft: #6b7280;
+        --paper: #f6f2ea;
+        --paper-light: #fcfaf6;
+        --orange: #f26a3d;
+        --orange-dark: #d95429;
+        --blue: #173f64;
+        --line: rgba(16, 42, 67, 0.12);
+        --error: #b42318;
+        --success: #15603a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top, rgba(242, 106, 61, 0.24), transparent 26rem),
+          linear-gradient(180deg, #173f64, #102a43 52%, #0d2236);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .card {
+        width: min(100%, 460px);
+        padding: 28px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 28px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(246, 242, 234, 0.98));
+        box-shadow: 0 24px 60px rgba(4, 15, 25, 0.28);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--orange-dark);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .brand::before {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--orange);
+        box-shadow: 0 0 0 5px rgba(242, 106, 61, 0.14);
+        content: '';
+      }
+
+      h1 {
+        margin: 18px 0 8px;
+        font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+        font-size: clamp(2rem, 7vw, 3rem);
+        font-weight: 500;
+        letter-spacing: -0.04em;
+        line-height: 0.98;
+      }
+
+      .sub {
+        margin: 0 0 22px;
+        color: var(--ink-soft);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .state {
+        color: var(--ink-soft);
+        text-align: center;
+        padding: 26px 0 6px;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      form {
+        display: grid;
+        gap: 14px;
+      }
+
+      label {
+        display: block;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      input {
+        width: 100%;
+        min-height: 54px;
+        margin-top: 6px;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: rgba(242, 106, 61, 0.72);
+        box-shadow: 0 0 0 4px rgba(242, 106, 61, 0.12);
+      }
+
+      button {
+        min-height: 54px;
+        margin-top: 6px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--blue);
+        color: #fff;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform 180ms ease, background 180ms ease;
+      }
+
+      button:hover,
+      button:focus-visible {
+        background: #102a43;
+        transform: translateY(-1px);
+      }
+
+      button:disabled {
+        background: #8b99a7;
+        cursor: wait;
+        transform: none;
+      }
+
+      .message {
+        min-height: 22px;
+        margin: 2px 0 0;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .message.error {
+        color: var(--error);
+      }
+
+      .message.success {
+        color: var(--success);
+      }
+
+      .result {
+        text-align: center;
+      }
+
+      .result-icon {
+        font-size: 42px;
+      }
+
+      .back-link {
+        display: inline-flex;
+        margin-top: 20px;
+        color: var(--ink-soft);
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .back-link:hover,
+      .back-link:focus-visible {
+        color: var(--orange-dark);
+      }
+
+      @media (max-width: 520px) {
+        body {
+          padding: 16px;
+        }
+
+        .card {
+          padding: 22px;
+          border-radius: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <span class="brand">Rota Luz de Minas</span>
+
+      <div id="state-loading" class="state">Validando link de recuperação...</div>
+
+      <section id="state-form" class="hidden" aria-labelledby="password-title">
+        <h1 id="password-title">Criar nova senha</h1>
+        <p class="sub">Escolha uma senha forte que você ainda não usou nesta conta.</p>
+
+        <form id="password-form">
+          <label for="password">
+            Nova senha
+            <input
+              id="password"
+              type="password"
+              placeholder="Mín. 8 caracteres, com letra e número"
+              autocomplete="new-password"
+              required
+            />
+          </label>
+
+          <label for="password-confirmation">
+            Confirmar senha
+            <input
+              id="password-confirmation"
+              type="password"
+              placeholder="Repita a nova senha"
+              autocomplete="new-password"
+              required
+            />
+          </label>
+
+          <button id="submit-button" type="submit">Salvar nova senha</button>
+          <p id="message" class="message" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="state-invalid" class="hidden result" aria-labelledby="invalid-title">
+        <div class="result-icon">⚠️</div>
+        <h1 id="invalid-title">Link inválido ou expirado</h1>
+        <p id="invalid-message" class="sub">
+          Este link de recuperação não é mais válido. Solicite um novo no aplicativo.
+        </p>
+      </section>
+
+      <section id="state-success" class="hidden result" aria-labelledby="success-title">
+        <div class="result-icon">✅</div>
+        <h1 id="success-title">Senha alterada</h1>
+        <p class="sub">
+          Sua senha foi redefinida com sucesso. Abra o aplicativo <strong>Rota Luz de Minas</strong>
+          e entre com a nova senha.
+        </p>
+      </section>
+
+      <a class="back-link" href="/" target="_top">← Voltar para HDL Soluções</a>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const SUPABASE_URL = 'https://urqasmjytewhberpslcg.supabase.co';
+      const SUPABASE_ANON_KEY =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVycWFzbWp5dGV3aGJlcnBzbGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNjM4MjIsImV4cCI6MjA5NzczOTgyMn0.tS8P8T6ZG3b61mzJJOJA3YAtVxswVuRzaHBKzvdHohs';
+
+      const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        auth: {
+          detectSessionInUrl: true,
+          flowType: 'implicit',
+          persistSession: false,
+          autoRefreshToken: false,
+        },
+      });
+
+      const states = ['state-loading', 'state-form', 'state-invalid', 'state-success'];
+      const elements = Object.fromEntries(states.map((id) => [id, document.getElementById(id)]));
+      const passwordForm = document.getElementById('password-form');
+      const passwordInput = document.getElementById('password');
+      const passwordConfirmationInput = document.getElementById('password-confirmation');
+      const submitButton = document.getElementById('submit-button');
+      const message = document.getElementById('message');
+      const invalidMessage = document.getElementById('invalid-message');
+
+      let recoveryReady = false;
+
+      function showState(activeState) {
+        states.forEach((state) => {
+          elements[state].classList.toggle('hidden', state !== activeState);
+        });
+      }
+
+      function setMessage(text, type) {
+        message.textContent = text;
+        message.className = type ? `message ${type}` : 'message';
+      }
+
+      function enableRecoveryForm() {
+        if (recoveryReady) {
+          return;
+        }
+
+        recoveryReady = true;
+        showState('state-form');
+      }
+
+      client.auth.onAuthStateChange((event, session) => {
+        if (event === 'PASSWORD_RECOVERY' || (event === 'SIGNED_IN' && session)) {
+          enableRecoveryForm();
+        }
+      });
+
+      window.addEventListener('load', async () => {
+        const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+        const hashError = hash.get('error_description') || hash.get('error');
+
+        if (hashError) {
+          invalidMessage.textContent = decodeURIComponent(hashError).replace(/\+/g, ' ');
+          showState('state-invalid');
+          return;
+        }
+
+        window.setTimeout(async () => {
+          if (recoveryReady) {
+            return;
+          }
+
+          const {
+            data: { session },
+          } = await client.auth.getSession();
+
+          if (session) {
+            enableRecoveryForm();
+            return;
+          }
+
+          showState('state-invalid');
+        }, 1200);
+      });
+
+      passwordForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const password = passwordInput.value;
+        const passwordConfirmation = passwordConfirmationInput.value;
+
+        if (password.length < 8 || !/[A-Za-z]/.test(password) || !/\d/.test(password)) {
+          setMessage('A senha deve ter no mínimo 8 caracteres, com letra e número.', 'error');
+          return;
+        }
+
+        if (password !== passwordConfirmation) {
+          setMessage('As senhas não coincidem.', 'error');
+          return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = 'Salvando...';
+        setMessage('', '');
+
+        const { error } = await client.auth.updateUser({ password });
+
+        if (error) {
+          setMessage(error.message || 'Não foi possível atualizar a senha.', 'error');
+          submitButton.disabled = false;
+          submitButton.textContent = 'Salvar nova senha';
+          return;
+        }
+
+        await client.auth.signOut();
+        showState('state-success');
+      });
+    </script>
+  </body>
+</html>
