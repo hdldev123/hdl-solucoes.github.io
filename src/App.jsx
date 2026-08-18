@@ -134,19 +134,18 @@ const notes = [
 
 const supportLinks = [
   {
-    href: '/rotaluzdeminas/reset-password/',
     label: 'Resetar senha',
-    description: 'Recuperacao de acesso para usuarios do aplicativo.',
+    description: 'Recuperação de acesso para usuários do aplicativo. Solicite o link de alteração de senha pelo aplicativo.',
   },
   {
     href: '/rotaluzdeminas/exclusao-conta/',
-    label: 'Exclusao de conta',
-    description: 'Solicitacao publica de remocao de conta e dados do produto.',
+    label: 'Exclusão de conta',
+    description: 'Solicitação pública de remoção de conta e dados do produto.',
   },
   {
     href: '/rotaluzdeminas/politica-privacidade/',
-    label: 'Politica de privacidade',
-    description: 'Como os dados pessoais sao tratados no Rota Luz de Minas.',
+    label: 'Política de privacidade',
+    description: 'Como os dados pessoais são tratados no Rota Luz de Minas.',
   },
 ];
 
@@ -157,11 +156,11 @@ const supportRoutePages = {
   },
   '/rotaluzdeminas/exclusao-conta/': {
     src: '/rotaluzdeminas/exclusao-conta/index.html',
-    title: 'Exclusao de conta - Rota Luz de Minas',
+    title: 'Exclusão de conta - Rota Luz de Minas',
   },
   '/rotaluzdeminas/politica-privacidade/': {
     src: '/rotaluzdeminas/politica-privacidade/index.html',
-    title: 'Politica de privacidade - Rota Luz de Minas',
+    title: 'Política de privacidade - Rota Luz de Minas',
   },
 };
 
@@ -367,7 +366,7 @@ function BrevoContactForm({ isReady }) {
               <div className="form__entry entry_block">
                 <div className="form__label-row">
                   <label className="entry__label" htmlFor="BREVE_DESCRICAO" data-required="*">
-                    Breve descricao
+                    Breve descrição
                   </label>
                   <div className="entry__field">
                     <input
@@ -904,9 +903,9 @@ function App() {
           <div className="contact-modal-head support-modal-head">
             <div>
               <span className="contact-modal-kicker">Rota Luz de Minas</span>
-              <h2 id="support-modal-title">Suporte e paginas publicas do produto.</h2>
+              <h2 id="support-modal-title">Suporte e páginas públicas do produto.</h2>
               <p>
-                Escolha abaixo a pagina que deseja abrir no dominio oficial da HDL Solucoes.
+                Escolha abaixo a página que deseja abrir no domínio oficial da HDL Soluções.
               </p>
             </div>
             <button
@@ -920,15 +919,28 @@ function App() {
           </div>
 
           <div className="support-link-list">
-            {supportLinks.map(({ href, label, description }) => (
-              <a key={href} className="support-link-card" href={href}>
-                <div>
-                  <strong>{label}</strong>
-                  <p>{description}</p>
-                </div>
-                <ArrowUpRight size={18} aria-hidden="true" />
-              </a>
-            ))}
+            {supportLinks.map(({ href, label, description }) => {
+              if (!href) {
+                return (
+                  <div key={label} className="support-link-card" role="note">
+                    <div>
+                      <strong>{label}</strong>
+                      <p>{description}</p>
+                    </div>
+                  </div>
+                );
+              }
+
+              return (
+                <a key={href} className="support-link-card" href={href}>
+                  <div>
+                    <strong>{label}</strong>
+                    <p>{description}</p>
+                  </div>
+                  <ArrowUpRight size={18} aria-hidden="true" />
+                </a>
+              );
+            })}
           </div>
         </section>
       </div>
