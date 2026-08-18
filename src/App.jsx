@@ -37,12 +37,12 @@ const projects = [
     status: 'Web + mobile',
   },
   {
-    name: 'Respiro App',
+    name: 'Respire',
     description:
       'Meditação e exercícios respiratórios com a técnica 4-7-8 para alívio rápido da ansiedade e relaxamento.',
     icon: Wind,
     visual: 'breathe',
-    status: 'React Native + Expo',
+    status: 'App mobile',
   },
   {
     name: 'Rota Luz de Minas',
@@ -50,15 +50,27 @@ const projects = [
       'Rotas e pontos de atendimento organizados para apoiar decisões em campo.',
     icon: Map,
     visual: 'routes',
-    status: 'Conteúdo provisório',
+    status: 'App mobile',
+    actions: [
+      {
+        href: 'https://rotaluzdeminas.vercel.app/',
+        label: 'Ver produto',
+        variant: 'primary',
+      },
+      {
+        type: 'support',
+        label: 'Precisando de suporte?',
+        variant: 'secondary',
+      },
+    ],
   },
   {
     name: 'Rangô',
     description:
-      'Descoberta de comida e conexão local em uma jornada simples e rápida.',
+      'Gestão completa para fábrica de salgados com pedidos via WhatsApp, IA de negócios e logística inteligente.',
     icon: Utensils,
     visual: 'food',
-    status: 'Conteúdo provisório',
+    status: 'Web + WhatsApp',
   },
 ];
 
@@ -80,27 +92,27 @@ function getInitialTheme() {
 const team = [
   {
     name: 'Hugo Garcia',
-    role: 'Full-stack · Java',
+    role: 'CFO',
     photo: hugoPhoto,
   },
   {
     name: 'Davydson Maciel',
-    role: 'Full-stack · TypeScript',
+    role: 'CTO',
     photo: davydsonPhoto,
   },
   {
     name: 'Lucas Araújo Ramos',
-    role: 'Full-stack · .NET',
+    role: 'COO',
     photo: lucasPhoto,
   },
   {
     name: 'Matheus Meigre',
-    role: 'Full-stack · .NET & Infra',
+    role: 'CEO',
     photo: matheusPhoto,
   },
   {
     name: 'Phablo Ribeiro',
-    role: 'Full-stack · JavaScript',
+    role: 'CMO',
     photo: phabloPhoto,
   },
 ];
@@ -120,6 +132,57 @@ const notes = [
   },
 ];
 
+const supportLinks = [
+  {
+    href: '/rotaluzdeminas/reset-password/',
+    label: 'Resetar senha',
+    description: 'Recuperacao de acesso para usuarios do aplicativo.',
+  },
+  {
+    href: '/rotaluzdeminas/exclusao-conta/',
+    label: 'Exclusao de conta',
+    description: 'Solicitacao publica de remocao de conta e dados do produto.',
+  },
+  {
+    href: '/rotaluzdeminas/politica-privacidade/',
+    label: 'Politica de privacidade',
+    description: 'Como os dados pessoais sao tratados no Rota Luz de Minas.',
+  },
+];
+
+const supportRoutePages = {
+  '/rotaluzdeminas/reset-password/': {
+    src: '/rotaluzdeminas/reset-password/index.html',
+    title: 'Resetar senha - Rota Luz de Minas',
+  },
+  '/rotaluzdeminas/exclusao-conta/': {
+    src: '/rotaluzdeminas/exclusao-conta/index.html',
+    title: 'Exclusao de conta - Rota Luz de Minas',
+  },
+  '/rotaluzdeminas/politica-privacidade/': {
+    src: '/rotaluzdeminas/politica-privacidade/index.html',
+    title: 'Politica de privacidade - Rota Luz de Minas',
+  },
+};
+
+function normalizePathname(pathname) {
+  if (!pathname || pathname === '/') {
+    return '/';
+  }
+
+  return pathname.endsWith('/') ? pathname : `${pathname}/`;
+}
+
+function SupportRouteFrame({ src, title }) {
+  const frameSrc = `${src}${window.location.search}${window.location.hash}`;
+
+  return (
+    <main className="support-route-shell">
+      <iframe className="support-route-frame" title={title} src={frameSrc} />
+    </main>
+  );
+}
+
 function ProjectVisual({ type }) {
   if (type === 'mobile') {
     return (
@@ -137,7 +200,7 @@ function ProjectVisual({ type }) {
         <div className="breath-orbit breath-orbit-inner" />
         <div className="breath-core">
           <Wind size={26} strokeWidth={1.5} />
-          <span>inspire</span>
+          <span>respire</span>
         </div>
         <span className="breath-time">02:00</span>
       </div>
@@ -148,7 +211,6 @@ function ProjectVisual({ type }) {
     return (
       <div className="mockup mockup-routes" aria-hidden="true">
         <img className="routes-artwork" src={routesArtwork} alt="" />
-        <span className="artwork-label">Identidade do projeto</span>
       </div>
     );
   }
@@ -163,7 +225,6 @@ function ProjectVisual({ type }) {
         <div><i className="food-picture food-picture-one" /><span>Almoço<br /><small>25 min</small></span></div>
         <div><i className="food-picture food-picture-two" /><span>Lanches<br /><small>18 min</small></span></div>
       </div>
-      <span className="food-action">ver cardápio</span>
     </div>
   );
 }
@@ -387,11 +448,18 @@ function BrevoContactForm({ isReady }) {
 }
 
 function App() {
+  const currentPath = normalizePathname(window.location.pathname);
   const [theme, setTheme] = useState(getInitialTheme);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
   const [isBrevoReady, setIsBrevoReady] = useState(false);
   const activeTheme = themeOptions.find(({ value }) => value === theme) ?? themeOptions[2];
   const ActiveThemeIcon = activeTheme.icon;
+  const supportRoutePage = supportRoutePages[currentPath];
+
+  if (supportRoutePage) {
+    return <SupportRouteFrame {...supportRoutePage} />;
+  }
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -458,7 +526,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!isContactModalOpen) {
+    if (!isContactModalOpen && !isSupportModalOpen) {
       return undefined;
     }
 
@@ -466,6 +534,7 @@ function App() {
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
         setIsContactModalOpen(false);
+        setIsSupportModalOpen(false);
       }
     };
 
@@ -476,7 +545,7 @@ function App() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isContactModalOpen]);
+  }, [isContactModalOpen, isSupportModalOpen]);
 
   return (
     <div className="site-shell">
@@ -620,7 +689,7 @@ function App() {
           </div>
 
           <div className="projects-grid">
-            {projects.map(({ name, description, icon: Icon, visual, status }, index) => (
+            {projects.map(({ name, description, icon: Icon, visual, status, actions }, index) => (
               <article className={`project-card project-card-${visual}`} key={name}>
                 <div className="project-meta">
                   <span className="project-number">0{index + 1}</span>
@@ -634,7 +703,35 @@ function App() {
                     <p>{description}</p>
                   </div>
                 </div>
-                <span className="project-access">Acesso em validação</span>
+                {actions?.length ? (
+                  <div className="project-actions">
+                    {actions.map(({ href, label, variant, type }) => (
+                      type === 'support' ? (
+                        <button
+                          key={label}
+                          className={`project-card-action project-card-action-${variant}`}
+                          type="button"
+                          onClick={() => setIsSupportModalOpen(true)}
+                        >
+                          <span>{label}</span>
+                          <ArrowUpRight size={14} aria-hidden="true" />
+                        </button>
+                      ) : (
+                        <a
+                          key={label}
+                          className={`project-card-action project-card-action-${variant}`}
+                          href={href}
+                          {...(href.startsWith('http') ? { target: '_blank', rel: 'noreferrer' } : {})}
+                        >
+                          <span>{label}</span>
+                          <ArrowUpRight size={14} aria-hidden="true" />
+                        </a>
+                      )
+                    ))}
+                  </div>
+                ) : (
+                  <span className="project-access">Acesso em validação</span>
+                )}
               </article>
             ))}
           </div>
@@ -788,6 +885,51 @@ function App() {
           <a className="contact-modal-email" href="mailto:hdlgithub@gmail.com?subject=Novo%20projeto%20com%20a%20HDL">
             Ou fale direto: hdlgithub@gmail.com <ArrowUpRight size={18} aria-hidden="true" />
           </a>
+        </section>
+      </div>
+
+      <div
+        className={`contact-modal-backdrop${isSupportModalOpen ? ' is-open' : ''}`}
+        role="presentation"
+        aria-hidden={isSupportModalOpen ? 'false' : 'true'}
+        onClick={() => setIsSupportModalOpen(false)}
+      >
+        <section
+          className="contact-modal support-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="support-modal-title"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className="contact-modal-head support-modal-head">
+            <div>
+              <span className="contact-modal-kicker">Rota Luz de Minas</span>
+              <h2 id="support-modal-title">Suporte e paginas publicas do produto.</h2>
+              <p>
+                Escolha abaixo a pagina que deseja abrir no dominio oficial da HDL Solucoes.
+              </p>
+            </div>
+            <button
+              className="contact-modal-close"
+              type="button"
+              aria-label="Fechar suporte do Rota Luz de Minas"
+              onClick={() => setIsSupportModalOpen(false)}
+            >
+              <X size={18} aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="support-link-list">
+            {supportLinks.map(({ href, label, description }) => (
+              <a key={href} className="support-link-card" href={href}>
+                <div>
+                  <strong>{label}</strong>
+                  <p>{description}</p>
+                </div>
+                <ArrowUpRight size={18} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </section>
       </div>
     </div>

@@ -83,6 +83,19 @@ a {
   transform: translateY(0);
 }
 
+.support-route-shell {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--paper);
+}
+
+.support-route-frame {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  border: 0;
+}
+
 .site-shell {
   width: min(100%, 1600px);
   margin: 0 auto;
@@ -900,6 +913,54 @@ a {
   text-transform: uppercase;
 }
 
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 0 50px;
+}
+
+.project-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.project-card-action-primary {
+  background: var(--ink);
+  color: var(--paper-light);
+}
+
+.project-card-action-primary:hover,
+.project-card-action-primary:focus-visible {
+  border-color: var(--orange-dark);
+  background: var(--orange-dark);
+  color: #fff;
+}
+
+.project-card-action-secondary {
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+.project-card-action-secondary:hover,
+.project-card-action-secondary:focus-visible {
+  border-color: var(--ink);
+  background: rgba(16, 42, 67, 0.06);
+}
+
 .process {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(380px, 1.15fr);
@@ -1573,6 +1634,56 @@ a {
   color: var(--orange-dark);
 }
 
+.support-modal {
+  width: min(100%, 760px);
+}
+
+.support-modal-head p {
+  max-width: 560px;
+}
+
+.support-link-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.support-link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 22px;
+  border: 1px solid rgba(16, 42, 67, 0.12);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.84);
+  color: #102a43;
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.support-link-card:hover,
+.support-link-card:focus-visible {
+  border-color: rgba(242, 106, 61, 0.45);
+  box-shadow: 0 16px 30px rgba(16, 42, 67, 0.08);
+  transform: translateY(-1px);
+}
+
+.support-link-card strong {
+  display: block;
+  font-family: Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.support-link-card p {
+  margin-top: 6px;
+  color: #456079;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
 .contact-email {
   display: inline-flex;
   align-items: center;
@@ -1635,6 +1746,29 @@ a:focus-visible {
 :root[data-theme='dark'] .project-card:nth-child(2),
 :root[data-theme='dark'] .project-card:nth-child(3) {
   background: rgba(255, 255, 255, 0.055);
+}
+
+:root[data-theme='dark'] .project-card-action-primary {
+  background: #a7d0eb;
+  border-color: #a7d0eb;
+  color: #102a43;
+}
+
+:root[data-theme='dark'] .project-card-action-primary:hover,
+:root[data-theme='dark'] .project-card-action-primary:focus-visible {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+
+:root[data-theme='dark'] .project-card-action-secondary {
+  border-color: rgba(225, 237, 245, 0.17);
+  color: #d9e8f2;
+}
+
+:root[data-theme='dark'] .project-card-action-secondary:hover,
+:root[data-theme='dark'] .project-card-action-secondary:focus-visible {
+  background: rgba(225, 237, 245, 0.08);
 }
 
 :root[data-theme='dark'] .team-photo-wrap {
@@ -1875,6 +2009,16 @@ a:focus-visible {
     scroll-snap-align: start;
   }
 
+  .project-actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-left: 50px;
+  }
+
+  .project-card-action {
+    justify-content: center;
+  }
+
   .mockup-food {
     padding: 18px;
   }
@@ -2000,6 +2144,12 @@ a:focus-visible {
   .contact-modal-frame {
     padding: 10px;
     border-radius: 18px;
+  }
+
+  .support-link-card {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px;
   }
 
   #sib-container {
