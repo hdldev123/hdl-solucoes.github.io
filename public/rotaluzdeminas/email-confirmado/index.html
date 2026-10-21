@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>E-mail confirmado — Rota Luz de Minas</title>
+  <style>
+    :root { --laranja: #EE5C07; --azul: #00478F; --cinza: #6B7280; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #EE5C07 0%, #c54a02 100%);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+      padding: 20px; color: #1F2937;
+    }
+    .card {
+      background: #fff; width: 100%; max-width: 420px; border-radius: 18px;
+      padding: 32px 28px; text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,.2);
+    }
+    .marca { color: var(--laranja); font-weight: 700; letter-spacing: 1px; font-size: 13px; text-transform: uppercase; margin-bottom: 18px; }
+    .icone { font-size: 48px; margin-bottom: 8px; }
+    h1 { font-size: 22px; margin: 0 0 8px; }
+    p { color: var(--cinza); font-size: 15px; line-height: 1.5; margin: 0 0 20px; }
+    .btn { display: block; width: 100%; padding: 14px; font-size: 16px; font-weight: 600; color: #fff; background: var(--azul); border-radius: 10px; text-decoration: none; margin-top: 10px; }
+    .btn.sec { background: #fff; color: var(--azul); border: 1px solid var(--azul); }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="marca">Rota Luz de Minas</div>
+
+    <!-- Estado: e-mail confirmado -->
+    <div id="estado-ok">
+      <div class="icone">✅</div>
+      <h1>E-mail confirmado!</h1>
+      <p id="texto-ok">Sua conta foi ativada. Volte ao aplicativo <b>Rota Luz de Minas</b> e entre com seu e-mail e senha.</p>
+      <a id="abrir" class="btn hidden" href="hdlrotas://login">Abrir o app</a>
+      <a id="loja" class="btn sec hidden" href="#">Baixar o app</a>
+    </div>
+
+    <!-- Estado: link inválido ou expirado -->
+    <div id="estado-erro" class="hidden">
+      <div class="icone">⚠️</div>
+      <h1>Link inválido ou expirado</h1>
+      <p id="texto-erro">Este link de confirmação não é mais válido. Abra o app e tente entrar: se o e-mail já foi confirmado, o acesso será liberado; se não, solicite um novo e-mail de confirmação.</p>
+    </div>
+  </div>
+
+  <script>
+    var PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.hdl.rotas";
+    var APP_STORE_URL = "https://apps.apple.com/br/app/id6820334771";
+
+    var ua = navigator.userAgent || "";
+    var ehIos = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    var ehAndroid = /Android/.test(ua);
+    var ehCelular = ehIos || ehAndroid;
+
+    // O Supabase devolve o resultado no hash (#error=...&error_description=...) ou na query.
+    var params = new URLSearchParams(location.hash.replace(/^#/, "") + "&" + location.search.replace(/^\?/, ""));
+    var temErro = params.get("error") || params.get("error_code") || params.get("error_description");
+
+    // Não deixa tokens na barra de endereço nem no histórico.
+    if (location.hash || location.search) {
+      history.replaceState(null, "", location.pathname);
+    }
+
+    if (temErro) {
+      document.getElementById("estado-ok").classList.add("hidden");
+      document.getElementById("estado-erro").classList.remove("hidden");
+    } else if (ehCelular) {
+      // Só no celular tenta abrir o app: no computador o deep link não tem
+      // quem o trate e o navegador fica com a tela em branco.
+      var loja = document.getElementById("loja");
+      loja.href = ehIos ? APP_STORE_URL : PLAY_STORE_URL;
+      loja.textContent = ehIos ? "Baixar na App Store" : "Baixar na Play Store";
+      document.getElementById("abrir").classList.remove("hidden");
+      loja.classList.remove("hidden");
+      window.location.href = "hdlrotas://login";
+    } else {
+      document.getElementById("texto-ok").innerHTML =
+        "Sua conta foi ativada. Agora abra o aplicativo <b>Rota Luz de Minas</b> no seu celular e entre com seu e-mail e senha.";
+    }
+  </script>
+</body>
+</html>
