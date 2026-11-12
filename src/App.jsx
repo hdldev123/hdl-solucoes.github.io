@@ -20,7 +20,8 @@ import {
 import davydsonPhoto from './assets/dav-perf.jpeg';
 import hugoPhoto from './assets/hugo-perf.jpeg';
 import lucasPhoto from './assets/lucas-perf.jpeg';
-import hdlLogo from './assets/logo-hdl.webp';
+import logoClaro from './assets/logo-hdl-claro.webp';
+import logoEscuro from './assets/logo-hdl-escuro.webp';
 import matheusPhoto from './assets/matheus-perf.webp';
 import financeArtwork from './assets/minha-gestao-financeira.webp';
 import phabloPhoto from './assets/phablo-perf.jfif';
@@ -446,19 +447,13 @@ function BrevoContactForm({ isReady }) {
   );
 }
 
-function App() {
-  const currentPath = normalizePathname(window.location.pathname);
+function HomePage() {
   const [theme, setTheme] = useState(getInitialTheme);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
   const [isBrevoReady, setIsBrevoReady] = useState(false);
   const activeTheme = themeOptions.find(({ value }) => value === theme) ?? themeOptions[2];
   const ActiveThemeIcon = activeTheme.icon;
-  const supportRoutePage = supportRoutePages[currentPath];
-
-  if (supportRoutePage) {
-    return <SupportRouteFrame {...supportRoutePage} />;
-  }
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -471,7 +466,7 @@ function App() {
       document.documentElement.style.colorScheme = resolvedTheme;
       document.querySelector('meta[name="theme-color"]')?.setAttribute(
         'content',
-        resolvedTheme === 'dark' ? '#0b1824' : '#f6f2ea',
+        resolvedTheme === 'dark' ? '#0B1019' : '#F7F7F4',
       );
     };
 
@@ -552,7 +547,8 @@ function App() {
 
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="HDL Soluções, início">
-          <img className="brand-logo" src={hdlLogo} alt="HDL Soluções" />
+          <img className="brand-logo brand-logo-light" src={logoClaro} alt="HDL Soluções" width="600" height="358" />
+          <img className="brand-logo brand-logo-dark" src={logoEscuro} alt="HDL Soluções" width="600" height="358" />
         </a>
 
         <nav className="site-nav" aria-label="Navegação principal">
@@ -615,6 +611,9 @@ function App() {
           </div>
 
           <div className="hero-visual" aria-label="Visão de um produto digital em operação">
+            <div className="hero-pixels" aria-hidden="true">
+              <span /><span /><span /><span /><span />
+            </div>
             <div className="signal-card">
               <div className="signal-card-header">
                 <span><i /> produto em operação</span>
@@ -842,7 +841,8 @@ function App() {
 
       <footer className="site-footer">
         <a className="brand brand-footer" href="#inicio" aria-label="Voltar ao início">
-          <img className="brand-logo" src={hdlLogo} alt="HDL Soluções" />
+          <img className="brand-logo brand-logo-light" src={logoClaro} alt="HDL Soluções" width="600" height="358" />
+          <img className="brand-logo brand-logo-dark" src={logoEscuro} alt="HDL Soluções" width="600" height="358" />
         </a>
         <p>Produtos digitais pensados para funcionar.</p>
         <span>© {new Date().getFullYear()} HDL Soluções</span>
@@ -946,6 +946,16 @@ function App() {
       </div>
     </div>
   );
+}
+
+function App() {
+  const supportRoutePage = supportRoutePages[normalizePathname(window.location.pathname)];
+
+  if (supportRoutePage) {
+    return <SupportRouteFrame {...supportRoutePage} />;
+  }
+
+  return <HomePage />;
 }
 
 export default App;

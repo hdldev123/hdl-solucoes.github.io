@@ -2,18 +2,23 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <meta name="theme-color" content="#F7F7F4" />
     <script>
       try {
         const preference = localStorage.getItem('hdl-theme') || 'system';
         const isDark = preference === 'dark' || (preference === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
         document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
         document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isDark ? '#0B1019' : '#F7F7F4');
       } catch {}
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f6f2ea" />
     <meta name="description" content="A HDL cria produtos digitais web e mobile, da estratégia ao software em operação." />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f26a3d'/%3E%3Cpath d='M17 15h8v13h14V15h8v34h-8V36H25v13h-8z' fill='white'/%3E%3C/svg%3E" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
     <title>HDL Soluções | Produtos digitais que funcionam</title>
   </head>
   <body>
