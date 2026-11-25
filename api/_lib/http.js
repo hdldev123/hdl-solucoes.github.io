@@ -16,6 +16,14 @@ export function responder(res, status, corpo, extras = {}) {
   res.end(JSON.stringify(corpo));
 }
 
+// Redirecionamento 302 (sem corpo JSON), usado pelo link de confirmação da newsletter.
+export function redirecionar(res, location) {
+  res.statusCode = 302;
+  res.setHeader('Location', location);
+  res.setHeader('Cache-Control', 'no-store');
+  res.end();
+}
+
 export function extrairIp(req) {
   const h = req.headers || {};
   const xff = String(h['x-forwarded-for'] || '').split(',')[0].trim();
@@ -131,7 +139,8 @@ export function criarHandler(config, deps = {}) {
         if (!existe) return responder(res, 404, { erro: 'Notícia não encontrada.' });
       }
 
-      const r = await config.processar({ redis, slug, visitante, corpo, query, ipHash, agora: deps.agora });
+      const r = await config.processar({ redis, slug, visitante, corpo, query, ipHash, agora: deps.agora, deps });
+      if (r.location) return redirecionar(res, r.location);
       return responder(res, r.status, r.corpo);
     } catch (e) {
       if (e instanceof ErroHttp) return responder(res, e.status, { erro: e.message });

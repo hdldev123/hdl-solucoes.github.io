@@ -27,6 +27,7 @@ import { useTema } from './tema.js';
 import { dataRelativa, rotuloCategoria, urlDoPost, slugDaUrl, useIndice } from './caderno/dados.js';
 import './estilos/global.css';
 
+const Newsletter = lazy(() => import('./caderno/Newsletter.jsx'));
 const CadernoLista = lazy(() => import('./caderno/CadernoLista.jsx'));
 const CadernoArtigo = lazy(() => import('./caderno/CadernoArtigo.jsx'));
 
@@ -746,6 +747,7 @@ function HomePage() {
               </article>
             ))}
           </div>
+          <Suspense fallback={null}><Newsletter variante="compacta" /></Suspense>
         </section>
 
         <section className="careers" id="vagas">
