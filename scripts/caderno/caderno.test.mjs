@@ -343,17 +343,31 @@ test('redigir: 400/401/403/404 são fatais, citam config e nunca vazam a chave',
   await assert.rejects(redigir(fontesFake, opts(fakeFetch(ok()), { modelo: 'Modelo Inválido!' })), (e) => e.fatal === true && /CADERNO_MODELO/.test(e.message));
 });
 
-test('redigir: 503 e erro de rede tentam de novo uma vez e depois pulam o cluster', async () => {
+test('redigir: 503 e erro de rede tentam de novo, caem no reserva e só então pulam o cluster', async () => {
+  // principal 503 duas vezes → reserva 503 duas vezes → pula
   const f = fakeFetch(erroHttp(503, 'indisponível'));
   const r = await redigir(fontesFake, opts(f));
   assert.equal(r.ok, false);
-  assert.equal(f.chamadas.length, 2);
+  assert.equal(f.chamadas.length, 4);
+  assert.match(f.chamadas[0].url, /gemini-3\.8-flash:/);
+  assert.match(f.chamadas[2].url, /gemini-3\.5-flash-lite:/);
+  // 503 uma vez e depois ok no principal: não usa o reserva
   const f2 = fakeFetch(erroHttp(503), ok());
   assert.equal((await redigir(fontesFake, opts(f2))).ok, true);
+  assert.equal(f2.chamadas.length, 2);
+  // principal sobrecarregado (503 duas vezes) e reserva responde: publica e fica no reserva
+  const estado = { modelo: 'gemini-3.8-flash' };
+  const f4 = fakeFetch(erroHttp(503), erroHttp(503), ok());
+  const r4 = await redigir(fontesFake, opts(f4, { estado }));
+  assert.equal(r4.ok, true);
+  assert.equal(f4.chamadas.length, 3);
+  assert.match(f4.chamadas[2].url, /gemini-3\.5-flash-lite:/);
+  assert.equal(estado.modelo, 'gemini-3.5-flash-lite');
+  // erro de rede persistente: 2 tentativas no principal + 2 no reserva, sem vazar a chave
   const f3 = fakeFetch(new Error(`falha de rede em ${CHAVE}`));
   const r3 = await redigir(fontesFake, opts(f3));
   assert.equal(r3.ok, false);
-  assert.equal(f3.chamadas.length, 2);
+  assert.equal(f3.chamadas.length, 4);
   assert.ok(!r3.motivo.includes(CHAVE));
 });
 
