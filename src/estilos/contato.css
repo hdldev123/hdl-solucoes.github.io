@@ -83,6 +83,41 @@
   text-transform: uppercase;
 }
 
+/* ---------- Home: seção Caderno ---------- */
+
+.journal-side {
+  display: grid;
+  justify-items: end;
+  gap: 16px;
+}
+
+a.note-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.note-card-link h3 {
+  overflow-wrap: anywhere;
+}
+
+a.note-card-link small {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+a.note-card-link:hover small,
+a.note-card-link:focus-visible small {
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .journal-side {
+    justify-items: start;
+  }
+}
+
 /* ---------- Vagas ---------- */
 .careers {
   display: grid;

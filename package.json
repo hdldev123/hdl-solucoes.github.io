@@ -1,15 +1,18 @@
 {
   "name": "vite-react-typescript-starter",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/caderno/prerender.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test",
+    "caderno:coletar": "node scripts/caderno/coletar.mjs"
   },
   "dependencies": {
+    "@upstash/redis": "^1.41.1",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
@@ -17,7 +20,9 @@
     "react-intersection-observer": "^9.16.0"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^1.14.0",
     "@eslint/js": "^9.9.1",
+    "@mozilla/readability": "^0.6.0",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -25,7 +30,9 @@
     "eslint": "^9.9.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.11",
+    "fast-xml-parser": "^5.12.1",
     "globals": "^15.9.0",
+    "linkedom": "^0.18.15",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
