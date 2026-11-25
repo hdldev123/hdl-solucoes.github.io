@@ -1,0 +1,66 @@
+name: Caderno HDL — resumo diário por e-mail
+
+on:
+  schedule:
+    # 10:03 UTC = 07:03 de Brasília (UTC-3)
+    - cron: '3 10 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Somente montar o e-mail (não envia; anexa o HTML como artefato)'
+        type: boolean
+        default: false
+      forcar:
+        description: 'Ignorar a checagem de campanha já enviada hoje'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: caderno-newsletter
+  cancel-in-progress: false
+
+jobs:
+  resumo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Enviar resumo diário
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          CADERNO_REMETENTE_EMAIL: ${{ vars.CADERNO_REMETENTE_EMAIL }}
+          BREVO_LISTA_ID: ${{ vars.BREVO_LISTA_ID }}
+          SITE_URL: ${{ vars.SITE_URL }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          FORCAR: ${{ inputs.forcar && 'true' || 'false' }}
+        run: |
+          ARGS=""
+          if [ "$DRY_RUN" = "true" ]; then
+            ARGS="$ARGS --dry-run --saida=resumo-newsletter.html"
+          fi
+          if [ "$FORCAR" = "true" ]; then
+            ARGS="$ARGS --forcar"
+          fi
+          # shellcheck disable=SC2086
+          node scripts/caderno/newsletter.mjs $ARGS
+
+      - name: Anexar HTML do dry-run
+        if: ${{ inputs.dry_run }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: resumo-newsletter
+          path: resumo-newsletter.html
+          if-no-files-found: ignore

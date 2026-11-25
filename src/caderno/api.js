@@ -112,3 +112,11 @@ export function marcarDenuncia(id) {
   mapa[id] = 1;
   gravarPreferencia(CHAVE_DENUNCIAS, JSON.stringify(mapa));
 }
+
+/* ---------- Newsletter ---------- */
+
+export const assinarNewsletter = ({ email, site = '', tempo = 0 }) =>
+  chamar('newsletter', { metodo: 'POST', corpo: { email, acao: 'assinar', site, tempo } });
+
+export const cancelarNewsletter = ({ email, site = '', tempo = 0 }) =>
+  chamar('newsletter', { metodo: 'POST', corpo: { email, acao: 'cancelar', site, tempo } });

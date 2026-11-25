@@ -3,6 +3,7 @@ import { RefreshCw, Search, X } from 'lucide-react';
 import CadernoLayout from './CadernoLayout.jsx';
 import CartaoPost from './CartaoPost.jsx';
 import { buscarResumo } from './api.js';
+import Newsletter, { RetornoNewsletter } from './Newsletter.jsx';
 import {
   CATEGORIAS, definirMeta, dataRelativa, escolherDestaque, textoPlano, useIndice,
 } from './dados.js';
@@ -134,6 +135,8 @@ export default function CadernoLista() {
           )}
         </header>
 
+        <RetornoNewsletter />
+
         {estado === 'carregando' ? <EsqueletoLista /> : null}
 
         {estado === 'erro' ? (
@@ -224,6 +227,8 @@ export default function CadernoLista() {
                     <CartaoPost post={destaque} resumo={resumos[destaque.slug]} destaque />
                   </section>
                 ) : null}
+
+                <div className="nl-na-lista"><Newsletter /></div>
 
                 {exibidos.length ? (
                   <section aria-label="Mais notícias">
