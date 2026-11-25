@@ -185,11 +185,15 @@ export async function redigir(fontes, {
 
   let usado = estado.modelo;
   let r = await chamarComRetry(fetchFn, usado, chave, corpo, espera);
-  if (r.status === 429 && usado !== reserva) {
-    console.warn(`  Cota do modelo ${usado} esgotada; tentando o modelo reserva ${reserva}.`);
+  // Cota esgotada (429) ou modelo sobrecarregado/indisponível mesmo após nova tentativa
+  // (500/503/rede): cai para o modelo reserva e o mantém no resto da rodada se ele responder.
+  const indisponivel = (x) => x.status === 429 || x.status === 500 || x.status === 503 || !!x.erroRede;
+  if (indisponivel(r) && usado !== reserva) {
+    const causa = r.status === 429 ? 'com a cota esgotada' : 'sobrecarregado ou indisponível';
+    console.warn(`  Modelo ${usado} ${causa}; tentando o modelo reserva ${reserva}.`);
     usado = reserva;
     r = await chamarComRetry(fetchFn, usado, chave, corpo, espera);
-    if (r.status !== 429) estado.modelo = reserva;
+    if (!indisponivel(r)) estado.modelo = reserva;
   }
   if (r.status === 429) {
     throw new ErroRodada('Cota gratuita do Gemini esgotada; a próxima rodada tenta de novo.', { fatal: false });
