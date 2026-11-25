@@ -1,6 +1,5 @@
-// Redação do texto original em PT-BR com o Claude, a partir das fontes extraídas.
+// Redação do texto original em PT-BR com a API Gemini (plano gratuito), a partir das fontes extraídas.
 import { randomBytes } from 'node:crypto';
-import Anthropic from '@anthropic-ai/sdk';
 
 export const CATEGORIAS = ['ia', 'seguranca', 'desenvolvimento', 'nuvem', 'hardware', 'mobile', 'negocios', 'ciencia'];
 
@@ -80,22 +79,10 @@ export function montarConteudoUsuario(fontes, nonce = randomBytes(8).toString('h
   ].join('\n');
 }
 
-const ESFORCOS = ['low', 'medium', 'high', 'xhigh', 'max'];
-
-/** Valida a configuração (CADERNO_ESFORCO); lança ErroRodada fatal se inválida. */
-export function validarConfig(esforco = process.env.CADERNO_ESFORCO || 'medium') {
-  if (!ESFORCOS.includes(esforco)) {
-    throw new ErroRodada(`CADERNO_ESFORCO inválido: "${esforco}". Use um de: ${ESFORCOS.join(', ')}.`, { fatal: true });
-  }
-}
-
-export function modeloPadrao() {
-  return process.env.CADERNO_MODELO || 'claude-opus-5-5';
-}
-
-export function usaFallback(modelo) {
-  return /^claude-(opus-5-5|sonnet-5-5|fable-5-2|opus-5)$/.test(modelo);
-}
+const MODELO_RE = /^[a-z0-9][a-z0-9.\-]{2,60}$/;
+const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models';
+const TIMEOUT_MS = 120_000;
+const ESPERA_RETRY_MS = 5_000;
 
 /** Erro que deve interromper toda a rodada. */
 export class ErroRodada extends Error {
@@ -106,49 +93,132 @@ export class ErroRodada extends Error {
   }
 }
 
-/**
- * Pede ao Claude a matéria. Retorna { ok:true, dados, modelo } | { ok:false, motivo }.
- * `cliente` pode ser injetado nos testes.
- */
-export async function redigir(fontes, { cliente, modelo = modeloPadrao(), esforco = process.env.CADERNO_ESFORCO || 'medium' } = {}) {
-  validarConfig(esforco);
-  const client = cliente || new Anthropic();
-  let resposta;
+export function modeloPadrao() {
+  return process.env.CADERNO_MODELO || 'gemini-3.8-flash';
+}
+
+export function modeloReserva() {
+  return process.env.CADERNO_MODELO_RESERVA || 'gemini-3.5-flash-lite';
+}
+
+/** Valida os nomes de modelo (CADERNO_MODELO / CADERNO_MODELO_RESERVA); lança ErroRodada fatal se inválidos. */
+export function validarConfig(principal = modeloPadrao(), reserva = modeloReserva()) {
+  for (const [nome, valor] of [['CADERNO_MODELO', principal], ['CADERNO_MODELO_RESERVA', reserva]]) {
+    if (!MODELO_RE.test(valor)) {
+      throw new ErroRodada(`${nome} inválido: "${valor}". Use um nome como gemini-3.8-flash.`, { fatal: true });
+    }
+  }
+}
+
+/** Remove qualquer ocorrência da chave de textos que possam ir para o log. */
+function sanitizar(texto, chave) {
+  const t = String(texto ?? '');
+  return chave ? t.split(chave).join('[chave]') : t;
+}
+
+const dormir = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/** Uma chamada HTTP. Retorna { status, json } ou { erroRede }. */
+async function chamar(fetchFn, modelo, chave, corpo) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    resposta = await client.beta.messages.create({
-      model: modelo,
-      max_tokens: 16000,
-      ...(usaFallback(modelo) ? { betas: ['server-side-fallback-2026-07-01'], fallbacks: 'default' } : {}),
-      output_config: { effort: esforco, format: { type: 'json_schema', schema: SCHEMA } },
-      system: SISTEMA,
-      messages: [{ role: 'user', content: montarConteudoUsuario(fontes) }],
+    const res = await fetchFn(`${ENDPOINT}/${modelo}:generateContent`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-goog-api-key': chave },
+      body: JSON.stringify(corpo),
+      signal: ctrl.signal,
     });
+    let json = null;
+    try {
+      json = await res.json();
+    } catch {
+      json = null;
+    }
+    return { status: res.status, json };
   } catch (e) {
-    if (e instanceof Anthropic.AuthenticationError) {
-      throw new ErroRodada('Autenticação na API da Anthropic falhou: verifique o segredo ANTHROPIC_API_KEY.', { fatal: true });
+    return { erroRede: e?.name === 'AbortError' ? 'timeout' : sanitizar(e?.message || e, chave) };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/** Chamada com 1 nova tentativa após espera em 500/503/rede/timeout. */
+async function chamarComRetry(fetchFn, modelo, chave, corpo, espera) {
+  let r = await chamar(fetchFn, modelo, chave, corpo);
+  if (r.erroRede || r.status === 500 || r.status === 503) {
+    await dormir(espera);
+    r = await chamar(fetchFn, modelo, chave, corpo);
+  }
+  return r;
+}
+
+/**
+ * Pede ao Gemini a matéria. Retorna { ok:true, dados, modelo } | { ok:false, motivo }.
+ * Opções (injetáveis nos testes): fetch, chave, modelo, reserva, estado, espera.
+ * `estado` ({ modelo }) é compartilhado entre as chamadas da rodada: depois de cair no
+ * modelo reserva por cota esgotada, as próximas chamadas já usam o reserva.
+ */
+export async function redigir(fontes, {
+  fetch: fetchFn = globalThis.fetch,
+  chave = process.env.GEMINI_API_KEY,
+  modelo = modeloPadrao(),
+  reserva = modeloReserva(),
+  estado = { modelo },
+  espera = ESPERA_RETRY_MS,
+} = {}) {
+  validarConfig(modelo, reserva);
+  if (!chave) throw new ErroRodada('GEMINI_API_KEY não definida.', { fatal: true });
+  estado.modelo ||= modelo;
+
+  const corpo = {
+    systemInstruction: { parts: [{ text: SISTEMA }] },
+    contents: [{ role: 'user', parts: [{ text: montarConteudoUsuario(fontes) }] }],
+    generationConfig: { responseMimeType: 'application/json', responseJsonSchema: SCHEMA, maxOutputTokens: 16384 },
+  };
+
+  let usado = estado.modelo;
+  let r = await chamarComRetry(fetchFn, usado, chave, corpo, espera);
+  if (r.status === 429 && usado !== reserva) {
+    console.warn(`  Cota do modelo ${usado} esgotada; tentando o modelo reserva ${reserva}.`);
+    usado = reserva;
+    r = await chamarComRetry(fetchFn, usado, chave, corpo, espera);
+    if (r.status !== 429) estado.modelo = reserva;
+  }
+  if (r.status === 429) {
+    throw new ErroRodada('Cota gratuita do Gemini esgotada; a próxima rodada tenta de novo.', { fatal: false });
+  }
+  if (r.erroRede) return { ok: false, motivo: `erro de rede/timeout: ${r.erroRede}` };
+
+  if (r.status >= 400) {
+    const msg = sanitizar(r.json?.error?.message || '(sem mensagem)', chave);
+    if ([400, 401, 403, 404].includes(r.status)) {
+      throw new ErroRodada(`Erro de configuração na API Gemini (${r.status} ${r.json?.error?.status || ''}): ${msg}. Verifique GEMINI_API_KEY (e se a API está habilitada) e CADERNO_MODELO / CADERNO_MODELO_RESERVA.`, { fatal: true });
     }
-    if (e instanceof Anthropic.BadRequestError || e instanceof Anthropic.NotFoundError || e instanceof Anthropic.PermissionDeniedError) {
-      throw new ErroRodada(`Erro de configuração na API (${e.status}): ${e.message}. Verifique as variáveis CADERNO_MODELO e CADERNO_ESFORCO.`, { fatal: true });
-    }
-    if (e instanceof Anthropic.RateLimitError) {
-      throw new ErroRodada('Limite de requisições da API da Anthropic atingido; encerrando a rodada sem falhar.', { fatal: false });
-    }
-    if (e instanceof Anthropic.APIError) {
-      return { ok: false, motivo: `erro da API (${e.status ?? 'sem status'}): ${e.message}` };
-    }
-    throw e;
+    return { ok: false, motivo: `erro da API (${r.status}): ${msg}` };
   }
 
-  if (resposta.stop_reason === 'refusal') return { ok: false, motivo: 'a IA recusou a solicitação (refusal)' };
-  if (resposta.stop_reason === 'max_tokens') return { ok: false, motivo: 'resposta cortada por max_tokens' };
+  const resp = r.json || {};
+  const cand = resp.candidates?.[0];
+  if (!cand) {
+    const bloqueio = resp.promptFeedback?.blockReason;
+    return { ok: false, motivo: bloqueio ? `prompt bloqueado (${bloqueio})` : 'resposta sem candidates' };
+  }
+  if (resp.usageMetadata?.totalTokenCount != null) console.log(`  Tokens usados: ${resp.usageMetadata.totalTokenCount}`);
+  if (cand.finishReason && cand.finishReason !== 'STOP') {
+    const motivo = cand.finishReason === 'RECITATION'
+      ? 'RECITATION (a IA tentou reproduzir texto de terceiros)'
+      : cand.finishReason === 'MAX_TOKENS' ? 'resposta cortada por MAX_TOKENS' : `finishReason ${cand.finishReason}`;
+    return { ok: false, motivo };
+  }
 
-  const bloco = (resposta.content || []).find((b) => b.type === 'text');
-  if (!bloco) return { ok: false, motivo: 'resposta sem bloco de texto' };
+  const texto = (cand.content?.parts || []).filter((p) => typeof p.text === 'string' && p.thought !== true).map((p) => p.text).join('');
+  if (!texto) return { ok: false, motivo: 'resposta sem texto' };
   let dados;
   try {
-    dados = JSON.parse(bloco.text);
+    dados = JSON.parse(texto);
   } catch {
     return { ok: false, motivo: 'resposta não é JSON válido' };
   }
-  return { ok: true, dados, modelo: resposta.model || modelo };
+  return { ok: true, dados, modelo: typeof resp.modelVersion === 'string' && resp.modelVersion ? resp.modelVersion : usado };
 }

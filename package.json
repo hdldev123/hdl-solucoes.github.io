@@ -20,7 +20,6 @@
     "react-intersection-observer": "^9.16.0"
   },
   "devDependencies": {
-    "@anthropic-ai/sdk": "^1.14.0",
     "@eslint/js": "^9.9.1",
     "@mozilla/readability": "^0.6.0",
     "@types/react": "^18.3.5",
