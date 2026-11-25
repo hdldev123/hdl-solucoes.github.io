@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowUpRight, ChevronRight, Clock, Minus, Plus, RefreshCw, Sparkles } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, ChevronRight, Clock, Headphones, Minus, Plus, RefreshCw, Sparkles } from 'lucide-react';
 import CadernoLayout from './CadernoLayout.jsx';
+import CapaGerada from './CapaGerada.jsx';
 import CartaoPost from './CartaoPost.jsx';
 import BarraAcoes from './artigo/BarraAcoes.jsx';
 import Comentarios from './artigo/Comentarios.jsx';
@@ -105,6 +106,7 @@ function ArtigoConteudo({ post, indice }) {
   const slug = post.slug;
   const artigoRef = useRef(null);
   const comentariosRef = useRef(null);
+  const cabecalhoRef = useRef(null);
   const leitor = useLeitorVoz(post);
 
   const [nivelFonte, setNivelFonte] = useState(() => {
@@ -117,6 +119,12 @@ function ArtigoConteudo({ post, indice }) {
   const [aviso, setAviso] = useState('');
 
   useEffect(() => { gravarPreferencia(CHAVE_FONTE, String(nivelFonte)); }, [nivelFonte]);
+
+  useEffect(() => {
+    if (!aviso) return undefined;
+    const t = setTimeout(() => setAviso(''), 4500);
+    return () => clearTimeout(t);
+  }, [aviso]);
 
   useEffect(() => {
     definirMeta(`${post.titulo} | Caderno HDL`, post.resumo);
@@ -193,19 +201,6 @@ function ArtigoConteudo({ post, indice }) {
       <ProgressoLeitura alvoRef={artigoRef} />
 
       <div className="artigo-pagina">
-        <BarraAcoes
-          post={post}
-          leitor={leitor}
-          curtidas={inter.curtidas}
-          curtiu={inter.curtiu}
-          curtindo={curtindo}
-          aoCurtir={aoCurtir}
-          aviso={aviso}
-          aoComentar={irParaComentarios}
-          comentariosDisponiveis={inter.estado === 'ok'}
-          totalComentarios={inter.comentarios.length}
-        />
-
         <article className="artigo" ref={artigoRef} style={tamanho}>
           <nav className="breadcrumb" aria-label="Você está em">
             <ol>
@@ -215,7 +210,7 @@ function ArtigoConteudo({ post, indice }) {
             </ol>
           </nav>
 
-          <header className="artigo-cabecalho">
+          <header className="artigo-cabecalho" ref={cabecalhoRef}>
             <span className="artigo-categoria">{rotuloCategoria(post.categoria)}</span>
             <h1 id="artigo-titulo">{post.titulo}</h1>
             <p className="artigo-subtitulo" id="artigo-subtitulo">{post.subtitulo}</p>
@@ -229,8 +224,21 @@ function ArtigoConteudo({ post, indice }) {
               <ControleFonte nivel={nivelFonte} setNivel={setNivelFonte} />
             </div>
 
-            <SeloIA />
+            <button
+              type="button"
+              className="ouvir-inline"
+              disabled={!leitor.suportado}
+              aria-pressed={leitor.estado !== 'parado'}
+              onClick={() => (leitor.estado !== 'parado' ? leitor.parar() : leitor.tocar())}
+            >
+              <Headphones size={17} aria-hidden="true" />
+              {leitor.estado !== 'parado' ? 'Parar leitura' : 'Ouvir notícia'}
+            </button>
           </header>
+
+          <CapaGerada categoria={post.categoria} slug={post.slug} palavra={post.tags?.[0]} variante="hero" />
+
+          <SeloIA />
 
           {post.pontosChave?.length ? (
             <aside className="pontos-chave" aria-labelledby="artigo-pontos">
@@ -311,7 +319,22 @@ function ArtigoConteudo({ post, indice }) {
         </div>
       </div>
 
-      <PlayerVoz leitor={leitor} />
+      <BarraAcoes
+        post={post}
+        leitor={leitor}
+        curtidas={inter.curtidas}
+        curtiu={inter.curtiu}
+        curtindo={curtindo}
+        aoCurtir={aoCurtir}
+        aviso={aviso}
+        aoComentar={irParaComentarios}
+        cabecalhoRef={cabecalhoRef}
+        comentariosRef={comentariosRef}
+        player={<PlayerVoz leitor={leitor} />}
+        comentariosDisponiveis={inter.estado === 'ok'}
+        totalComentarios={inter.comentarios.length}
+      />
+
     </>
   );
 }

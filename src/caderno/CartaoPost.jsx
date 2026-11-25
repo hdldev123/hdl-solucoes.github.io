@@ -1,44 +1,6 @@
-import {
-  Brain, Cloud, Cpu, Clock, Code2, Heart, MessageCircle, Rocket, Shield, Smartphone, Telescope, Newspaper,
-} from 'lucide-react';
+import { Clock, Heart, MessageCircle } from 'lucide-react';
+import CapaGerada from './CapaGerada.jsx';
 import { dataRelativa, rotuloCategoria, urlDoPost } from './dados.js';
-
-export const ICONES_CATEGORIA = {
-  ia: Brain,
-  seguranca: Shield,
-  desenvolvimento: Code2,
-  nuvem: Cloud,
-  hardware: Cpu,
-  mobile: Smartphone,
-  negocios: Rocket,
-  ciencia: Telescope,
-};
-
-function hash(texto) {
-  let h = 0;
-  for (let i = 0; i < texto.length; i += 1) h = (h * 31 + texto.charCodeAt(i)) >>> 0;
-  return h;
-}
-
-/** Capa gerada: gradiente/padrão determinístico por categoria + ícone. Sem imagens externas. */
-export function CapaCategoria({ categoria, slug = '', grande = false }) {
-  const Icone = ICONES_CATEGORIA[categoria] || Newspaper;
-  const h = hash(slug || categoria);
-  const estilo = {
-    '--capa-angulo': `${(h % 6) * 30 + 120}deg`,
-    '--capa-x': `${8 + (h % 5) * 6}%`,
-    '--capa-y': `${10 + ((h >> 3) % 4) * 8}%`,
-  };
-
-  return (
-    <div className={`capa capa-${categoria || 'geral'}${grande ? ' capa-grande' : ''}`} style={estilo} aria-hidden="true">
-      <span className="capa-pixel capa-pixel-a" />
-      <span className="capa-pixel capa-pixel-b" />
-      <Icone className="capa-icone" size={grande ? 72 : 44} strokeWidth={1.25} />
-      <span className="capa-rotulo">{rotuloCategoria(categoria)}</span>
-    </div>
-  );
-}
 
 export function nFontes(post) {
   const n = post.fontes?.length || 0;
@@ -50,7 +12,7 @@ export default function CartaoPost({ post, resumo, destaque = false }) {
   return (
     <article className={`cartao${destaque ? ' cartao-destaque' : ''}`} aria-labelledby={titleId}>
       <a className="cartao-capa" href={urlDoPost(post.slug)} tabIndex={-1} aria-hidden="true">
-        <CapaCategoria categoria={post.categoria} slug={post.slug} grande={destaque} />
+        <CapaGerada categoria={post.categoria} slug={post.slug} palavra={post.tags?.[0]} cheia={destaque} />
       </a>
       <div className="cartao-corpo">
         <span className="cartao-categoria">{rotuloCategoria(post.categoria)}</span>
