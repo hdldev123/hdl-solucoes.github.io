@@ -1,0 +1,68 @@
+name: Caderno HDL — coleta de notícias
+
+on:
+  schedule:
+    # Horários em UTC. 06h, 10h, 14h, 18h e 22h de Brasília (UTC-3):
+    # 09:07, 13:07, 17:07 e 21:07 UTC no mesmo dia, e 01:07 UTC (22h BRT do dia anterior).
+    - cron: '7 9,13,17,21 * * *'
+    - cron: '7 1 * * *'
+  workflow_dispatch:
+    inputs:
+      max:
+        description: 'Máximo de notícias a publicar nesta rodada'
+        type: number
+        default: 2
+      dry_run:
+        description: 'Somente listar clusters (não chama a IA nem grava)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: caderno-hdl
+  cancel-in-progress: false
+
+jobs:
+  coletar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Coletar e publicar notícias
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CADERNO_MODELO: ${{ vars.CADERNO_MODELO }}
+          CADERNO_ESFORCO: ${{ vars.CADERNO_ESFORCO }}
+          MAX_NOTICIAS: ${{ inputs.max || 2 }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            node scripts/caderno/coletar.mjs --max="$MAX_NOTICIAS" --dry-run
+          else
+            node scripts/caderno/coletar.mjs --max="$MAX_NOTICIAS"
+          fi
+
+      - name: Commit e push (apenas public/caderno)
+        if: ${{ !cancelled() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add public/caderno
+          if git diff --cached --quiet; then
+            echo "Sem mudanças em public/caderno."
+            exit 0
+          fi
+          git commit -m "chore(caderno): publica notícias de $(TZ=America/Sao_Paulo date '+%d/%m/%Y %H:%M') BRT"
+          git pull --rebase origin main && git push || { sleep 5; git pull --rebase origin main && git push; }
