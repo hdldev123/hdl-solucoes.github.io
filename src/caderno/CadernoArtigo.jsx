@@ -6,6 +6,7 @@ import CartaoPost from './CartaoPost.jsx';
 import BarraAcoes from './artigo/BarraAcoes.jsx';
 import Comentarios from './artigo/Comentarios.jsx';
 import PlayerVoz from './artigo/PlayerVoz.jsx';
+import Newsletter from './Newsletter.jsx';
 import { useLeitorVoz } from './artigo/useLeitorVoz.js';
 import { AVISO_IA } from './artigo/exportar.js';
 import {
@@ -297,6 +298,8 @@ function ArtigoConteudo({ post, indice }) {
         </article>
 
         <div className="artigo-extra">
+          <Newsletter />
+
           <Comentarios
             ref={comentariosRef}
             slug={slug}
