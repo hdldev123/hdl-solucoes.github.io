@@ -1,5 +1,6 @@
 import { criarHandler } from '../_lib/http.js';
 import { LIMITES } from '../_lib/limite.js';
+import { contemPalavrao } from '../_lib/moderacao.js';
 
 export function lerComentario(item) {
   if (item && typeof item === 'object') return item; // Upstash já desserializa JSON
@@ -21,6 +22,8 @@ export async function processar({ redis, slug, visitante }) {
   const comentarios = (itens || [])
     .map(lerComentario)
     .filter((c) => c && c.id && !oculto.has(c.id))
+    // retroativo: oculta comentários antigos com palavrão (só camada 1, sem IA)
+    .filter((c) => !contemPalavrao(c.nome).bloqueado && !contemPalavrao(c.texto).bloqueado)
     .map(({ id, nome, texto, criadoEm }) => ({ id, nome, texto, criadoEm }));
   return { status: 200, corpo: { curtidas: curtidas || 0, curtiu: Boolean(curtiu), comentarios } };
 }
