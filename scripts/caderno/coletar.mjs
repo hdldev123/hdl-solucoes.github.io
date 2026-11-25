@@ -8,7 +8,7 @@ import { buscarFonte } from './rss.mjs';
 import { agrupar, chaveDoCluster, entidadesDoTitulo, dentroDaJanela, ehOferta, jaPublicado } from './agrupar.mjs';
 import { extrairCluster } from './extrair.mjs';
 import { ErroRodada, modeloPadrao, redigir, validarConfig } from './redigir.mjs';
-import { validar } from './validar.mjs';
+import { validar, MOTIVO_SEM_ACENTO } from './validar.mjs';
 import { lerIndex, proximaAtualizacao, publicarPost } from './publicar.mjs';
 
 const MAX_CHAMADAS_IA = 3;
@@ -99,20 +99,36 @@ async function main() {
         console.warn('  Sem texto utilizável nas fontes; pulando.');
         continue;
       }
-      const r = await redigir(fontes, { estado });
-      if (!r.ok) {
-        console.warn(`  Falha na redação: ${r.motivo}`);
-        continue;
-      }
-      if (r.dados.pular === true) {
-        console.log(`  IA pediu para pular: ${r.dados.motivoPular || '(sem motivo)'}`);
-        continue;
-      }
-      const v = validar(r.dados, fontes.map((f) => f.texto));
-      if (!v.ok) {
+      let r;
+      let v;
+      let reforco = false;
+      let abortar = false;
+      while (true) {
+        r = await redigir(fontes, { estado, reforco });
+        if (!r.ok) {
+          console.warn(`  Falha na redação: ${r.motivo}`);
+          abortar = true;
+          break;
+        }
+        if (r.dados.pular === true) {
+          console.log(`  IA pediu para pular: ${r.dados.motivoPular || '(sem motivo)'}`);
+          abortar = true;
+          break;
+        }
+        v = validar(r.dados, fontes.map((f) => f.texto));
+        if (v.ok) break;
         console.warn(`  Validação reprovou: ${v.erros.join('; ')}`);
-        continue;
+        // Sem acentos: uma nova tentativa no mesmo assunto, se ainda houver chamadas de IA.
+        if (!reforco && v.erros.every((e) => e === MOTIVO_SEM_ACENTO) && tentativas < maxTentativas) {
+          tentativas++;
+          reforco = true;
+          console.log(`  [${tentativas}/${maxTentativas}] Nova tentativa no mesmo assunto, reforçando a acentuação.`);
+          continue;
+        }
+        abortar = true;
+        break;
       }
+      if (abortar) continue;
       let usadas = Array.isArray(r.dados.fontesUsadas) ? [...new Set(r.dados.fontesUsadas)].filter((i) => Number.isInteger(i) && i >= 0 && i < fontes.length) : [];
       if (!usadas.length) usadas = fontes.map((_, i) => i);
       const itensUsados = usadas.map((i) => fontes[i].item);
