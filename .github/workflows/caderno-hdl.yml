@@ -11,7 +11,7 @@ on:
       max:
         description: 'Máximo de notícias a publicar nesta rodada'
         type: number
-        default: 2
+        default: 1
       dry_run:
         description: 'Somente listar clusters (não chama a IA nem grava)'
         type: boolean
@@ -42,10 +42,11 @@ jobs:
 
       - name: Coletar e publicar notícias
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Gemini, plano gratuito (chave em https://aistudio.google.com/apikey)
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           CADERNO_MODELO: ${{ vars.CADERNO_MODELO }}
-          CADERNO_ESFORCO: ${{ vars.CADERNO_ESFORCO }}
-          MAX_NOTICIAS: ${{ inputs.max || 2 }}
+          CADERNO_MODELO_RESERVA: ${{ vars.CADERNO_MODELO_RESERVA }}
+          MAX_NOTICIAS: ${{ inputs.max || 1 }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: |
           if [ "$DRY_RUN" = "true" ]; then
