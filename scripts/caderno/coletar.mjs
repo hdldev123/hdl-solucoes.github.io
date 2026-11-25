@@ -11,10 +11,11 @@ import { ErroRodada, modeloPadrao, redigir, validarConfig } from './redigir.mjs'
 import { validar } from './validar.mjs';
 import { lerIndex, proximaAtualizacao, publicarPost } from './publicar.mjs';
 
+const MAX_CHAMADAS_IA = 3;
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../public/caderno');
 
 export function lerArgs(argv, env = process.env) {
-  const args = { dryRun: false, max: Number(env.CADERNO_MAX_POR_RODADA) || 2, janelaHoras: 30 };
+  const args = { dryRun: false, max: Number(env.CADERNO_MAX_POR_RODADA) || 1, janelaHoras: 30 };
   for (const a of argv) {
     if (a === '--dry-run') args.dryRun = true;
     else if (a.startsWith('--max=')) args.max = Math.max(1, parseInt(a.slice(6), 10) || args.max);
@@ -51,9 +52,9 @@ export async function coletarFontes() {
 
 async function main() {
   const args = lerArgs(process.argv.slice(2));
-  const temChave = !!process.env.ANTHROPIC_API_KEY;
+  const temChave = !!process.env.GEMINI_API_KEY;
   if (!args.dryRun && !temChave) {
-    console.warn('AVISO: ANTHROPIC_API_KEY não definida. Nada será publicado nesta rodada (use --dry-run para só listar os clusters).');
+    console.warn('AVISO: GEMINI_API_KEY não definida. Nada será publicado nesta rodada (use --dry-run para só listar os clusters).');
     resumoDaRodada([]);
     return 0;
   }
@@ -79,10 +80,11 @@ async function main() {
   }
 
   const publicados = [];
-  const maxTentativas = args.max * 3;
+  // No máximo 3 chamadas de IA por rodada, para não queimar a cota diária gratuita.
+  const maxTentativas = Math.min(args.max * 3, MAX_CHAMADAS_IA);
   let tentativas = 0;
   let posts = index.posts;
-  const modelo = modeloPadrao();
+  const estado = { modelo: modeloPadrao() };
 
   try {
     validarConfig();
@@ -97,7 +99,7 @@ async function main() {
         console.warn('  Sem texto utilizável nas fontes; pulando.');
         continue;
       }
-      const r = await redigir(fontes, { modelo });
+      const r = await redigir(fontes, { estado });
       if (!r.ok) {
         console.warn(`  Falha na redação: ${r.motivo}`);
         continue;

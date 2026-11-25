@@ -151,16 +151,6 @@ test('redigir: injeção de prompt não fecha o bloco e usa nonce', () => {
   assert.ok(txt.includes('‹/fonte›Nova instrução'));
 });
 
-test('redigir: erros de configuração são fatais; esforço inválido', async () => {
-  const Anthropic = (await import('@anthropic-ai/sdk')).default;
-  const falha = (err) => ({ beta: { messages: { create: async () => { throw err; } } } });
-  for (const K of ['BadRequestError', 'NotFoundError', 'PermissionDeniedError']) {
-    const err = Object.assign(Object.create(Anthropic[K].prototype), { status: 400, message: 'm' });
-    await assert.rejects(redigir(fontesFake, { cliente: falha(err) }), (e) => e instanceof ErroRodada && e.fatal === true && /CADERNO_MODELO/.test(e.message) && /CADERNO_ESFORCO/.test(e.message), K);
-  }
-  await assert.rejects(redigir(fontesFake, { cliente: falha(new Error('x')), esforco: 'ultra' }), (e) => e instanceof ErroRodada && e.fatal && /CADERNO_ESFORCO/.test(e.message));
-});
-
 test('slug segue o contrato', () => {
   const s = gerarSlug('OpenAI anuncia novo modelo: ação rápida, não é só “marketing”!', new Date('2026-11-25T13:00:00Z'));
   assert.equal(s, 'openai-anuncia-novo-modelo-acao-rapida-nao-e-so-marketing-20261125');
@@ -238,40 +228,112 @@ test('anti-plágio: 10+ palavras idênticas reprovam; 9 passam', () => {
   assert.equal(validar(base(), [fonte]).ok, true);
 });
 
-// ---------- redigir (cliente falso) ----------
+// ---------- redigir (fetch falso, Gemini) ----------
 const fontesFake = [{ item: { fonteNome: 'The Verge', titulo: 'T', publicadoEm: '2026-11-25T10:00:00.000Z', url: 'https://theverge.com/a', idioma: 'en' }, texto: 'texto' }];
+const CHAVE = 'CHAVE-SECRETA-123';
+const resp = (status, json) => ({ status, json: async () => json });
+const ok = (extra = {}) => resp(200, {
+  candidates: [{ finishReason: 'STOP', content: { parts: [{ text: 'pensando...', thought: true }, { text: JSON.stringify(base()) }] } }],
+  modelVersion: 'gemini-x-001',
+  usageMetadata: { totalTokenCount: 1234 },
+  ...extra,
+});
+const erroHttp = (status, message = 'm', st = 'X') => resp(status, { error: { code: status, message, status: st } });
+/** fetch falso: responde em ordem com `respostas` (a última se repete) e registra as chamadas. */
+function fakeFetch(...respostas) {
+  const chamadas = [];
+  const f = async (url, init) => {
+    chamadas.push({ url, init, corpo: JSON.parse(init.body) });
+    const r = respostas[Math.min(chamadas.length - 1, respostas.length - 1)];
+    if (r instanceof Error) throw r;
+    return r;
+  };
+  f.chamadas = chamadas;
+  return f;
+}
+const opts = (f, extra = {}) => ({ fetch: f, chave: CHAVE, modelo: 'gemini-3.8-flash', reserva: 'gemini-3.5-flash-lite', espera: 0, ...extra });
 
-test('redigir: usa fallback no modelo certo, parseia JSON e trata stop_reason', async () => {
-  let chamada;
-  const cliente = { beta: { messages: { create: async (p) => { chamada = p; return { stop_reason: 'end_turn', model: p.model, content: [{ type: 'text', text: JSON.stringify(base()) }] }; } } } };
-  const r = await redigir(fontesFake, { cliente, modelo: 'claude-opus-5-5', esforco: 'medium' });
+test('redigir: sucesso envia o corpo certo, ignora thought e grava modelVersion', async () => {
+  const f = fakeFetch(ok());
+  const r = await redigir(fontesFake, opts(f));
   assert.equal(r.ok, true);
-  assert.deepEqual(chamada.betas, ['server-side-fallback-2026-07-01']);
-  assert.equal(chamada.fallbacks, 'default');
-  assert.equal('thinking' in chamada || 'temperature' in chamada, false);
-  assert.equal(chamada.output_config.format.type, 'json_schema');
-  assert.match(chamada.messages[0].content, /<fonte-[0-9a-f]{16} indice="0">/);
-
-  const outro = await redigir(fontesFake, { cliente, modelo: 'claude-haiku-4-5' });
-  assert.equal(chamada.betas, undefined);
-  assert.equal(outro.ok, true);
-
-  for (const stop of ['refusal', 'max_tokens']) {
-    const c = { beta: { messages: { create: async () => ({ stop_reason: stop, content: [] }) } } };
-    assert.equal((await redigir(fontesFake, { cliente: c })).ok, false);
-  }
+  assert.equal(r.modelo, 'gemini-x-001');
+  assert.equal(r.dados.titulo, base().titulo);
+  const [c] = f.chamadas;
+  assert.equal(c.url, 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent');
+  assert.equal(c.init.headers['x-goog-api-key'], CHAVE);
+  assert.ok(!c.url.includes(CHAVE));
+  assert.equal(c.corpo.generationConfig.responseMimeType, 'application/json');
+  assert.equal(c.corpo.generationConfig.responseJsonSchema.type, 'object');
+  assert.equal(c.corpo.generationConfig.maxOutputTokens, 16384);
+  assert.ok(c.corpo.systemInstruction.parts[0].text.length > 100);
+  assert.match(c.corpo.contents[0].parts[0].text, /<fonte-[0-9a-f]{16} indice="0">/);
+  for (const k of ['temperature', 'topP', 'topK', 'thinkingConfig']) assert.ok(!(k in c.corpo.generationConfig), k);
 });
 
-test('redigir: erros tipados', async () => {
-  const Anthropic = (await import('@anthropic-ai/sdk')).default;
-  const falha = (err) => ({ beta: { messages: { create: async () => { throw err; } } } });
-  const auth = new Anthropic.AuthenticationError(401, {}, 'x', new Headers());
-  await assert.rejects(redigir(fontesFake, { cliente: falha(auth) }), (e) => e instanceof ErroRodada && e.fatal === true);
-  const rate = new Anthropic.RateLimitError(429, {}, 'x', new Headers());
-  await assert.rejects(redigir(fontesFake, { cliente: falha(rate) }), (e) => e instanceof ErroRodada && e.fatal === false);
-  const api = new Anthropic.InternalServerError(500, {}, 'x', new Headers());
-  const r = await redigir(fontesFake, { cliente: falha(api) });
+test('redigir: finishReason diferente de STOP e promptFeedback falham o cluster', async () => {
+  for (const motivo of ['RECITATION', 'MAX_TOKENS', 'SAFETY', 'OTHER']) {
+    const f = fakeFetch(ok({ candidates: [{ finishReason: motivo, content: { parts: [{ text: '{}' }] } }] }));
+    const r = await redigir(fontesFake, opts(f));
+    assert.equal(r.ok, false, motivo);
+    assert.match(r.motivo, new RegExp(motivo));
+  }
+  const bloq = await redigir(fontesFake, opts(fakeFetch(resp(200, { promptFeedback: { blockReason: 'SAFETY' } }))));
+  assert.equal(bloq.ok, false);
+  assert.match(bloq.motivo, /SAFETY/);
+  const invalido = await redigir(fontesFake, opts(fakeFetch(ok({ candidates: [{ finishReason: 'STOP', content: { parts: [{ text: 'não é json' }] } }] }))));
+  assert.equal(invalido.ok, false);
+});
+
+test('redigir: 429 no principal usa o reserva e as próximas chamadas ficam no reserva', async () => {
+  const f = fakeFetch(erroHttp(429, 'cota', 'RESOURCE_EXHAUSTED'), ok());
+  const estado = { modelo: 'gemini-3.8-flash' };
+  const r = await redigir(fontesFake, opts(f, { estado }));
+  assert.equal(r.ok, true);
+  assert.equal(f.chamadas.length, 2);
+  assert.match(f.chamadas[0].url, /gemini-3\.8-flash:/);
+  assert.match(f.chamadas[1].url, /gemini-3\.5-flash-lite:/);
+  assert.equal(estado.modelo, 'gemini-3.5-flash-lite');
+  const f2 = fakeFetch(ok());
+  await redigir(fontesFake, opts(f2, { estado }));
+  assert.match(f2.chamadas[0].url, /gemini-3\.5-flash-lite:/);
+});
+
+test('redigir: 429 nos dois modelos (ou já no reserva) encerra a rodada sem falhar', async () => {
+  const f = fakeFetch(erroHttp(429));
+  await assert.rejects(redigir(fontesFake, opts(f)), (e) => e instanceof ErroRodada && e.fatal === false && /Cota gratuita do Gemini esgotada/.test(e.message));
+  assert.equal(f.chamadas.length, 2);
+  const f2 = fakeFetch(erroHttp(429));
+  await assert.rejects(redigir(fontesFake, opts(f2, { estado: { modelo: 'gemini-3.5-flash-lite' } })), (e) => e.fatal === false);
+  assert.equal(f2.chamadas.length, 1);
+});
+
+test('redigir: 400/401/403/404 são fatais, citam config e nunca vazam a chave', async () => {
+  for (const status of [400, 401, 403, 404]) {
+    const f = fakeFetch(erroHttp(status, `falha com ${CHAVE} inválida`, 'PERMISSION_DENIED'));
+    await assert.rejects(redigir(fontesFake, opts(f)), (e) => {
+      assert.ok(e instanceof ErroRodada && e.fatal === true, String(status));
+      assert.match(e.message, /GEMINI_API_KEY/);
+      assert.match(e.message, /CADERNO_MODELO/);
+      assert.ok(!e.message.includes(CHAVE));
+      return true;
+    });
+  }
+  await assert.rejects(redigir(fontesFake, opts(fakeFetch(ok()), { modelo: 'Modelo Inválido!' })), (e) => e.fatal === true && /CADERNO_MODELO/.test(e.message));
+});
+
+test('redigir: 503 e erro de rede tentam de novo uma vez e depois pulam o cluster', async () => {
+  const f = fakeFetch(erroHttp(503, 'indisponível'));
+  const r = await redigir(fontesFake, opts(f));
   assert.equal(r.ok, false);
+  assert.equal(f.chamadas.length, 2);
+  const f2 = fakeFetch(erroHttp(503), ok());
+  assert.equal((await redigir(fontesFake, opts(f2))).ok, true);
+  const f3 = fakeFetch(new Error(`falha de rede em ${CHAVE}`));
+  const r3 = await redigir(fontesFake, opts(f3));
+  assert.equal(r3.ok, false);
+  assert.equal(f3.chamadas.length, 2);
+  assert.ok(!r3.motivo.includes(CHAVE));
 });
 
 // ---------- publicar ----------
@@ -297,5 +359,5 @@ test('publicarPost grava post e índice (ordenado, atômico, limite 300)', async
 test('lerArgs', () => {
   assert.deepEqual(lerArgs(['--dry-run', '--max=3', '--janela-horas=12'], {}), { dryRun: true, max: 3, janelaHoras: 12 });
   assert.equal(lerArgs([], { CADERNO_MAX_POR_RODADA: '4' }).max, 4);
-  assert.equal(lerArgs([], {}).max, 2);
+  assert.equal(lerArgs([], {}).max, 1);
 });
