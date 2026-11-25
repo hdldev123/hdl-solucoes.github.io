@@ -35,6 +35,18 @@ export function acharTrechoCopiado(gerado, fontes, n = JANELA_PLAGIO) {
   return null;
 }
 
+export const MOTIVO_SEM_ACENTO = 'texto sem acentuação (o modelo omitiu os acentos)';
+export const MIN_ACENTUADOS_POR_100 = 2;
+const RE_ACENTUADO = /[áàâãéêíóôõúüçÁÀÂÃÉÊÍÓÔÕÚÜÇ]/g;
+
+/** Acentuados por 100 palavras no texto informado (0 se não houver palavras). */
+export function acentuadosPor100(textos) {
+  const juntos = textos.join(' ');
+  const palavras = contarPalavras(juntos);
+  if (!palavras) return 0;
+  return ((juntos.match(RE_ACENTUADO) || []).length / palavras) * 100;
+}
+
 const RE_HTML = /</;
 const RE_MD_NEGRITO = /\*\*|__/;
 const RE_MD_TITULO = /^\s{0,3}#{1,6}\s/m;
@@ -120,6 +132,10 @@ export function validar(dados, textosFontes = []) {
   const corpo = [...secoes.flatMap((s) => s.paragrafos), porQueImporta];
   const palavras = corpo.reduce((n, p) => n + contarPalavras(p), 0);
   if (palavras < 350 || palavras > 1500) erros.push(`texto: ${palavras} palavras (esperado 350–1500)`);
+
+  if (palavras >= 350 && acentuadosPor100([titulo, subtitulo, resumo, ...pontosChave, ...secoes.map((s) => s.titulo || ''), ...corpo]) < MIN_ACENTUADOS_POR_100) {
+    erros.push(MOTIVO_SEM_ACENTO);
+  }
 
   if (!erros.length && textosFontes.length) {
     const trecho = acharTrechoCopiado([titulo, subtitulo, resumo, ...pontosChave, ...corpo], textosFontes);

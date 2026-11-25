@@ -6,8 +6,8 @@ import path from 'node:path';
 import { parseFeed, filtrarPorDominio, canonizarUrl, limparHtml } from './rss.mjs';
 import { tokens, entidades, jaccard, agrupar, scoreCluster, jaPublicado, chaveDoCluster, ehOferta, normalizarTitulo } from './agrupar.mjs';
 import { gerarSlug, proximaAtualizacao, publicarPost, SLUG_RE } from './publicar.mjs';
-import { validar, acharTrechoCopiado } from './validar.mjs';
-import { redigir, ErroRodada, montarConteudoUsuario } from './redigir.mjs';
+import { validar, acharTrechoCopiado, MOTIVO_SEM_ACENTO } from './validar.mjs';
+import { redigir, ErroRodada, montarConteudoUsuario, SISTEMA } from './redigir.mjs';
 import { lerArgs } from './coletar.mjs';
 import { FONTES } from './fontes.mjs';
 
@@ -170,7 +170,7 @@ test('proximaAtualizacao: grade 06/10/14/18/22 BRT em UTC', () => {
 });
 
 // ---------- validação ----------
-const frase = (n, p = 'alfa') => Array.from({ length: n }, (_, i) => `${p}${i}`).join(' ') + '.';
+const frase = (n, p = 'alfa') => Array.from({ length: n }, (_, i) => `${p}ção${i}`).join(' ') + '.';
 const base = () => ({
   pular: false,
   motivoPular: '',
@@ -214,6 +214,14 @@ test('validar: rejeita limites, categoria, HTML, Markdown e links', () => {
     alt(d);
     assert.equal(validar(d, []).ok, false, String(alt));
   }
+});
+
+test('validar: texto sem acentos é rejeitado com o motivo certo', () => {
+  const semAcentos = (t) => t.normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const d = JSON.parse(semAcentos(JSON.stringify(base())));
+  const v = validar(d, []);
+  assert.equal(v.ok, false);
+  assert.deepEqual(v.erros, [MOTIVO_SEM_ACENTO]);
 });
 
 test('anti-plágio: 10+ palavras idênticas reprovam; 9 passam', () => {
@@ -269,6 +277,19 @@ test('redigir: sucesso envia o corpo certo, ignora thought e grava modelVersion'
   assert.ok(c.corpo.systemInstruction.parts[0].text.length > 100);
   assert.match(c.corpo.contents[0].parts[0].text, /<fonte-[0-9a-f]{16} indice="0">/);
   for (const k of ['temperature', 'topP', 'topK', 'thinkingConfig']) assert.ok(!(k in c.corpo.generationConfig), k);
+});
+
+test('redigir: prompt exige acentuação e reforco acrescenta o aviso', async () => {
+  assert.match(SISTEMA, /TODOS os acentos/);
+  assert.match(SISTEMA, /"após", "pressão", "política", "liderança"/);
+  const f = fakeFetch(ok());
+  await redigir(fontesFake, opts(f));
+  const normal = f.chamadas[0].corpo.contents[0].parts[0].text;
+  assert.match(normal, /Lembre-se: português do Brasil com acentuação completa\./);
+  assert.ok(!normal.includes('a versão anterior veio sem acentos'));
+  const g = fakeFetch(ok());
+  await redigir(fontesFake, opts(g, { reforco: true }));
+  assert.match(g.chamadas[0].corpo.contents[0].parts[0].text, /Atenção: a versão anterior veio sem acentos\. Reescreva com a acentuação completa do português\./);
 });
 
 test('redigir: finishReason diferente de STOP e promptFeedback falham o cluster', async () => {
