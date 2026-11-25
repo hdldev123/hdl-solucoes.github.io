@@ -1,18 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import {
   ArrowRight,
   ArrowUpRight,
   BookOpen,
   Briefcase,
   CheckCircle,
-  ChevronDown,
   Code2,
   Mail,
   Map,
-  Monitor,
-  Moon,
   Smartphone,
-  Sun,
   X,
   Utensils,
   Wind,
@@ -26,7 +22,13 @@ import matheusPhoto from './assets/matheus-perf.webp';
 import financeArtwork from './assets/minha-gestao-financeira.webp';
 import phabloPhoto from './assets/phablo-perf.jfif';
 import routesArtwork from './assets/recurso-grafico-rotas.webp';
+import SeletorTema from './SeletorTema.jsx';
+import { useTema } from './tema.js';
+import { dataRelativa, rotuloCategoria, urlDoPost, slugDaUrl, useIndice } from './caderno/dados.js';
 import './estilos/global.css';
+
+const CadernoLista = lazy(() => import('./caderno/CadernoLista.jsx'));
+const CadernoArtigo = lazy(() => import('./caderno/CadernoArtigo.jsx'));
 
 const projects = [
   {
@@ -75,21 +77,6 @@ const projects = [
   },
 ];
 
-const themeOptions = [
-  { value: 'light', label: 'Claro', icon: Sun },
-  { value: 'dark', label: 'Escuro', icon: Moon },
-  { value: 'system', label: 'Sistema', icon: Monitor },
-];
-
-function getInitialTheme() {
-  try {
-    const savedTheme = window.localStorage.getItem('hdl-theme');
-    return themeOptions.some(({ value }) => value === savedTheme) ? savedTheme : 'system';
-  } catch {
-    return 'system';
-  }
-}
-
 const team = [
   {
     name: 'Hugo Garcia',
@@ -115,21 +102,6 @@ const team = [
     name: 'Phablo Ribeiro',
     role: 'CMO',
     photo: phabloPhoto,
-  },
-];
-
-const notes = [
-  {
-    category: 'Produto',
-    title: 'Produto primeiro: como cortar ruído antes do primeiro deploy',
-  },
-  {
-    category: 'Engenharia',
-    title: 'Da ideia à operação: o que muda quando o software precisa durar',
-  },
-  {
-    category: 'Experiência',
-    title: 'Mobile sem atalhos: decisões para experiências que cabem na rotina',
   },
 ];
 
@@ -447,44 +419,21 @@ function BrevoContactForm({ isReady }) {
   );
 }
 
+function useCadernoRecentes() {
+  const { estado, indice } = useIndice();
+  return { estado, posts: (indice?.posts ?? []).slice(0, 3) };
+}
+
+function PaginaCarregando() {
+  return <div className="pagina-carregando" role="status" aria-label="Carregando" />;
+}
+
 function HomePage() {
-  const [theme, setTheme] = useState(getInitialTheme);
+  const tema = useTema();
+  const { posts: postsRecentes, estado: estadoCaderno } = useCadernoRecentes();
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isSupportModalOpen, setIsSupportModalOpen] = useState(false);
   const [isBrevoReady, setIsBrevoReady] = useState(false);
-  const activeTheme = themeOptions.find(({ value }) => value === theme) ?? themeOptions[2];
-  const ActiveThemeIcon = activeTheme.icon;
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const applyTheme = () => {
-      const resolvedTheme = theme === 'system'
-        ? (mediaQuery.matches ? 'dark' : 'light')
-        : theme;
-
-      document.documentElement.dataset.theme = resolvedTheme;
-      document.documentElement.style.colorScheme = resolvedTheme;
-      document.querySelector('meta[name="theme-color"]')?.setAttribute(
-        'content',
-        resolvedTheme === 'dark' ? '#0B1019' : '#F7F7F4',
-      );
-    };
-
-    applyTheme();
-
-    try {
-      window.localStorage.setItem('hdl-theme', theme);
-    } catch {
-      // The selected theme still works when storage is unavailable.
-    }
-
-    if (theme === 'system') {
-      mediaQuery.addEventListener('change', applyTheme);
-      return () => mediaQuery.removeEventListener('change', applyTheme);
-    }
-
-    return undefined;
-  }, [theme]);
 
   useEffect(() => {
     let cancelled = false;
@@ -555,35 +504,12 @@ function HomePage() {
           <a href="#projetos">Projetos</a>
           <a href="#processo">Como fazemos</a>
           <a href="#sobre">Quem somos</a>
-          <a href="#blog">Blog</a>
+          <a href="/caderno/">Caderno</a>
           <a href="#vagas">Vagas</a>
         </nav>
 
         <div className="header-actions">
-          <details className="theme-menu">
-            <summary aria-label={`Tema: ${activeTheme.label}`} title={`Tema: ${activeTheme.label}`}>
-              <ActiveThemeIcon size={16} aria-hidden="true" />
-              <span className="theme-current">{activeTheme.label}</span>
-              <ChevronDown className="theme-chevron" size={14} aria-hidden="true" />
-            </summary>
-            <div className="theme-options" aria-label="Escolher tema">
-              {themeOptions.map(({ value, label, icon: ThemeOptionIcon }) => (
-                <button
-                  type="button"
-                  key={value}
-                  aria-pressed={theme === value}
-                  onClick={(event) => {
-                    setTheme(value);
-                    event.currentTarget.closest('details')?.removeAttribute('open');
-                  }}
-                >
-                  <ThemeOptionIcon size={16} aria-hidden="true" />
-                  <span>{label}</span>
-                  <i aria-hidden="true" />
-                </button>
-              ))}
-            </div>
-          </details>
+          <SeletorTema {...tema} />
 
           <button className="header-contact" type="button" onClick={() => setIsContactModalOpen(true)}>
             <span>Fale com a HDL</span> <ArrowUpRight size={16} aria-hidden="true" />
@@ -800,14 +726,23 @@ function HomePage() {
               <span className="eyebrow"><BookOpen size={15} /> Caderno HDL</span>
               <h2>Ideias para construir melhor.</h2>
             </div>
-            <span className="coming-label">Blog em preparação</span>
+            <div className="journal-side">
+              <span className="coming-label">Atualizado a cada 4h</span>
+              <a className="text-link" href="/caderno/">Ver Caderno completo <ArrowRight size={16} aria-hidden="true" /></a>
+            </div>
           </div>
           <div className="notes-grid">
-            {notes.map(({ category, title }, index) => (
-              <article className="note-card" key={title}>
-                <span>{category} · 0{index + 1}</span>
-                <h3>{title}</h3>
-                <small>Conteúdo em breve</small>
+            {postsRecentes.length ? postsRecentes.map((post) => (
+              <a className="note-card note-card-link" href={urlDoPost(post.slug)} key={post.slug}>
+                <span>{rotuloCategoria(post.categoria)} · {dataRelativa(post.publicadoEm)}</span>
+                <h3>{post.titulo}</h3>
+                <small>Ler notícia <ArrowUpRight size={13} aria-hidden="true" /></small>
+              </a>
+            )) : [0, 1, 2].map((n) => (
+              <article className="note-card" key={n} aria-hidden={n > 0 ? 'true' : undefined}>
+                <span>{estadoCaderno === 'carregando' ? 'Carregando…' : 'Caderno HDL'}</span>
+                <h3>{estadoCaderno === 'carregando' ? ' ' : 'Primeiras notícias a caminho'}</h3>
+                <small>{estadoCaderno === 'carregando' ? ' ' : 'Atualizado a cada 4h'}</small>
               </article>
             ))}
           </div>
@@ -953,6 +888,16 @@ function App() {
 
   if (supportRoutePage) {
     return <SupportRouteFrame {...supportRoutePage} />;
+  }
+
+  const pathname = normalizePathname(window.location.pathname);
+
+  if (pathname === '/caderno/') {
+    return <Suspense fallback={<PaginaCarregando />}><CadernoLista /></Suspense>;
+  }
+
+  if (slugDaUrl(pathname)) {
+    return <Suspense fallback={<PaginaCarregando />}><CadernoArtigo /></Suspense>;
   }
 
   return <HomePage />;
