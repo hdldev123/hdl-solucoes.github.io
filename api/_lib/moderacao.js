@@ -48,13 +48,13 @@ export function temLink(texto) {
 function limparBase(valor) {
   return String(valor ?? '')
     .replace(/\r\n?/g, '\n')
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F​-‏‪-‮⁦-⁩﻿]/g, '');
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g, '');
 }
 
 function limparTexto(valor) {
   let t = limparBase(valor)
     .split('\n')
-    .map((l) => l.replace(/[ \t ]+/g, ' ').trim())
+    .map((l) => l.replace(/[ \t\u00A0]+/g, ' ').trim())
     .join('\n')
     .replace(/\n{3,}/g, '\n\n')
     .trim();

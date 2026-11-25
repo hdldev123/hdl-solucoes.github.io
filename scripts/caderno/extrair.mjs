@@ -10,7 +10,7 @@ export function extrairTextoDeHtml(html, url) {
   // Readability usa documentURI para resolver links; linkedom não define, então só ignoramos.
   void url;
   const artigo = new Readability(document, { charThreshold: 200 }).parse();
-  const texto = (artigo?.textContent || '').replace(/[ \t\f\v ]+/g, ' ').replace(/\s*\n\s*/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  const texto = (artigo?.textContent || '').replace(/[ \t\f\v\u00A0]+/g, ' ').replace(/\s*\n\s*/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
   return texto;
 }
 

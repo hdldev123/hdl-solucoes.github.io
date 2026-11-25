@@ -26,7 +26,7 @@ export function limparHtml(s) {
   t = t.replace(/<\/(p|div|li|h[1-6]|br)>|<br\s*\/?>/gi, '\n');
   t = t.replace(/<[^>]*>/g, ' ');
   t = decodificarEntidades(t);
-  t = t.replace(/[ \t\f\v ]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n');
+  t = t.replace(/[ \t\f\v\u00A0]+/g, ' ').replace(/ *\n */g, '\n').replace(/\n{3,}/g, '\n\n');
   return t.trim();
 }
 
