@@ -13,14 +13,9 @@ import {
   Utensils,
   Wind,
 } from 'lucide-react';
-import davydsonPhoto from './assets/dav-perf.jpeg';
-import hugoPhoto from './assets/hugo-perf.jpeg';
-import lucasPhoto from './assets/lucas-perf.jpeg';
 import logoClaro from './assets/logo-hdl-claro.webp';
 import logoEscuro from './assets/logo-hdl-escuro.webp';
-import matheusPhoto from './assets/matheus-perf.webp';
 import financeArtwork from './assets/minha-gestao-financeira.webp';
-import phabloPhoto from './assets/phablo-perf.jfif';
 import routesArtwork from './assets/recurso-grafico-rotas.webp';
 import SeletorTema from './SeletorTema.jsx';
 import { useTema } from './tema.js';
@@ -75,34 +70,6 @@ const projects = [
     icon: Utensils,
     visual: 'food',
     status: 'Web + WhatsApp',
-  },
-];
-
-const team = [
-  {
-    name: 'Hugo Garcia',
-    role: 'CFO',
-    photo: hugoPhoto,
-  },
-  {
-    name: 'Davydson Maciel',
-    role: 'CTO',
-    photo: davydsonPhoto,
-  },
-  {
-    name: 'Lucas Araújo Ramos',
-    role: 'COO',
-    photo: lucasPhoto,
-  },
-  {
-    name: 'Matheus Meigre',
-    role: 'CEO',
-    photo: matheusPhoto,
-  },
-  {
-    name: 'Phablo Ribeiro',
-    role: 'CMO',
-    photo: phabloPhoto,
   },
 ];
 
@@ -531,7 +498,7 @@ function HomePage() {
               <a className="button button-primary" href="#projetos">
                 Ver projetos <ArrowRight size={18} aria-hidden="true" />
               </a>
-              <a className="text-link" href="mailto:hdlgithub@gmail.com?subject=Quero%20conversar%20com%20a%20HDL">
+              <a className="text-link" href="mailto:suportehdlsolucoes@hdlsolucoes.dev.br?subject=Quero%20conversar%20com%20a%20HDL">
                 Tenho uma ideia <ArrowUpRight size={17} aria-hidden="true" />
               </a>
             </div>
@@ -703,22 +670,6 @@ function HomePage() {
             </div>
           </div>
 
-          <div className="team-heading">
-            <span>Quem constrói com você</span>
-            <p>Experiências diferentes, responsabilidade compartilhada.</p>
-          </div>
-          <div className="team-grid">
-            {team.map(({ name, role, photo }, index) => (
-              <article className="team-member" key={name}>
-                <div className="team-photo-wrap">
-                  <img src={photo} alt={`Foto de ${name}`} loading="lazy" decoding="async" />
-                  <span>0{index + 1}</span>
-                </div>
-                <h3>{name}</h3>
-                <p>{role}</p>
-              </article>
-            ))}
-          </div>
         </section>
 
         <section className="section journal" id="blog">
@@ -756,7 +707,7 @@ function HomePage() {
             <span className="eyebrow eyebrow-light">Trabalhe com a gente</span>
             <h2>Gosta de transformar problemas em produto?</h2>
           </div>
-          <a href="mailto:hdlgithub@gmail.com?subject=Quero%20trabalhar%20com%20a%20HDL">
+          <a href="mailto:suportehdlsolucoes@hdlsolucoes.dev.br?subject=Quero%20trabalhar%20com%20a%20HDL">
             Apresente-se <ArrowUpRight size={18} aria-hidden="true" />
           </a>
         </section>
@@ -769,8 +720,8 @@ function HomePage() {
             <button className="contact-cta" type="button" onClick={() => setIsContactModalOpen(true)}>
               Abrir formulário <ArrowUpRight size={22} aria-hidden="true" />
             </button>
-            <a className="contact-email" href="mailto:hdlgithub@gmail.com?subject=Novo%20projeto%20com%20a%20HDL">
-              hdlgithub@gmail.com <ArrowUpRight size={30} aria-hidden="true" />
+            <a className="contact-email" href="mailto:suportehdlsolucoes@hdlsolucoes.dev.br?subject=Novo%20projeto%20com%20a%20HDL">
+              <span>suportehdlsolucoes@<wbr />hdlsolucoes.dev.br</span> <ArrowUpRight size={30} aria-hidden="true" />
             </a>
           </div>
         </section>
@@ -818,8 +769,8 @@ function HomePage() {
             <BrevoContactForm isReady={isBrevoReady} />
           </div>
 
-          <a className="contact-modal-email" href="mailto:hdlgithub@gmail.com?subject=Novo%20projeto%20com%20a%20HDL">
-            Ou fale direto: hdlgithub@gmail.com <ArrowUpRight size={18} aria-hidden="true" />
+          <a className="contact-modal-email" href="mailto:suportehdlsolucoes@hdlsolucoes.dev.br?subject=Novo%20projeto%20com%20a%20HDL">
+            <span>Ou fale direto: suportehdlsolucoes@<wbr />hdlsolucoes.dev.br</span> <ArrowUpRight size={18} aria-hidden="true" />
           </a>
         </section>
       </div>
