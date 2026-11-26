@@ -2,10 +2,11 @@ name: Caderno HDL — coleta de notícias
 
 on:
   schedule:
-    # Horários em UTC. 06h, 10h, 14h, 18h e 22h de Brasília (UTC-3):
-    # 09:07, 13:07, 17:07 e 21:07 UTC no mesmo dia, e 01:07 UTC (22h BRT do dia anterior).
-    - cron: '7 9,13,17,21 * * *'
-    - cron: '7 1 * * *'
+    # De hora em hora, das 06h23 às 22h23 de Brasília (UTC-3), em minuto "quebrado" para
+    # fugir da virada da hora (quando o GitHub mais descarta execuções agendadas).
+    # UTC 09-23 = 06h-20h BRT; UTC 00 e 01 = 21h e 22h BRT. O ritmo mínimo entre notícias
+    # (3h30) é controlado por scripts/caderno/coletar.mjs.
+    - cron: '23 0,1,9-23 * * *'
   workflow_dispatch:
     inputs:
       max:

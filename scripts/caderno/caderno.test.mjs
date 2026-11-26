@@ -6,9 +6,10 @@ import path from 'node:path';
 import { parseFeed, filtrarPorDominio, canonizarUrl, limparHtml } from './rss.mjs';
 import { tokens, entidades, jaccard, agrupar, scoreCluster, jaPublicado, chaveDoCluster, ehOferta, normalizarTitulo } from './agrupar.mjs';
 import { gerarSlug, proximaAtualizacao, publicarPost, SLUG_RE } from './publicar.mjs';
-import { validar, acharTrechoCopiado, MOTIVO_SEM_ACENTO } from './validar.mjs';
+import { validar, acharTrechoCopiado, acentuadosPor100, MOTIVO_SEM_ACENTO, MOTIVO_MOJIBAKE } from './validar.mjs';
+import { repararMojibake, repararMojibakeProfundo } from './texto.mjs';
 import { redigir, ErroRodada, montarConteudoUsuario, SISTEMA } from './redigir.mjs';
-import { lerArgs } from './coletar.mjs';
+import { lerArgs, portaoDeRitmo, INTERVALO_MIN_MS } from './coletar.mjs';
 import { FONTES } from './fontes.mjs';
 
 const fonteEn = { id: 'verge', nome: 'The Verge', site: 'theverge.com', idioma: 'en' };
@@ -161,12 +162,37 @@ test('slug segue o contrato', () => {
   assert.ok(gerarSlug('Titulo qualquer aqui', new Date('2026-11-26T01:00:00Z')).endsWith('-20261125'));
 });
 
-test('proximaAtualizacao: grade 06/10/14/18/22 BRT em UTC', () => {
-  assert.equal(proximaAtualizacao(new Date('2026-11-25T13:08:00Z')), '2026-11-25T17:07:00.000Z');
-  assert.equal(proximaAtualizacao(new Date('2026-11-25T13:06:00Z')), '2026-11-25T13:07:00.000Z');
-  assert.equal(proximaAtualizacao(new Date('2026-11-25T21:30:00Z')), '2026-11-26T01:07:00.000Z');
-  assert.equal(proximaAtualizacao(new Date('2026-11-26T01:07:00Z')), '2026-11-26T09:07:00.000Z');
-  assert.equal(proximaAtualizacao(new Date('2026-11-25T00:10:00Z')), '2026-11-25T01:07:00.000Z');
+test('proximaAtualizacao: max(última + 3h30, próxima hora cheia + 23min) dentro de 06-22h BRT', () => {
+  const d = (x) => new Date(x);
+  // publicou agora (13:08Z): 16:38Z -> primeira rodada :23 depois disso
+  assert.equal(proximaAtualizacao(d('2026-11-25T13:08:00Z')), '2026-11-25T17:23:00.000Z');
+  // última notícia antiga: vale só a próxima hora cheia + 23min
+  assert.equal(proximaAtualizacao(d('2026-11-25T13:06:00Z'), '2026-11-25T02:00:00Z'), '2026-11-25T13:23:00.000Z');
+  assert.equal(proximaAtualizacao(d('2026-11-25T13:30:00Z'), '2026-11-25T02:00:00Z'), '2026-11-25T14:23:00.000Z');
+  // última + 3h30 manda quando é maior
+  assert.equal(proximaAtualizacao(d('2026-11-25T09:30:00Z'), '2026-11-25T08:00:00Z'), '2026-11-25T12:23:00.000Z');
+  // 21h30Z + 3h30 = 01h00Z (22h BRT): ainda cabe na rodada 22h23 BRT
+  assert.equal(proximaAtualizacao(d('2026-11-25T21:30:00Z')), '2026-11-26T01:23:00.000Z');
+  // depois das 22h23 BRT vai para 06h23 BRT (09:23Z) do dia seguinte
+  assert.equal(proximaAtualizacao(d('2026-11-25T22:30:00Z')), '2026-11-26T09:23:00.000Z');
+  assert.equal(proximaAtualizacao(d('2026-11-26T01:30:00Z'), '2026-11-25T01:00:00Z'), '2026-11-26T09:23:00.000Z');
+  assert.equal(proximaAtualizacao(d('2026-11-25T00:10:00Z'), '2026-11-24T00:00:00Z'), '2026-11-25T00:23:00.000Z');
+});
+
+// ---------- portão de ritmo ----------
+test('portão de ritmo: schedule com última notícia recente pula; antiga segue; manual ignora', () => {
+  const agora = new Date('2026-11-25T15:23:00Z');
+  const posts = (h) => [{ publicadoEm: new Date(agora.getTime() - h * 3600000).toISOString() }];
+  const r1 = portaoDeRitmo(posts(1), { env: { GITHUB_EVENT_NAME: 'schedule' }, agora });
+  assert.equal(r1.pular, true);
+  assert.equal(r1.mensagem, 'Rodada pulada: última notícia publicada há 1h 0min (mínimo 3h 30min).');
+  assert.equal(portaoDeRitmo(posts(4), { env: { GITHUB_EVENT_NAME: 'schedule' }, agora }).pular, false);
+  assert.equal(portaoDeRitmo(posts(3.5), { env: { GITHUB_EVENT_NAME: 'schedule' }, agora }).pular, false);
+  assert.equal(portaoDeRitmo(posts(1), { env: { GITHUB_EVENT_NAME: 'workflow_dispatch' }, agora }).pular, false);
+  assert.equal(portaoDeRitmo(posts(1), { env: {}, agora }).pular, false);
+  assert.equal(portaoDeRitmo([], { env: { GITHUB_EVENT_NAME: 'schedule' }, agora }).pular, false);
+  assert.equal(portaoDeRitmo(posts(1), { env: { GITHUB_EVENT_NAME: 'schedule', CADERNO_INTERVALO_MIN_HORAS: '0.5' }, agora }).pular, false);
+  assert.equal(INTERVALO_MIN_MS, 3.5 * 3600 * 1000);
 });
 
 // ---------- validação ----------
@@ -371,6 +397,39 @@ test('redigir: 503 e erro de rede tentam de novo, caem no reserva e só então p
   assert.ok(!r3.motivo.includes(CHAVE));
 });
 
+// ---------- mojibake ----------
+const moji = (t) => Buffer.from(t, 'utf8').toString('latin1');
+const mojiCp = (t) => Buffer.from(t, 'utf8').toString('latin1').replace(/[-]/g, (c) => ({ '': '€', '': '“', '': '”', '': '™', '': '…' })[c] || c);
+
+test('repararMojibake: título real, frase correta e aspas tipográficas', () => {
+  const certo = 'FCC autoriza SpaceX a implantar até um milhão de satélites para data centers no espaço';
+  assert.equal(repararMojibake(moji(certo)), certo);
+  assert.ok(moji(certo).includes('Ã'));
+  const corpo = 'A Comissão de Comunicações vai lançar a constelação';
+  assert.equal(repararMojibake(moji(corpo)), corpo);
+  assert.equal(repararMojibake(certo), certo);
+  assert.equal(repararMojibake('Ação da CIA em São Paulo: já é.'), 'Ação da CIA em São Paulo: já é.');
+  const aspas = 'Ele disse “oi” e ’tchau’ — fim…';
+  assert.equal(repararMojibake(mojiCp(aspas)), aspas);
+  assert.equal(repararMojibake(moji(aspas)), aspas);
+  assert.equal(repararMojibake('Â© sozinho'), 'Â© sozinho'.replace('Â©', '©'));
+  assert.deepEqual(repararMojibakeProfundo({ a: [moji('milhão')], n: 3 }), { a: ['milhão'], n: 3 });
+});
+
+test('validar: rejeita mojibake residual e ele não infla a acentuação', () => {
+  const d = base();
+  d.titulo = 'Empresa anuncia sat' + moji('é') + 'lites para desenvolvedores';
+  const v = validar(d, []);
+  assert.equal(v.ok, false);
+  assert.ok(v.erros.includes(MOTIVO_MOJIBAKE));
+  const d2 = base();
+  d2.resumo = d2.resumo + ' ' + mojiCp('“');
+  assert.ok(validar(d2, []).erros.includes(MOTIVO_MOJIBAKE));
+  // só mojibake, sem acentos reais: contagem deve ser 0
+  assert.equal(acentuadosPor100([moji('ção ção ção ção ção')]), 0);
+  assert.ok(acentuadosPor100(['ação ação ação']) > 0);
+});
+
 // ---------- publicar ----------
 test('publicarPost grava post e índice (ordenado, atômico, limite 300)', async () => {
   const raiz = await mkdtemp(path.join(tmpdir(), 'caderno-'));
@@ -381,7 +440,7 @@ test('publicarPost grava post e índice (ordenado, atômico, limite 300)', async
   assert.notEqual(r1.slug, r2.slug);
   const idx = JSON.parse(await readFile(path.join(raiz, 'index.json'), 'utf8'));
   assert.equal(idx.posts[0].slug, r2.slug);
-  assert.equal(idx.proximaAtualizacao, '2026-11-25T17:07:00.000Z');
+  assert.equal(idx.proximaAtualizacao, '2026-11-25T18:23:00.000Z');
   const txt = await readFile(path.join(raiz, 'posts', `${r1.slug}.json`), 'utf8');
   assert.ok(txt.endsWith('}\n'));
   const post = JSON.parse(txt);
@@ -395,4 +454,10 @@ test('lerArgs', () => {
   assert.deepEqual(lerArgs(['--dry-run', '--max=3', '--janela-horas=12'], {}), { dryRun: true, max: 3, janelaHoras: 12 });
   assert.equal(lerArgs([], { CADERNO_MAX_POR_RODADA: '4' }).max, 4);
   assert.equal(lerArgs([], {}).max, 1);
+});
+
+test('validar: "Ã" órfão (byte perdido) é corrompido, maiúsculas legítimas não', async () => {
+  const { RE_MOJIBAKE } = await import('./validar.mjs');
+  for (const t of ['atender Ã demanda', 'serÃn concedidas', 'satÃ©lites']) assert.equal(RE_MOJIBAKE.test(t), true, t);
+  for (const t of ['SÃO PAULO recebe evento', 'A CONSTRUÇÃO e a NAÇÃO', 'São Paulo, coração, ação']) assert.equal(RE_MOJIBAKE.test(t), false, t);
 });
