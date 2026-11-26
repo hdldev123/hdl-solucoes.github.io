@@ -1,0 +1,76 @@
+{
+  "versao": 1,
+  "slug": "procuradores-estaduais-tentam-barrar-leilao-de-conversas-de-usuarios-20261126",
+  "titulo": "Procuradores estaduais tentam barrar leilão de conversas de usuários pela Character.AI",
+  "subtitulo": "Uma coalizão de 42 procuradores-gerais nos Estados Unidos contesta o plano de venda de dados e chats privados em meio ao processo de falência da empresa",
+  "resumo": "Uma coalizão de 42 procuradores-gerais estaduais nos Estados Unidos está se movimentando para impedir que a Character.AI leiloe o histórico de conversas e dados de mais de 21 milhões de usuários, incluindo milhões de menores de idade, durante seu processo de recuperação judicial sob o Capítulo 11.",
+  "categoria": "negocios",
+  "tags": [
+    "character.ai",
+    "privacidade",
+    "falencia",
+    "inteligencia artificial",
+    "dados"
+  ],
+  "publicadoEm": "2026-11-26T12:34:08.563Z",
+  "atualizadoEm": "2026-11-26T12:34:08.563Z",
+  "tempoLeitura": 3,
+  "palavras": 429,
+  "pontosChave": [
+    "Coalizão de 42 procuradores-gerais tenta bloquear leilão de dados de usuários da Character.AI.",
+    "A proposta de venda inclui o histórico de chats de mais de 21 milhões de contas, sendo mais de 2,1 milhões de menores.",
+    "A única oferta inicial divulgada até o momento veio de uma empresa recém-criada chamada Smirks and Pangs Acquisition LLC."
+  ],
+  "secoes": [
+    {
+      "titulo": null,
+      "paragrafos": [
+        "A empresa de inteligência artificial Character.AI enfrenta forte oposição de autoridades reguladoras enquanto navega por seu processo de falência sob o Capítulo 11, protocolado em outubro. Uma coalizão formada por 42 procuradores-gerais estaduais iniciou medidas jurídicas para impedir que a companhia realize um leilão de seu acervo de dados e histórico de conversas privadas de seus usuários.",
+        "De acordo com as autoridades, o conjunto de dados em questão abrange mais de 21 milhões de contas nos Estados Unidos. Desse total, mais de 2,1 milhões pertencem a menores de idade, cujas interações e conversas sensíveis podem ser transferidas sem proteções adequadas de privacidade ou garantias de exclusão."
+      ]
+    },
+    {
+      "titulo": "Preocupações com comprador desconhecido e promessas quebradas",
+      "paragrafos": [
+        "O ponto central da contestação por parte dos procuradores envolve a falta de salvaguardas para o consumidor. A Character.AI havia garantido anteriormente aos usuários, por meio de sua política de privacidade e postagens em blog, que as informações pessoais coletadas não seriam comercializadas. Contudo, o processo de falência abriu caminho para a alienação desses registros.",
+        "Até o momento, apenas um licitante anônimo foi revelado para o leilão: a Smirks and Pangs Acquisition LLC. A entidade foi estabelecida no estado de Delaware poucos dias antes de ser selecionada pela Character.AI como a oferta base para o leilão. Os procuradores apontam que o acordo proposto não restringe o que o comprador poderá fazer com os dados após a conclusão da transação, permitindo inclusive novas revendas sem aviso prévio."
+      ]
+    },
+    {
+      "titulo": "Impacto de conversas sensíveis e histórico de litígios",
+      "paragrafos": [
+        "O volume de dados sob risco inclui registros de diálogos profundos e muitas vezes vulneráveis, englobando conversas em que avatares interagiram com usuários sobre tópicos delicados como transtornos alimentares, automutilação, pensamentos suicidas e conteúdos de cunho sexual explícito. Para o procurador-geral de Connecticut, William Tong, a conduta da empresa e o modelo de negócios falho conduziram a plataforma ao colapso, resultando agora na tentativa de utilizar o processo de falência para contornar responsabilidades legais.",
+        "Além da disputa em torno do leilão dos chats, a companhia também enfrentou oposição recente a um acordo de licenciamento de propriedade intelectual e contratação de pessoal envolvendo a Disney, além de investigações e processos judiciais ligados à segurança infantil e incidentes graves na plataforma."
+      ]
+    }
+  ],
+  "porQueImporta": "O caso envolvendo a falência da Character.AI estabelece um precedente crítico sobre os limites legais e éticos no tratamento de dados sensíveis de usuários por empresas de tecnologia em insolvência. Para o mercado e desenvolvedores, a forte intervenção regulatória demonstra que promessas de privacidade e a proteção de dados de menores não podem ser ignoradas ou comercializadas através de processos de recuperação judicial, sinalizando um cerco regulatório mais rígido sobre o destino de informações confidenciais de inteligência artificial.",
+  "fontes": [
+    {
+      "nome": "The Verge",
+      "url": "https://www.theverge.com/policy/1042620/character-ai-sale-state-ags-block-selling-users-chats",
+      "titulo": "42 state AGs are trying to stop Character.AI from selling users’ chats",
+      "publicadoEm": "2026-11-26T09:54:40.000Z",
+      "idioma": "en"
+    },
+    {
+      "nome": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/25/state-ags-fight-character-ais-plan-to-auction-off-users-private-chats",
+      "titulo": "Character.AI’s plan to auction off users’ private chats challenged by state AGs",
+      "publicadoEm": "2026-11-25T17:35:58.000Z",
+      "idioma": "en"
+    },
+    {
+      "nome": "Engadget",
+      "url": "https://www.engadget.com/2328630/state-ags-are-trying-to-stop-characterai-from-auctioning-off-users-chat-histories",
+      "titulo": "State AGs are trying to stop Character.AI from auctioning off users' chat histories",
+      "publicadoEm": "2026-11-25T20:04:07.000Z",
+      "idioma": "en"
+    }
+  ],
+  "geracao": {
+    "modelo": "gemini-3.5-flash-lite",
+    "metodo": "ia-a-partir-de-fontes",
+    "geradoEm": "2026-11-26T12:34:08.563Z"
+  }
+}
