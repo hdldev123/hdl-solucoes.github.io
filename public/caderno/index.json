@@ -1,8 +1,65 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-26T12:34:08.563Z",
-  "proximaAtualizacao": "2026-11-26T16:23:00.000Z",
+  "atualizadoEm": "2026-11-26T16:05:39.941Z",
+  "proximaAtualizacao": "2026-11-26T20:23:00.000Z",
   "posts": [
+    {
+      "slug": "grand-theft-auto-vi-quebra-recordes-e-marca-o-fim-de-uma-era-no-20261126",
+      "titulo": "Grand Theft Auto VI quebra recordes e marca o fim de uma era no desenvolvimento",
+      "subtitulo": "Com faturamento bilionário no lançamento e dezenas de milhares de personagens únicos, o jogo desafia a lógica de eficiência da inteligência artificial",
+      "resumo": "O lançamento de Grand Theft Auto VI quebrou recordes históricos de entretenimento e faturou bilhões em seu primeiro dia.",
+      "categoria": "ia",
+      "tags": [
+        "jogos",
+        "ia",
+        "industria",
+        "recordes",
+        "desenvolvimento"
+      ],
+      "publicadoEm": "2026-11-26T16:05:39.941Z",
+      "tempoLeitura": 3,
+      "destaque": 10.99,
+      "fontes": [
+        {
+          "nome": "The Guardian",
+          "url": "https://www.theguardian.com/games/2026/nov/25/the-secret-to-grand-theft-auto-vi-routine-rockstar-games"
+        },
+        {
+          "nome": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/26/as-anthropic-ipos-grand-theft-auto-vi-proves-why-efficiency-isnt-a-virtue"
+        }
+      ],
+      "chave": [
+        "grand",
+        "theft",
+        "auto",
+        "vi",
+        "anthropic",
+        "ipos",
+        "proves",
+        "efficiency",
+        "isn",
+        "virtue",
+        "unexpected",
+        "joy",
+        "hiding",
+        "chaos",
+        "little",
+        "routine"
+      ],
+      "entidades": [
+        "anthropic",
+        "ipos",
+        "grand",
+        "theft",
+        "auto",
+        "vi"
+      ],
+      "urls": [
+        "https://www.theguardian.com/games/2026/nov/25/the-secret-to-grand-theft-auto-vi-routine-rockstar-games",
+        "https://techcrunch.com/2026/11/26/as-anthropic-ipos-grand-theft-auto-vi-proves-why-efficiency-isnt-a-virtue"
+      ]
+    },
     {
       "slug": "procuradores-estaduais-tentam-barrar-leilao-de-conversas-de-usuarios-20261126",
       "titulo": "Procuradores estaduais tentam barrar leilão de conversas de usuários pela Character.AI",
