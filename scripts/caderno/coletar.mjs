@@ -158,11 +158,12 @@ async function main() {
         v = validar(r.dados, fontes.map((f) => f.texto));
         if (v.ok) break;
         console.warn(`  Validação reprovou: ${v.erros.join('; ')}`);
-        // Sem acentos: uma nova tentativa no mesmo assunto, se ainda houver chamadas de IA.
-        if (!reforco && v.erros.every((e) => e === MOTIVO_SEM_ACENTO) && tentativas < maxTentativas) {
+        // Uma nova tentativa no mesmo assunto, informando à IA o que reprovou, se ainda houver chamadas de IA.
+        if (!reforco && tentativas < maxTentativas) {
           tentativas++;
-          reforco = true;
-          console.log(`  [${tentativas}/${maxTentativas}] Nova tentativa no mesmo assunto, reforçando a acentuação.`);
+          reforco = v.erros;
+          const foco = v.erros.every((e) => e === MOTIVO_SEM_ACENTO) ? 'reforçando a acentuação' : 'corrigindo o que reprovou';
+          console.log(`  [${tentativas}/${maxTentativas}] Nova tentativa no mesmo assunto, ${foco}.`);
           continue;
         }
         abortar = true;
