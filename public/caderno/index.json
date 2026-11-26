@@ -1,8 +1,69 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-26T16:05:39.941Z",
-  "proximaAtualizacao": "2026-11-26T20:23:00.000Z",
+  "atualizadoEm": "2026-11-26T20:04:59.659Z",
+  "proximaAtualizacao": "2026-11-27T00:23:00.000Z",
   "posts": [
+    {
+      "slug": "samsung-r95h-e-novas-tvs-mostram-avancos-e-limites-da-tecnologia-rgb-20261126",
+      "titulo": "Samsung R95H e novas TVs mostram avanços e limites da tecnologia RGB LED",
+      "subtitulo": "Analistas avaliam o desempenho do modelo da Samsung equipado com retroiluminação RGB LED, enquanto o mercado registra ofertas de smart TVs durante a Black Week de 2026.",
+      "resumo": "O mercado de televisores em 2026 destaca o avanço das TVs RGB LED com o modelo Samsung R95H, que entrega alta fidelidade de cores e tela antirreflexo, embora enfrente desafios como o crosstalk de cor. Paralelamente, ofertas de modelos Mini LED movimentam o comércio na Black Week.",
+      "categoria": "hardware",
+      "tags": [
+        "tv",
+        "samsung",
+        "lg",
+        "tecnologia",
+        "oled"
+      ],
+      "publicadoEm": "2026-11-26T20:04:59.659Z",
+      "tempoLeitura": 3,
+      "destaque": 9.09,
+      "fontes": [
+        {
+          "nome": "The Verge",
+          "url": "https://www.theverge.com/tech/1042613/samsung-r95h-rgb-led-tv-review"
+        },
+        {
+          "nome": "Tecnoblog",
+          "url": "https://tecnoblog.net/achados/aproveite-tv-lg-mini-led-50-cai-33-em-ate-12x-na-black-week"
+        }
+      ],
+      "chave": [
+        "tv",
+        "led",
+        "samsung",
+        "r95h",
+        "shows",
+        "rgb",
+        "capable",
+        "aproveite",
+        "lg",
+        "mini",
+        "50",
+        "cai",
+        "33",
+        "12x",
+        "black",
+        "week"
+      ],
+      "entidades": [
+        "r95h",
+        "tv",
+        "rgb",
+        "led",
+        "lg",
+        "mini",
+        "12x",
+        "black",
+        "week",
+        "tvs"
+      ],
+      "urls": [
+        "https://www.theverge.com/tech/1042613/samsung-r95h-rgb-led-tv-review",
+        "https://tecnoblog.net/achados/aproveite-tv-lg-mini-led-50-cai-33-em-ate-12x-na-black-week"
+      ]
+    },
     {
       "slug": "grand-theft-auto-vi-quebra-recordes-e-marca-o-fim-de-uma-era-no-20261126",
       "titulo": "Grand Theft Auto VI quebra recordes e marca o fim de uma era no desenvolvimento",
