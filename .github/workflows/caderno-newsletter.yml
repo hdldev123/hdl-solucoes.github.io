@@ -2,8 +2,9 @@ name: Caderno HDL — resumo diário por e-mail
 
 on:
   schedule:
-    # 10:03 UTC = 07:03 de Brasília (UTC-3)
-    - cron: '3 10 * * *'
+    # 10:03-12:33 UTC = 07h03-09h33 de Brasília (UTC-3): 6 tentativas, pois o GitHub pode descartar
+    # execuções agendadas. A idempotência (campanha do dia já enviada) garante 1 envio por dia.
+    - cron: '3,33 10-12 * * *'
   workflow_dispatch:
     inputs:
       dry_run:

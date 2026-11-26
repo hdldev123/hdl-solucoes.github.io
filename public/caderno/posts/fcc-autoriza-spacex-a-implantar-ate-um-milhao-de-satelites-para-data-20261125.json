@@ -1,0 +1,77 @@
+{
+  "versao": 1,
+  "slug": "fcc-autoriza-spacex-a-implantar-ate-um-milhao-de-satelites-para-data-20261125",
+  "titulo": "FCC autoriza SpaceX a implantar até um milhão de satélites para data centers no espaço",
+  "subtitulo": "A agência reguladora norte-americana deu sinal verde para o projeto Starmind, da empresa de Elon Musk, visando a infraestrutura de inteligência artificial em órbita.",
+  "resumo": "A Comissão Federal de Comunicações dos Estados Unidos aprovou o plano da SpaceX para lançar até 1 milhão de satélites do projeto Starmind destinados a data centers orbitais, apesar de ressalvas ambientais e concorrenciais.",
+  "categoria": "ia",
+  "tags": [
+    "spacex",
+    "fcc",
+    "satelites",
+    "ia",
+    "data-center"
+  ],
+  "publicadoEm": "2026-11-26T01:52:13.949Z",
+  "atualizadoEm": "2026-11-26T01:52:13.949Z",
+  "tempoLeitura": 3,
+  "palavras": 447,
+  "pontosChave": [
+    "A SpaceX recebeu autorização da FCC para lançar até 1 milhão de satélites do projeto Starmind.",
+    "O objetivo é criar data centers em órbita para atender à demanda por infraestrutura de inteligência artificial.",
+    "Empresas como Amazon, Viasat e entidades científicas questionaram os riscos de detritos orbitais e poluição.",
+    "A agência reguladora rejeitou críticas ambientais sob a alegação de que estariam fora de sua jurisdição."
+  ],
+  "secoes": [
+    {
+      "titulo": "Aprovação e o projeto Starmind",
+      "paragrafos": [
+        "A Comissão Federal de Comunicações dos Estados Unidos aprovou condicionalmente a proposta da SpaceX para lançar e operar uma constelação de até um milhão de satélites voltados para o negócio de data centers orbitais. A autorização regulatória estende-se até o ano de 2040 e integra o projeto Starmind, iniciativa destinada a estruturar centros de processamento e armazenamento de informações no espaço.",
+        "De acordo com a empresa, os equipamentos serão posicionados em altitudes que variam de 500 a 1.002 quilômetros. A estrutura deve se comunicar primariamente por meio de raios laser com outras unidades da própria rede e também com a constelação Starlink. Elon Musk prometeu realizar o primeiro lançamento no último trimestre de 2027 e intensificar o ritmo da implantação a partir de 2028."
+      ]
+    },
+    {
+      "titulo": "Vantagens energéticas e críticas de concorrentes",
+      "paragrafos": [
+        "A mudança de data centers para a órbita terrestre busca aproveitar vantagens na captação de energia. Em órbitas heliossícronas, os satélites conseguem captar luz solar de maneira contínua, alcançando uma eficiência de captação que pode ser até oito vezes superior à de estruturas equivalentes baseadas no solo terrestre. O presidente da FCC, Brendan Carr, afirmou que a medida abre uma nova fronteira para a infraestrutura de computação dos Estados Unidos.",
+        "Apesar da decisão favorável, o processo enfrentou forte resistência de companhias como Amazon e Viasat, além de organizações astronômicas. A Amazon classificou a iniciativa como uma ambição grandiosa desprovida de detalhes operacionais e apontou riscos reais de danos, enquanto outros grupos alertaram sobre o aumento de detritos espaciais, congestionamento orbital e interferência de radiofrequência."
+      ]
+    },
+    {
+      "titulo": "Barreiras técnicas e recusa de análise ambiental",
+      "paragrafos": [
+        "A FCC rejeitou grande parte das contestações sobre impactos ambientais e científicos, argumentando que tais questões estariam fora do escopo de sua supervisão ou que os dados apresentados careciam de comprovação conclusiva. A agência também pontuou que atividades espaciais situadas além do território americano não exigem revisão ambiental federal extensiva.",
+        "Mesmo com o aval inicial, a SpaceX ainda precisa superar obstáculos regulatôrios e econômicos. A empresa não obteve permissão para métodos alternativos de descarte de satélites que operam acima de 600 quilômetros e terá de submeter novos pedidos caso deseje alterar as regras padrão de reentrada atmosférica. Para cumprir os prazos estabelecidos, a companhia disporá de sete anos para colocar o primeiro satélite operacional em órbita e de quatorze anos para concluir a implantação completa."
+      ]
+    }
+  ],
+  "porQueImporta": "A autorização concedida à SpaceX sinaliza uma mudança importante no panorama regulatório para a infraestrutura de inteligência artificial e computação em grande escala. Embora o projeto ainda enfrente severos desafios técnicos, financeiros e logísticos para se concretizar, o aval da FCC abre precedente para que empresas de tecnologia busquem alternativas espaciais para suprir a demanda massiva por energia e capacidade de processamento, redefinindo o futuro dos data centers e o gerenciamento de órbitas terrestres.",
+  "fontes": [
+    {
+      "nome": "Ars Technica",
+      "url": "https://arstechnica.com/space/2026/11/the-fcc-has-authorized-spacex-to-deploy-1-million-satellites",
+      "titulo": "The FCC has authorized SpaceX to deploy 1 million satellites",
+      "publicadoEm": "2026-11-25T18:22:38.000Z",
+      "idioma": "en"
+    },
+    {
+      "nome": "g1 Tecnologia",
+      "url": "https://g1.globo.com/tecnologia/noticia/2026/11/25/fcc-autoriza-spacex-a-lancar-1-milhao-de-satelites-para-criar-data-centers-no-espaco.ghtml",
+      "titulo": "FCC autoriza SpaceX a lançar 1 milhão de satélites para criar data centers no espaço",
+      "publicadoEm": "2026-11-25T21:17:17.000Z",
+      "idioma": "pt"
+    },
+    {
+      "nome": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/25/fcc-approves-spacex-plan-to-put-ai-data-centers-in-space",
+      "titulo": "FCC approves SpaceX plan to put AI data centers in space",
+      "publicadoEm": "2026-11-25T20:56:44.000Z",
+      "idioma": "en"
+    }
+  ],
+  "geracao": {
+    "modelo": "gemini-3.5-flash-lite",
+    "metodo": "ia-a-partir-de-fontes",
+    "geradoEm": "2026-11-26T01:52:13.949Z"
+  }
+}
