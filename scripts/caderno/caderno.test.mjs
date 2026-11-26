@@ -6,7 +6,7 @@ import path from 'node:path';
 import { parseFeed, filtrarPorDominio, canonizarUrl, limparHtml } from './rss.mjs';
 import { tokens, entidades, jaccard, agrupar, scoreCluster, jaPublicado, chaveDoCluster, ehOferta, normalizarTitulo } from './agrupar.mjs';
 import { gerarSlug, proximaAtualizacao, publicarPost, SLUG_RE } from './publicar.mjs';
-import { validar, acharTrechoCopiado, acentuadosPor100, MOTIVO_SEM_ACENTO, MOTIVO_MOJIBAKE } from './validar.mjs';
+import { validar, acharTrechoCopiado, acentuadosPor100, apararResumo, MAX_RESUMO, MOTIVO_SEM_ACENTO, MOTIVO_MOJIBAKE } from './validar.mjs';
 import { repararMojibake, repararMojibakeProfundo } from './texto.mjs';
 import { redigir, ErroRodada, montarConteudoUsuario, SISTEMA } from './redigir.mjs';
 import { lerArgs, portaoDeRitmo, INTERVALO_MIN_MS } from './coletar.mjs';
@@ -320,6 +320,27 @@ test('redigir: prompt exige acentuação e reforco acrescenta o aviso', async ()
   const g = fakeFetch(ok());
   await redigir(fontesFake, opts(g, { reforco: true }));
   assert.match(g.chamadas[0].corpo.contents[0].parts[0].text, /Atenção: a versão anterior veio sem acentos\. Reescreva com a acentuação completa do português\./);
+  // reforço com os motivos da reprovação: a IA recebe exatamente o que corrigir
+  const h = fakeFetch(ok());
+  await redigir(fontesFake, opts(h, { reforco: ['texto: 283 palavras (esperado 350–1500)', 'resumo: <script> 369 caracteres'] }));
+  const comMotivos = h.chamadas[0].corpo.contents[0].parts[0].text;
+  assert.match(comMotivos, /a versão anterior foi reprovada na revisão automática/);
+  assert.match(comMotivos, /- texto: 283 palavras \(esperado 350–1500\)/);
+  assert.match(comMotivos, /- resumo: ‹script› 369 caracteres/);
+  assert.ok(!comMotivos.includes('veio sem acentos'));
+});
+
+test('validar: resumo acima de 320 caracteres é aparado (frase inteira ou reticências), não reprovado', () => {
+  const frase = 'A empresa anunciou um novo recurso voltado a desenvolvedores, com foco em reduzir custos de operação.';
+  const longo = `${frase} ${frase} ${frase} ${frase}`; // ~400 caracteres
+  const aparado = apararResumo(longo);
+  assert.ok(aparado.length <= MAX_RESUMO && aparado.length >= 80);
+  assert.ok(aparado.endsWith('operação.'));
+  const semPonto = 'palavra '.repeat(60).trim(); // 479 caracteres, sem fim de frase
+  const r = apararResumo(semPonto);
+  assert.ok(r.length <= MAX_RESUMO);
+  assert.ok(r.endsWith('palavra…'));
+  assert.equal(apararResumo('curto o bastante.'), 'curto o bastante.');
 });
 
 test('redigir: finishReason diferente de STOP e promptFeedback falham o cluster', async () => {
@@ -385,14 +406,18 @@ test('redigir: 503 e erro de rede tentam de novo, caem no reserva e só então p
   const f2 = fakeFetch(erroHttp(503), ok());
   assert.equal((await redigir(fontesFake, opts(f2))).ok, true);
   assert.equal(f2.chamadas.length, 2);
-  // principal sobrecarregado (503 duas vezes) e reserva responde: publica e fica no reserva
+  // principal sobrecarregado (503 duas vezes) e reserva responde: publica, mas a próxima
+  // chamada volta a tentar o principal (sobrecarga é passageira; só a cota "gruda" o reserva)
   const estado = { modelo: 'gemini-3.8-flash' };
   const f4 = fakeFetch(erroHttp(503), erroHttp(503), ok());
   const r4 = await redigir(fontesFake, opts(f4, { estado }));
   assert.equal(r4.ok, true);
   assert.equal(f4.chamadas.length, 3);
   assert.match(f4.chamadas[2].url, /gemini-3\.5-flash-lite:/);
-  assert.equal(estado.modelo, 'gemini-3.5-flash-lite');
+  assert.equal(estado.modelo, 'gemini-3.8-flash');
+  const f5 = fakeFetch(ok());
+  await redigir(fontesFake, opts(f5, { estado }));
+  assert.match(f5.chamadas[0].url, /gemini-3\.8-flash:/);
   // erro de rede persistente: 2 tentativas no principal + 2 no reserva, sem vazar a chave
   const f3 = fakeFetch(new Error(`falha de rede em ${CHAVE}`));
   const r3 = await redigir(fontesFake, opts(f3));

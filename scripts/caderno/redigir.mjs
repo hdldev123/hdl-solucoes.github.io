@@ -57,6 +57,21 @@ export function neutralizar(s) {
 
 export const AVISO_REFORCO = 'Atenção: a versão anterior veio sem acentos. Reescreva com a acentuação completa do português.';
 
+/**
+ * Aviso da nova tentativa: `true` = só acentuação (compatível); lista de motivos = os erros
+ * que reprovaram a versão anterior na validação, para a IA corrigir exatamente isso.
+ */
+export function avisoReforco(reforco) {
+  if (Array.isArray(reforco) && reforco.length) {
+    const motivos = reforco.map((m) => `- ${neutralizar(m).slice(0, 300)}`).join('\n');
+    return [
+      'Atenção: a versão anterior foi reprovada na revisão automática pelos motivos abaixo. Reescreva a matéria inteira corrigindo todos eles e respeitando os limites das regras 7 e 8 (entre 450 e 1100 palavras no total; resumo de 80 a 320 caracteres):',
+      motivos,
+    ].join('\n');
+  }
+  return reforco ? AVISO_REFORCO : '';
+}
+
 export function montarConteudoUsuario(fontes, nonce = randomBytes(8).toString('hex'), { reforco = false } = {}) {
   const tag = `fonte-${nonce}`;
   const blocos = fontes.map((f, i) => {
@@ -79,7 +94,7 @@ export function montarConteudoUsuario(fontes, nonce = randomBytes(8).toString('h
     blocos.join('\n\n'),
     '',
     `Índices de fonte disponíveis: 0 a ${fontes.length - 1}.`,
-    ...(reforco ? [AVISO_REFORCO] : []),
+    ...(avisoReforco(reforco) ? [avisoReforco(reforco)] : []),
     'Lembre-se: português do Brasil com acentuação completa.',
   ].join('\n');
 }
@@ -186,14 +201,17 @@ export async function redigir(fontes, {
   let usado = estado.modelo;
   let r = await chamarComRetry(fetchFn, usado, chave, corpo, espera);
   // Cota esgotada (429) ou modelo sobrecarregado/indisponível mesmo após nova tentativa
-  // (500/503/rede): cai para o modelo reserva e o mantém no resto da rodada se ele responder.
+  // (500/503/rede): cai para o modelo reserva. Só a cota esgotada mantém o reserva no resto
+  // da rodada; sobrecarga é passageira e o reserva escreve pior (mais reprovações), então a
+  // próxima chamada volta a tentar o principal.
   const indisponivel = (x) => x.status === 429 || x.status === 500 || x.status === 503 || !!x.erroRede;
   if (indisponivel(r) && usado !== reserva) {
-    const causa = r.status === 429 ? 'com a cota esgotada' : 'sobrecarregado ou indisponível';
+    const cotaEsgotada = r.status === 429;
+    const causa = cotaEsgotada ? 'com a cota esgotada' : 'sobrecarregado ou indisponível';
     console.warn(`  Modelo ${usado} ${causa}; tentando o modelo reserva ${reserva}.`);
     usado = reserva;
     r = await chamarComRetry(fetchFn, usado, chave, corpo, espera);
-    if (!indisponivel(r)) estado.modelo = reserva;
+    if (cotaEsgotada && !indisponivel(r)) estado.modelo = reserva;
   }
   if (r.status === 429) {
     throw new ErroRodada('Cota gratuita do Gemini esgotada; a próxima rodada tenta de novo.', { fatal: false });
