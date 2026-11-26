@@ -42,7 +42,9 @@
 
 .nl-cartao {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  /* Duas colunas só quando cada uma tiver ao menos 380px (ex.: lista larga);
+     em espaços estreitos (fim do artigo, tablet) empilha texto e formulário. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
   gap: clamp(24px, 4vw, 56px);
   align-items: center;
   padding: clamp(28px, 4vw, 48px);
@@ -87,12 +89,14 @@
 
 .nl-form {
   display: flex;
+  flex-wrap: wrap; /* se não couber, o botão desce em vez de vazar do cartão */
   gap: 10px;
+  min-width: 0;
 }
 
 .nl-campo {
   display: flex;
-  flex: 1 1 auto;
+  flex: 1 1 220px;
   align-items: center;
   gap: 10px;
   min-width: 0;
@@ -122,6 +126,7 @@
 
 .nl-campo input {
   flex: 1;
+  width: 100%; /* anula a largura intrínseca do input, que impedia o campo de encolher */
   min-width: 0;
   height: 46px;
   padding: 0;
