@@ -1,8 +1,146 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-25T18:54:35.287Z",
-  "proximaAtualizacao": "2026-11-25T21:07:00.000Z",
+  "atualizadoEm": "2026-11-26T01:52:21.523Z",
+  "proximaAtualizacao": "2026-11-26T09:07:00.000Z",
   "posts": [
+    {
+      "slug": "gta-6-roda-com-mais-estabilidade-no-xbox-series-x-do-que-no-ps5-padrao-20261125",
+      "titulo": "GTA 6 roda com mais estabilidade no Xbox Series X do que no PS5 padrão",
+      "subtitulo": "Análises técnicas mostram que console da Microsoft lida melhor com cenas pesadas, enquanto o PS5 Pro entrega a experiência definitiva da nova aventura da Rockstar.",
+      "resumo": "Análises de desempenho de GTA 6 revelam que o Xbox Series X supera o PlayStation 5 padrão em estabilidade de quadros e recursos gráficos. O PS5 Pro lidera como a melhor versão geral, e o armazenamento interno dos consoles é obrigatório para rodar o jogo localmente.",
+      "categoria": "hardware",
+      "tags": [
+        "gta 6",
+        "xbox series x",
+        "playstation 5",
+        "jogos",
+        "hardware"
+      ],
+      "publicadoEm": "2026-11-26T01:52:21.523Z",
+      "tempoLeitura": 3,
+      "destaque": 17.44,
+      "fontes": [
+        {
+          "nome": "Tecnoblog",
+          "url": "https://tecnoblog.net/noticias/gta-6-e-mais-estavel-no-xbox-series-x-que-no-ps5"
+        },
+        {
+          "nome": "Canaltech",
+          "url": "https://canaltech.com.br/games/xbox-series-x-leva-vantagem-sobre-o-ps5-em-cenas-pesadas-de-gta-6-entenda-por-que"
+        },
+        {
+          "nome": "Engadget",
+          "url": "https://www.engadget.com/2328792/can-you-play-gta-6-from-external-hard-drive"
+        }
+      ],
+      "chave": [
+        "gta",
+        "ps5",
+        "xbox",
+        "series",
+        "play",
+        "external",
+        "hard",
+        "drive",
+        "estavel",
+        "playstation",
+        "leva",
+        "vantagem",
+        "cenas",
+        "pesadas",
+        "entenda",
+        "neuralink",
+        "paciente",
+        "joga",
+        "vi",
+        "pensamento",
+        "usar",
+        "controle"
+      ],
+      "entidades": [
+        "gta",
+        "ps5",
+        "xbox",
+        "series",
+        "x/s",
+        "playstation",
+        "x",
+        "vi"
+      ],
+      "urls": [
+        "https://tecnoblog.net/noticias/gta-6-e-mais-estavel-no-xbox-series-x-que-no-ps5",
+        "https://canaltech.com.br/games/xbox-series-x-leva-vantagem-sobre-o-ps5-em-cenas-pesadas-de-gta-6-entenda-por-que",
+        "https://www.engadget.com/2328792/can-you-play-gta-6-from-external-hard-drive",
+        "https://olhardigital.com.br/2026/11/25/games-e-consoles/neuralink-gta-6-paciente-joga-ps5-pensamento"
+      ]
+    },
+    {
+      "slug": "fcc-autoriza-spacex-a-implantar-ate-um-milhao-de-sata-lites-para-data-20261125",
+      "titulo": "FCC autoriza SpaceX a implantar até um milhão de satÃ©lites para data centers no espaÃ§o",
+      "subtitulo": "A agÃªncia reguladora norte-americana deu sinal verde para o projeto Starmind, da empresa de Elon Musk, visando a infraestrutura de inteligÃªncia artificial em Ã³rbita.",
+      "resumo": "A ComissÃ£o Federal de ComunicaÃ§Ãµes dos Estados Unidos aprovou o plano da SpaceX para lanÃ§ar atÃ© 1 milhÃ£o de satÃ©lites do projeto Starmind destinados a data centers orbitais, apesar de ressalvas ambientais e concorrenciais.",
+      "categoria": "ia",
+      "tags": [
+        "spacex",
+        "fcc",
+        "satelites",
+        "ia",
+        "data-center"
+      ],
+      "publicadoEm": "2026-11-26T01:52:13.949Z",
+      "tempoLeitura": 3,
+      "destaque": 20.31,
+      "fontes": [
+        {
+          "nome": "Ars Technica",
+          "url": "https://arstechnica.com/space/2026/11/the-fcc-has-authorized-spacex-to-deploy-1-million-satellites"
+        },
+        {
+          "nome": "g1 Tecnologia",
+          "url": "https://g1.globo.com/tecnologia/noticia/2026/11/25/fcc-autoriza-spacex-a-lancar-1-milhao-de-satelites-para-criar-data-centers-no-espaco.ghtml"
+        },
+        {
+          "nome": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/25/fcc-approves-spacex-plan-to-put-ai-data-centers-in-space"
+        }
+      ],
+      "chave": [
+        "fcc",
+        "spacex",
+        "data",
+        "plan",
+        "put",
+        "million",
+        "satellites",
+        "space",
+        "centers",
+        "signs",
+        "off",
+        "center",
+        "authorized",
+        "deploy",
+        "approves",
+        "ai",
+        "autoriza",
+        "lancar",
+        "milhao",
+        "satelites",
+        "criar",
+        "espaco"
+      ],
+      "entidades": [
+        "fcc",
+        "spacex",
+        "sata©lites",
+        "espaa§o"
+      ],
+      "urls": [
+        "https://arstechnica.com/space/2026/11/the-fcc-has-authorized-spacex-to-deploy-1-million-satellites",
+        "https://g1.globo.com/tecnologia/noticia/2026/11/25/fcc-autoriza-spacex-a-lancar-1-milhao-de-satelites-para-criar-data-centers-no-espaco.ghtml",
+        "https://techcrunch.com/2026/11/25/fcc-approves-spacex-plan-to-put-ai-data-centers-in-space",
+        "https://www.theverge.com/science/1042278/spacex-fcc-starmind-ai-space-data-centers"
+      ]
+    },
     {
       "slug": "jensen-huang-reassume-o-comando-da-nvidia-apos-afastamento-relampago-20261125",
       "titulo": "Jensen Huang reassume o comando da Nvidia após afastamento relâmpago de 11 dias",
