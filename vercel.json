@@ -10,5 +10,22 @@
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
     }
-  ]
+  ],
+  "functions": {
+    "api/caderno/agendador.js": {
+      "experimentalTriggers": [{ "type": "schedule/v1beta" }]
+    }
+  },
+  "schedules": {
+    "caderno-coleta": {
+      "schedule": "0 6-22 * * *",
+      "timezone": "America/Sao_Paulo",
+      "function": "api/caderno/agendador"
+    },
+    "caderno-newsletter": {
+      "schedule": "0,30 7-9 * * *",
+      "timezone": "America/Sao_Paulo",
+      "function": "api/caderno/agendador"
+    }
+  }
 }
