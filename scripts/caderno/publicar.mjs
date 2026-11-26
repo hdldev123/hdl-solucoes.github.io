@@ -5,9 +5,10 @@ import { semAcento } from './agrupar.mjs';
 
 export const MAX_POSTS_INDEX = 300;
 export const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
-// Grade de publicação em horário de Brasília (UTC-3): 06, 10, 14, 18, 22 => UTC 09, 13, 17, 21, 01 (minuto 07).
-const HORAS_UTC_GRADE = [1, 9, 13, 17, 21];
-const MINUTO_GRADE = 7;
+// Rodadas de hora em hora, das 06h23 às 22h23 de Brasília (UTC-3): minuto 23, UTC 00-01 e 09-23.
+export const MINUTO_RODADA = 23;
+const HORAS_UTC_RODADA = new Set([0, 1, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
+export const INTERVALO_MIN_MS = 3.5 * 3600 * 1000;
 
 function yyyymmddBrt(data) {
   const brt = new Date(data.getTime() - 3 * 3600 * 1000);
@@ -28,14 +29,18 @@ export function gerarSlug(titulo, data = new Date()) {
   return `${base}-${yyyymmddBrt(data)}`;
 }
 
-export function proximaAtualizacao(agora = new Date()) {
-  const t = agora.getTime();
-  const inicioDia = Date.UTC(agora.getUTCFullYear(), agora.getUTCMonth(), agora.getUTCDate());
-  for (let dia = 0; dia <= 1; dia++) {
-    for (const h of HORAS_UTC_GRADE) {
-      const c = inicioDia + dia * 86400000 + h * 3600000 + MINUTO_GRADE * 60000;
-      if (c > t) return new Date(c).toISOString();
-    }
+/**
+ * Próxima rodada em que uma nova notícia pode sair: a primeira hora-cheia+23min dentro da janela
+ * 06–22h BRT que seja posterior a `agora` e esteja ao menos `intervaloMs` após a última publicação.
+ */
+export function proximaAtualizacao(agora = new Date(), ultima = agora, intervaloMs = INTERVALO_MIN_MS) {
+  const ult = ultima instanceof Date ? ultima.getTime() : Date.parse(ultima);
+  const minimo = Math.max(agora.getTime(), Number.isFinite(ult) ? ult + intervaloMs : 0);
+  const inicioHora = Math.floor(agora.getTime() / 3600000) * 3600000;
+  for (let h = 0; h < 24 * 3; h++) {
+    const c = inicioHora + h * 3600000 + MINUTO_RODADA * 60000;
+    if (c <= agora.getTime() || c < minimo) continue;
+    if (HORAS_UTC_RODADA.has(new Date(c).getUTCHours())) return new Date(c).toISOString();
   }
   /* istanbul ignore next */
   throw new Error('grade inválida');

@@ -9,7 +9,10 @@ import { agrupar, chaveDoCluster, entidadesDoTitulo, dentroDaJanela, ehOferta, j
 import { extrairCluster } from './extrair.mjs';
 import { ErroRodada, modeloPadrao, redigir, validarConfig } from './redigir.mjs';
 import { validar, MOTIVO_SEM_ACENTO } from './validar.mjs';
-import { lerIndex, proximaAtualizacao, publicarPost } from './publicar.mjs';
+import { repararMojibakeProfundo } from './texto.mjs';
+import { lerIndex, proximaAtualizacao, publicarPost, INTERVALO_MIN_MS } from './publicar.mjs';
+
+export { INTERVALO_MIN_MS };
 
 const MAX_CHAMADAS_IA = 3;
 const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../public/caderno');
@@ -22,6 +25,27 @@ export function lerArgs(argv, env = process.env) {
     else if (a.startsWith('--janela-horas=')) args.janelaHoras = Math.max(1, parseInt(a.slice(15), 10) || args.janelaHoras);
   }
   return args;
+}
+
+function formatarDuracao(ms) {
+  const min = Math.max(0, Math.floor(ms / 60000));
+  return `${Math.floor(min / 60)}h ${min % 60}min`;
+}
+
+/**
+ * Portão de ritmo: em execução agendada, pula a rodada se a última notícia é recente demais.
+ * Execuções manuais (workflow_dispatch) ignoram o portão.
+ * @returns { pular, mensagem }
+ */
+export function portaoDeRitmo(posts, { env = process.env, agora = new Date() } = {}) {
+  if (env.GITHUB_EVENT_NAME !== 'schedule') return { pular: false, mensagem: '' };
+  const horas = Number(env.CADERNO_INTERVALO_MIN_HORAS);
+  const minimoMs = Number.isFinite(horas) && horas > 0 ? horas * 3600000 : INTERVALO_MIN_MS;
+  const ultima = Date.parse(posts?.[0]?.publicadoEm);
+  if (!Number.isFinite(ultima)) return { pular: false, mensagem: '' };
+  const idade = agora.getTime() - ultima;
+  if (idade >= minimoMs) return { pular: false, mensagem: '' };
+  return { pular: true, mensagem: `Rodada pulada: última notícia publicada há ${formatarDuracao(idade)} (mínimo ${formatarDuracao(minimoMs)}).` };
 }
 
 function resumoDaRodada(linhas) {
@@ -60,6 +84,19 @@ async function main() {
   }
 
   const index = await lerIndex(RAIZ);
+  const portao = portaoDeRitmo(index.posts);
+  if (portao.pular) {
+    console.log(portao.mensagem);
+    const arq = process.env.GITHUB_STEP_SUMMARY;
+    if (arq) {
+      try {
+        appendFileSync(arq, `## Caderno HDL\n\n${portao.mensagem}\n`);
+      } catch (e) {
+        console.warn(`Não foi possível escrever o resumo do job: ${e.message}`);
+      }
+    }
+    return 0;
+  }
   console.log(`Buscando ${FONTES.length} fontes...`);
   const todos = await coletarFontes();
   const recentes = dentroDaJanela(todos, args.janelaHoras).filter((it) => !ehOferta(it.titulo));
@@ -75,7 +112,7 @@ async function main() {
       const fontes = [...new Set(c.itens.map((it) => it.fonteNome))].join(', ');
       console.log(`${String(i + 1).padStart(2)}. [${c.score.toFixed(2)}] (${c.nFontes} fonte(s)) ${c.titulo}\n      ${fontes}`);
     });
-    console.log(`\nPróxima atualização prevista: ${proximaAtualizacao(new Date())}`);
+    console.log(`\nPróxima atualização prevista: ${proximaAtualizacao(new Date(), index.posts[0]?.publicadoEm)}`);
     return 0;
   }
 
@@ -115,6 +152,7 @@ async function main() {
           abortar = true;
           break;
         }
+        r.dados = repararMojibakeProfundo(r.dados);
         v = validar(r.dados, fontes.map((f) => f.texto));
         if (v.ok) break;
         console.warn(`  Validação reprovou: ${v.erros.join('; ')}`);

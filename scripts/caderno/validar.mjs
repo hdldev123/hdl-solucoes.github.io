@@ -38,13 +38,21 @@ export function acharTrechoCopiado(gerado, fontes, n = JANELA_PLAGIO) {
 export const MOTIVO_SEM_ACENTO = 'texto sem acentuação (o modelo omitiu os acentos)';
 export const MIN_ACENTUADOS_POR_100 = 2;
 const RE_ACENTUADO = /[áàâãéêíóôõúüçÁÀÂÃÉÊÍÓÔÕÚÜÇ]/g;
+export const MOTIVO_MOJIBAKE = 'texto com caracteres corrompidos (codificação)';
+// Al\u00E9m dos pares UTF-8 lidos como Latin-1, pega o "\u00C3" \u00F3rf\u00E3o (o 2\u00BA byte se perdeu):
+// sozinho antes de espa\u00E7o/fim ("atender \u00C3 demanda") ou colado a min\u00FAsculas ("ser\u00C3n").
+// Em portugu\u00EAs, "\u00C3" leg\u00EDtimo s\u00F3 aparece em palavras todas em mai\u00FAsculas ("S\u00C3O").
+const FONTE_MOJIBAKE = String.raw`[\xC3\xC2][\x80-\xBF]|\xE2\u20AC|\xC3(?=\s|$)|(?<=\p{Ll})\xC3|\xC3(?=\p{Ll})`;
+export const RE_MOJIBAKE = new RegExp(FONTE_MOJIBAKE, 'u');
+const RE_MOJIBAKE_G = new RegExp(FONTE_MOJIBAKE, 'gu');
 
 /** Acentuados por 100 palavras no texto informado (0 se não houver palavras). */
 export function acentuadosPor100(textos) {
   const juntos = textos.join(' ');
   const palavras = contarPalavras(juntos);
   if (!palavras) return 0;
-  return ((juntos.match(RE_ACENTUADO) || []).length / palavras) * 100;
+  const limpo = juntos.replace(RE_MOJIBAKE_G, '');
+  return ((limpo.match(RE_ACENTUADO) || []).length / palavras) * 100;
 }
 
 const RE_HTML = /</;
@@ -132,6 +140,9 @@ export function validar(dados, textosFontes = []) {
   const corpo = [...secoes.flatMap((s) => s.paragrafos), porQueImporta];
   const palavras = corpo.reduce((n, p) => n + contarPalavras(p), 0);
   if (palavras < 350 || palavras > 1500) erros.push(`texto: ${palavras} palavras (esperado 350–1500)`);
+
+  const todos = [titulo, subtitulo, resumo, ...tags, ...pontosChave, ...secoes.map((s) => s.titulo || ''), ...corpo];
+  if (todos.some((t) => RE_MOJIBAKE.test(t))) erros.push(MOTIVO_MOJIBAKE);
 
   if (palavras >= 350 && acentuadosPor100([titulo, subtitulo, resumo, ...pontosChave, ...secoes.map((s) => s.titulo || ''), ...corpo]) < MIN_ACENTUADOS_POR_100) {
     erros.push(MOTIVO_SEM_ACENTO);
