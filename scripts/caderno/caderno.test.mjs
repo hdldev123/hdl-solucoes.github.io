@@ -189,6 +189,10 @@ test('portão de ritmo: schedule com última notícia recente pula; antiga segue
   assert.equal(portaoDeRitmo(posts(4), { env: { GITHUB_EVENT_NAME: 'schedule' }, agora }).pular, false);
   assert.equal(portaoDeRitmo(posts(3.5), { env: { GITHUB_EVENT_NAME: 'schedule' }, agora }).pular, false);
   assert.equal(portaoDeRitmo(posts(1), { env: { GITHUB_EVENT_NAME: 'workflow_dispatch' }, agora }).pular, false);
+  // Disparo do agendador da Vercel: workflow_dispatch marcado como agendado respeita o ritmo
+  assert.equal(portaoDeRitmo(posts(1), { env: { GITHUB_EVENT_NAME: 'workflow_dispatch', CADERNO_AGENDADO: 'true' }, agora }).pular, true);
+  assert.equal(portaoDeRitmo(posts(4), { env: { GITHUB_EVENT_NAME: 'workflow_dispatch', CADERNO_AGENDADO: 'true' }, agora }).pular, false);
+  assert.equal(portaoDeRitmo(posts(1), { env: { GITHUB_EVENT_NAME: 'workflow_dispatch', CADERNO_AGENDADO: 'false' }, agora }).pular, false);
   assert.equal(portaoDeRitmo(posts(1), { env: {}, agora }).pular, false);
   assert.equal(portaoDeRitmo([], { env: { GITHUB_EVENT_NAME: 'schedule' }, agora }).pular, false);
   assert.equal(portaoDeRitmo(posts(1), { env: { GITHUB_EVENT_NAME: 'schedule', CADERNO_INTERVALO_MIN_HORAS: '0.5' }, agora }).pular, false);

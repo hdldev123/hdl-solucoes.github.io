@@ -34,11 +34,13 @@ function formatarDuracao(ms) {
 
 /**
  * Portão de ritmo: em execução agendada, pula a rodada se a última notícia é recente demais.
- * Execuções manuais (workflow_dispatch) ignoram o portão.
+ * "Agendada" = cron do próprio GitHub (schedule) OU disparo do agendador da Vercel
+ * (workflow_dispatch com CADERNO_AGENDADO=true). Execuções manuais ignoram o portão.
  * @returns { pular, mensagem }
  */
 export function portaoDeRitmo(posts, { env = process.env, agora = new Date() } = {}) {
-  if (env.GITHUB_EVENT_NAME !== 'schedule') return { pular: false, mensagem: '' };
+  const agendada = env.GITHUB_EVENT_NAME === 'schedule' || env.CADERNO_AGENDADO === 'true';
+  if (!agendada) return { pular: false, mensagem: '' };
   const horas = Number(env.CADERNO_INTERVALO_MIN_HORAS);
   const minimoMs = Number.isFinite(horas) && horas > 0 ? horas * 3600000 : INTERVALO_MIN_MS;
   const ultima = Date.parse(posts?.[0]?.publicadoEm);

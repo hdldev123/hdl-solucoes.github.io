@@ -1,14 +1,21 @@
 name: Caderno HDL — coleta de notícias
 
 on:
+  # O relógio principal é o agendador da Vercel (api/caderno/agendador.js + "schedules" no
+  # vercel.json), que dispara este workflow via workflow_dispatch com agendado=true de hora
+  # em hora, das 06h às 22h de Brasília. O cron abaixo fica só como reserva, porque o GitHub
+  # pode atrasar ou descartar execuções agendadas (em 25-26/11/2026 não disparou nenhuma).
+  # Disparos duplicados são inofensivos: o ritmo mínimo entre notícias (3h30) é controlado
+  # por scripts/caderno/coletar.mjs e o "concurrency" abaixo serializa as rodadas.
   schedule:
-    # De hora em hora, das 06h23 às 22h23 de Brasília (UTC-3), em minuto "quebrado" para
-    # fugir da virada da hora (quando o GitHub mais descarta execuções agendadas).
-    # UTC 09-23 = 06h-20h BRT; UTC 00 e 01 = 21h e 22h BRT. O ritmo mínimo entre notícias
-    # (3h30) é controlado por scripts/caderno/coletar.mjs.
+    # UTC 09-23 = 06h-20h BRT; UTC 00 e 01 = 21h e 22h BRT.
     - cron: '23 0,1,9-23 * * *'
   workflow_dispatch:
     inputs:
+      agendado:
+        description: 'Rodada agendada (respeita o ritmo mínimo entre notícias). Usado pelo agendador da Vercel.'
+        type: boolean
+        default: false
       max:
         description: 'Máximo de notícias a publicar nesta rodada'
         type: number
@@ -49,6 +56,7 @@ jobs:
           CADERNO_MODELO_RESERVA: ${{ vars.CADERNO_MODELO_RESERVA }}
           MAX_NOTICIAS: ${{ inputs.max || 1 }}
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+          CADERNO_AGENDADO: ${{ inputs.agendado && 'true' || 'false' }}
         run: |
           if [ "$DRY_RUN" = "true" ]; then
             node scripts/caderno/coletar.mjs --max="$MAX_NOTICIAS" --dry-run
