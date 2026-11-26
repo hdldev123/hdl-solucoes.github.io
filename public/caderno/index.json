@@ -1,8 +1,68 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-26T01:52:21.523Z",
-  "proximaAtualizacao": "2026-11-26T09:07:00.000Z",
+  "atualizadoEm": "2026-11-26T12:34:08.563Z",
+  "proximaAtualizacao": "2026-11-26T16:23:00.000Z",
   "posts": [
+    {
+      "slug": "procuradores-estaduais-tentam-barrar-leilao-de-conversas-de-usuarios-20261126",
+      "titulo": "Procuradores estaduais tentam barrar leilão de conversas de usuários pela Character.AI",
+      "subtitulo": "Uma coalizão de 42 procuradores-gerais nos Estados Unidos contesta o plano de venda de dados e chats privados em meio ao processo de falência da empresa",
+      "resumo": "Uma coalizão de 42 procuradores-gerais estaduais nos Estados Unidos está se movimentando para impedir que a Character.AI leiloe o histórico de conversas e dados de mais de 21 milhões de usuários, incluindo milhões de menores de idade, durante seu processo de recuperação judicial sob o Capítulo 11.",
+      "categoria": "negocios",
+      "tags": [
+        "character.ai",
+        "privacidade",
+        "falencia",
+        "inteligencia artificial",
+        "dados"
+      ],
+      "publicadoEm": "2026-11-26T12:34:08.563Z",
+      "tempoLeitura": 3,
+      "destaque": 13.61,
+      "fontes": [
+        {
+          "nome": "The Verge",
+          "url": "https://www.theverge.com/policy/1042620/character-ai-sale-state-ags-block-selling-users-chats"
+        },
+        {
+          "nome": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/25/state-ags-fight-character-ais-plan-to-auction-off-users-private-chats"
+        },
+        {
+          "nome": "Engadget",
+          "url": "https://www.engadget.com/2328630/state-ags-are-trying-to-stop-characterai-from-auctioning-off-users-chat-histories"
+        }
+      ],
+      "chave": [
+        "state",
+        "ags",
+        "character",
+        "ai",
+        "users",
+        "trying",
+        "stop",
+        "chats",
+        "off",
+        "42",
+        "selling",
+        "plan",
+        "auction",
+        "private",
+        "challenged",
+        "auctioning",
+        "chat",
+        "histories"
+      ],
+      "entidades": [
+        "ags",
+        "character.ai"
+      ],
+      "urls": [
+        "https://www.theverge.com/policy/1042620/character-ai-sale-state-ags-block-selling-users-chats",
+        "https://techcrunch.com/2026/11/25/state-ags-fight-character-ais-plan-to-auction-off-users-private-chats",
+        "https://www.engadget.com/2328630/state-ags-are-trying-to-stop-characterai-from-auctioning-off-users-chat-histories"
+      ]
+    },
     {
       "slug": "gta-6-roda-com-mais-estabilidade-no-xbox-series-x-do-que-no-ps5-padrao-20261125",
       "titulo": "GTA 6 roda com mais estabilidade no Xbox Series X do que no PS5 padrão",
