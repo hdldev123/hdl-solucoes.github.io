@@ -80,6 +80,25 @@ function textoLimpo(nome, s, erros) {
   return t;
 }
 
+export const MAX_RESUMO = 320;
+const MIN_RESUMO = 80;
+
+/**
+ * Resumo acima do limite é aparado em vez de reprovar a matéria inteira: corta no fim da
+ * última frase que caiba (se sobrarem ao menos 80 caracteres) ou, senão, na última palavra
+ * inteira, com reticências.
+ */
+export function apararResumo(resumo, max = MAX_RESUMO) {
+  if (typeof resumo !== 'string' || resumo.length <= max) return resumo;
+  const corte = resumo.slice(0, max);
+  const fimFrase = Math.max(corte.lastIndexOf('. '), corte.lastIndexOf('! '), corte.lastIndexOf('? '));
+  if (fimFrase + 1 >= MIN_RESUMO) return corte.slice(0, fimFrase + 1);
+  if (/[.!?]$/.test(corte) && corte.length >= MIN_RESUMO) return corte;
+  const espaco = corte.slice(0, max - 1).lastIndexOf(' ');
+  const base = (espaco >= MIN_RESUMO ? corte.slice(0, espaco) : corte.slice(0, max - 1)).replace(/[\s,;:.\-–—]+$/, '');
+  return `${base}…`;
+}
+
 function checarTamanho(nome, s, min, max, erros) {
   if (s.length < min || s.length > max) erros.push(`${nome}: ${s.length} caracteres (esperado ${min}–${max})`);
 }
@@ -96,10 +115,10 @@ export function validar(dados, textosFontes = []) {
 
   const titulo = textoLimpo('titulo', dados.titulo, erros);
   const subtitulo = textoLimpo('subtitulo', dados.subtitulo, erros);
-  const resumo = textoLimpo('resumo', dados.resumo, erros);
+  const resumo = apararResumo(textoLimpo('resumo', dados.resumo, erros));
   checarTamanho('titulo', titulo, 20, 120, erros);
   checarTamanho('subtitulo', subtitulo, 40, 220, erros);
-  checarTamanho('resumo', resumo, 80, 320, erros);
+  checarTamanho('resumo', resumo, MIN_RESUMO, MAX_RESUMO, erros);
 
   if (!CATEGORIAS.includes(dados.categoria)) erros.push(`categoria inválida: ${dados.categoria}`);
 
