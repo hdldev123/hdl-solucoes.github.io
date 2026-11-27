@@ -1,8 +1,61 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-26T20:04:59.659Z",
-  "proximaAtualizacao": "2026-11-27T00:23:00.000Z",
+  "atualizadoEm": "2026-11-27T00:08:33.791Z",
+  "proximaAtualizacao": "2026-11-27T09:23:00.000Z",
   "posts": [
+    {
+      "slug": "nintendo-switch-e-o-novo-switch-2-disputam-atencao-com-precos-e-20261126",
+      "titulo": "Nintendo Switch e o novo Switch 2 disputam atenção com preços e promoções na Black Friday",
+      "subtitulo": "Enquanto o console original se mantém relevante pela biblioteca vasta e custo acessível em 2026, a nova geração atinge seu menor preço histórico em oferta promocional.",
+      "resumo": "Análise sobre a relevância do Nintendo Switch original em 2026 frente ao lançamento do Nintendo Switch 2, detalhando preços, desempenho, retrocompatibilidade e ofertas recentes durante o período de Black Week.",
+      "categoria": "hardware",
+      "tags": [
+        "nintendo",
+        "switch",
+        "videogames",
+        "black friday",
+        "hardware"
+      ],
+      "publicadoEm": "2026-11-27T00:08:33.791Z",
+      "tempoLeitura": 2,
+      "destaque": 9.76,
+      "fontes": [
+        {
+          "nome": "Canaltech",
+          "url": "https://canaltech.com.br/games/nintendo-switch-original-ainda-vale-a-pena-comprar-2026"
+        },
+        {
+          "nome": "Tecnoblog",
+          "url": "https://tecnoblog.net/achados/black-week-nintendo-switch-2-tem-uma-das-melhores-ofertas-ate-hoje-na-amazon"
+        }
+      ],
+      "chave": [
+        "nintendo",
+        "switch",
+        "black",
+        "week",
+        "melhor",
+        "oferta",
+        "hoje",
+        "amazon",
+        "ainda",
+        "vale",
+        "pena",
+        "comprar",
+        "2026"
+      ],
+      "entidades": [
+        "week",
+        "nintendo",
+        "switch",
+        "amazon",
+        "black"
+      ],
+      "urls": [
+        "https://canaltech.com.br/games/nintendo-switch-original-ainda-vale-a-pena-comprar-2026",
+        "https://tecnoblog.net/achados/black-week-nintendo-switch-2-tem-uma-das-melhores-ofertas-ate-hoje-na-amazon"
+      ]
+    },
     {
       "slug": "samsung-r95h-e-novas-tvs-mostram-avancos-e-limites-da-tecnologia-rgb-20261126",
       "titulo": "Samsung R95H e novas TVs mostram avanços e limites da tecnologia RGB LED",
