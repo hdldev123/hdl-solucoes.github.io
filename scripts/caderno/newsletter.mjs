@@ -85,7 +85,7 @@ export async function executarResumo({ brevo, agora = new Date(), raiz = RAIZ_PA
       }
     }
     const listId = await brevo.obterListaNewsletter();
-    const id = await brevo.criarCampanha({ nome, assunto: email.assunto, html: email.html, listId, previewText: email.previewText, tag: 'resumo-diario' });
+    const id = await brevo.criarCampanha({ nome, assunto: email.assunto, html: email.html, listId, previewText: email.previewText });
     await brevo.enviarCampanhaAgora(id);
     await aviso(`Newsletter enviada: "${nome}" (campanha ${id}) com ${posts.length} notícia(s). Assunto: ${email.assunto}`, env);
     return 0;

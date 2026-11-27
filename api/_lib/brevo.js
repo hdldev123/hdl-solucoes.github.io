@@ -102,10 +102,11 @@ export function criarBrevo({ apiKey = process.env.BREVO_API_KEY, fetch = globalT
       const r = await chamar('POST', '/smtp/email', corpo);
       return r.messageId;
     },
-    async criarCampanha({ nome, assunto, html, listId, previewText, tag }) {
+    // Sem `tag`: o plano atual do Brevo recusa campanhas com tag
+    // ("You are not allowed to avail tag option for your campaign").
+    async criarCampanha({ nome, assunto, html, listId, previewText }) {
       const corpo = { name: nome, subject: assunto, sender: remetente(env), htmlContent: html, recipients: { listIds: [listId] } };
       if (previewText) corpo.previewText = previewText;
-      if (tag) corpo.tag = tag;
       return (await chamar('POST', '/emailCampaigns', corpo)).id;
     },
     async enviarCampanhaAgora(id) {

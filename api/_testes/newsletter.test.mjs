@@ -261,6 +261,15 @@ test('erros do Brevo: 429 tratável e chave nunca aparece na mensagem', async ()
     return true;
   });
 });
+test('criarCampanha não envia tag (plano do Brevo recusa) e devolve o id', async () => {
+  const { f, brevo } = brevoCom({ 'POST /emailCampaigns': { status: 201, json: { id: 42 } } });
+  const id = await brevo.criarCampanha({ nome: 'n', assunto: 's', html: '<p>h</p>', listId: 7, previewText: 'p', tag: 'x' });
+  assert.equal(id, 42);
+  const corpo = f.chamadas.find((c) => c.chave === 'POST /emailCampaigns').corpo;
+  assert.equal('tag' in corpo, false);
+  assert.deepEqual(corpo.recipients, { listIds: [7] });
+  assert.equal(corpo.previewText, 'p');
+});
 test('erro de rede não vaza a chave', async () => {
   const brevo = criarBrevo({ apiKey: CHAVE, fetch: async () => { throw new Error(`falha com ${CHAVE}`); } });
   await assert.rejects(brevo.enviarTransacional({ para: 'a@b.co', assunto: 's', html: 'h' }), (e) => {
