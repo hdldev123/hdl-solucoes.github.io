@@ -87,6 +87,7 @@ test('envia: cria campanha com nome, assunto e previewText e dispara', async () 
   assert.equal(criar.assunto, 'Caderno HDL: Notícia 3 e mais 2 notícias');
   assert.equal(criar.previewText, 'Resumo da notícia 3.');
   assert.equal(criar.listId, 7);
+  assert.equal('tag' in criar, false, 'o plano do Brevo não permite tag em campanha');
   assert.deepEqual(brevo.chamadas.at(-1), ['enviarCampanhaAgora', 99]);
 });
 

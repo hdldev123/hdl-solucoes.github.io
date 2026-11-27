@@ -1,8 +1,349 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-26T12:34:08.563Z",
-  "proximaAtualizacao": "2026-11-26T16:23:00.000Z",
+  "atualizadoEm": "2026-11-27T17:04:42.694Z",
+  "proximaAtualizacao": "2026-11-27T21:23:00.000Z",
   "posts": [
+    {
+      "slug": "plataforma-de-computacao-em-nuvem-da-forca-aerea-dos-estados-unidos-20261127",
+      "titulo": "Plataforma de computação em nuvem da Força Aérea dos Estados Unidos sofre invasão cibernética",
+      "subtitulo": "O incidente no ambiente Cloud One integra uma série recente de ataques digitais contra órgãos federais norte-americanos, incluindo FBI e CIA.",
+      "resumo": "A plataforma Cloud One da Força Aérea dos Estados Unidos foi alvo de uma invasão cibernética descoberta durante uma atualização de sistema. O ataque ocorre em meio a uma onda de incidentes recentes envolvendo agências federais do país e ferramentas automatizadas por inteligência artificial.",
+      "categoria": "seguranca",
+      "tags": [
+        "segurança",
+        "nuvem",
+        "cibersegurança",
+        "governo",
+        "ia"
+      ],
+      "publicadoEm": "2026-11-27T17:04:42.694Z",
+      "tempoLeitura": 2,
+      "destaque": 10.71,
+      "fontes": [
+        {
+          "nome": "The Guardian",
+          "url": "https://www.theguardian.com/technology/2026/nov/27/hackers-breach-us-air-force-cloud-computing"
+        },
+        {
+          "nome": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/us-air-force-cloud-platform-reportedly-hacked-in-latest-federal-breach"
+        }
+      ],
+      "chave": [
+        "reportedly",
+        "breach",
+        "us",
+        "air",
+        "force",
+        "cloud",
+        "platform",
+        "hackers",
+        "flagship",
+        "computing",
+        "hacked",
+        "latest",
+        "federal"
+      ],
+      "entidades": [
+        "air",
+        "force",
+        "forca",
+        "aerea",
+        "estados",
+        "unidos"
+      ],
+      "urls": [
+        "https://www.theguardian.com/technology/2026/nov/27/hackers-breach-us-air-force-cloud-computing",
+        "https://www.bleepingcomputer.com/news/security/us-air-force-cloud-platform-reportedly-hacked-in-latest-federal-breach"
+      ]
+    },
+    {
+      "slug": "malware-remus-instala-extensao-falsa-para-roubar-e-mails-do-gmail-20261127",
+      "titulo": "Malware Remus instala extensão falsa para roubar e-mails do Gmail",
+      "subtitulo": "Pesquisadores de cibersegurança revelam que uma ameaça direcionada a sistemas Windows utiliza uma extensão maliciosa disfarçada de Planilhas Google para monitorar caixas de entrada.",
+      "resumo": "Uma nova ameaça cibernética ligada ao malware Remus utiliza uma extensão falsa do Planilhas Google no navegador Chrome para monitorar caixas de entrada do Gmail, interceptando mensagens e dados confidenciais.",
+      "categoria": "seguranca",
+      "tags": [
+        "seguranca",
+        "malware",
+        "gmail",
+        "google chrome",
+        "ciberseguranca"
+      ],
+      "publicadoEm": "2026-11-27T13:06:56.799Z",
+      "tempoLeitura": 3,
+      "destaque": 9.99,
+      "fontes": [
+        {
+          "nome": "Canaltech",
+          "url": "https://canaltech.com.br/seguranca/extensao-falsa-do-planilhas-google-e-usada-para-espionar-e-roubar-e-mails-do-gmail"
+        },
+        {
+          "nome": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/remus-malware-steals-gmail-messages-via-fake-google-sheets-extension"
+        }
+      ],
+      "chave": [
+        "gmail",
+        "google",
+        "remus",
+        "malware",
+        "steals",
+        "messages",
+        "fake",
+        "sheets",
+        "extension",
+        "extensao",
+        "falsa",
+        "planilhas",
+        "usada",
+        "espionar",
+        "roubar",
+        "e-mails"
+      ],
+      "entidades": [
+        "gmail",
+        "google",
+        "sheets",
+        "planilhas",
+        "remus"
+      ],
+      "urls": [
+        "https://canaltech.com.br/seguranca/extensao-falsa-do-planilhas-google-e-usada-para-espionar-e-roubar-e-mails-do-gmail",
+        "https://www.bleepingcomputer.com/news/security/remus-malware-steals-gmail-messages-via-fake-google-sheets-extension"
+      ]
+    },
+    {
+      "slug": "samsung-reduz-o-preco-do-galaxy-tab-s10-fe-plus-na-black-friday-20261127",
+      "titulo": "Samsung reduz o preço do Galaxy Tab S10 FE Plus na Black Friday",
+      "subtitulo": "O modelo intermediário da Samsung com tela ampla e S Pen inclusa atinge nova mínima de valor no comércio eletrônico brasileiro",
+      "resumo": "O tablet Galaxy Tab S10 FE Plus da Samsung chega ao menor valor histórico no Mercado Livre às vésperas da Black Friday de 2026, acompanhado de acessórios na caixa.",
+      "categoria": "hardware",
+      "tags": [
+        "samsung",
+        "tablet",
+        "black friday",
+        "mercado livre",
+        "hardware"
+      ],
+      "publicadoEm": "2026-11-27T09:06:56.793Z",
+      "tempoLeitura": 3,
+      "destaque": 8.9,
+      "fontes": [
+        {
+          "nome": "Canaltech",
+          "url": "https://canaltech.com.br/tablet/samsung-derruba-preco-do-galaxy-tab-s10-fe-com-tela-de-13-polegadas"
+        },
+        {
+          "nome": "Tecnoblog",
+          "url": "https://tecnoblog.net/achados/vespera-da-black-galaxy-tab-s10-fe-plus-5g-sai-pelo-menor-preco-que-ja-vimos"
+        }
+      ],
+      "chave": [
+        "galaxy",
+        "tab",
+        "s10",
+        "fe",
+        "preco",
+        "vespera",
+        "black",
+        "plus",
+        "5g",
+        "sai",
+        "pelo",
+        "menor",
+        "vimos",
+        "samsung",
+        "derruba",
+        "tela",
+        "13",
+        "polegadas"
+      ],
+      "entidades": [
+        "black",
+        "galaxy",
+        "tab",
+        "s10",
+        "fe",
+        "plus",
+        "5g"
+      ],
+      "urls": [
+        "https://canaltech.com.br/tablet/samsung-derruba-preco-do-galaxy-tab-s10-fe-com-tela-de-13-polegadas",
+        "https://tecnoblog.net/achados/vespera-da-black-galaxy-tab-s10-fe-plus-5g-sai-pelo-menor-preco-que-ja-vimos"
+      ]
+    },
+    {
+      "slug": "nintendo-switch-e-o-novo-switch-2-disputam-atencao-com-precos-e-20261126",
+      "titulo": "Nintendo Switch e o novo Switch 2 disputam atenção com preços e promoções na Black Friday",
+      "subtitulo": "Enquanto o console original se mantém relevante pela biblioteca vasta e custo acessível em 2026, a nova geração atinge seu menor preço histórico em oferta promocional.",
+      "resumo": "Análise sobre a relevância do Nintendo Switch original em 2026 frente ao lançamento do Nintendo Switch 2, detalhando preços, desempenho, retrocompatibilidade e ofertas recentes durante o período de Black Week.",
+      "categoria": "hardware",
+      "tags": [
+        "nintendo",
+        "switch",
+        "videogames",
+        "black friday",
+        "hardware"
+      ],
+      "publicadoEm": "2026-11-27T00:08:33.791Z",
+      "tempoLeitura": 2,
+      "destaque": 9.76,
+      "fontes": [
+        {
+          "nome": "Canaltech",
+          "url": "https://canaltech.com.br/games/nintendo-switch-original-ainda-vale-a-pena-comprar-2026"
+        },
+        {
+          "nome": "Tecnoblog",
+          "url": "https://tecnoblog.net/achados/black-week-nintendo-switch-2-tem-uma-das-melhores-ofertas-ate-hoje-na-amazon"
+        }
+      ],
+      "chave": [
+        "nintendo",
+        "switch",
+        "black",
+        "week",
+        "melhor",
+        "oferta",
+        "hoje",
+        "amazon",
+        "ainda",
+        "vale",
+        "pena",
+        "comprar",
+        "2026"
+      ],
+      "entidades": [
+        "week",
+        "nintendo",
+        "switch",
+        "amazon",
+        "black"
+      ],
+      "urls": [
+        "https://canaltech.com.br/games/nintendo-switch-original-ainda-vale-a-pena-comprar-2026",
+        "https://tecnoblog.net/achados/black-week-nintendo-switch-2-tem-uma-das-melhores-ofertas-ate-hoje-na-amazon"
+      ]
+    },
+    {
+      "slug": "samsung-r95h-e-novas-tvs-mostram-avancos-e-limites-da-tecnologia-rgb-20261126",
+      "titulo": "Samsung R95H e novas TVs mostram avanços e limites da tecnologia RGB LED",
+      "subtitulo": "Analistas avaliam o desempenho do modelo da Samsung equipado com retroiluminação RGB LED, enquanto o mercado registra ofertas de smart TVs durante a Black Week de 2026.",
+      "resumo": "O mercado de televisores em 2026 destaca o avanço das TVs RGB LED com o modelo Samsung R95H, que entrega alta fidelidade de cores e tela antirreflexo, embora enfrente desafios como o crosstalk de cor. Paralelamente, ofertas de modelos Mini LED movimentam o comércio na Black Week.",
+      "categoria": "hardware",
+      "tags": [
+        "tv",
+        "samsung",
+        "lg",
+        "tecnologia",
+        "oled"
+      ],
+      "publicadoEm": "2026-11-26T20:04:59.659Z",
+      "tempoLeitura": 3,
+      "destaque": 9.09,
+      "fontes": [
+        {
+          "nome": "The Verge",
+          "url": "https://www.theverge.com/tech/1042613/samsung-r95h-rgb-led-tv-review"
+        },
+        {
+          "nome": "Tecnoblog",
+          "url": "https://tecnoblog.net/achados/aproveite-tv-lg-mini-led-50-cai-33-em-ate-12x-na-black-week"
+        }
+      ],
+      "chave": [
+        "tv",
+        "led",
+        "samsung",
+        "r95h",
+        "shows",
+        "rgb",
+        "capable",
+        "aproveite",
+        "lg",
+        "mini",
+        "50",
+        "cai",
+        "33",
+        "12x",
+        "black",
+        "week"
+      ],
+      "entidades": [
+        "r95h",
+        "tv",
+        "rgb",
+        "led",
+        "lg",
+        "mini",
+        "12x",
+        "black",
+        "week",
+        "tvs"
+      ],
+      "urls": [
+        "https://www.theverge.com/tech/1042613/samsung-r95h-rgb-led-tv-review",
+        "https://tecnoblog.net/achados/aproveite-tv-lg-mini-led-50-cai-33-em-ate-12x-na-black-week"
+      ]
+    },
+    {
+      "slug": "grand-theft-auto-vi-quebra-recordes-e-marca-o-fim-de-uma-era-no-20261126",
+      "titulo": "Grand Theft Auto VI quebra recordes e marca o fim de uma era no desenvolvimento",
+      "subtitulo": "Com faturamento bilionário no lançamento e dezenas de milhares de personagens únicos, o jogo desafia a lógica de eficiência da inteligência artificial",
+      "resumo": "O lançamento de Grand Theft Auto VI quebrou recordes históricos de entretenimento e faturou bilhões em seu primeiro dia.",
+      "categoria": "ia",
+      "tags": [
+        "jogos",
+        "ia",
+        "industria",
+        "recordes",
+        "desenvolvimento"
+      ],
+      "publicadoEm": "2026-11-26T16:05:39.941Z",
+      "tempoLeitura": 3,
+      "destaque": 10.99,
+      "fontes": [
+        {
+          "nome": "The Guardian",
+          "url": "https://www.theguardian.com/games/2026/nov/25/the-secret-to-grand-theft-auto-vi-routine-rockstar-games"
+        },
+        {
+          "nome": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/26/as-anthropic-ipos-grand-theft-auto-vi-proves-why-efficiency-isnt-a-virtue"
+        }
+      ],
+      "chave": [
+        "grand",
+        "theft",
+        "auto",
+        "vi",
+        "anthropic",
+        "ipos",
+        "proves",
+        "efficiency",
+        "isn",
+        "virtue",
+        "unexpected",
+        "joy",
+        "hiding",
+        "chaos",
+        "little",
+        "routine"
+      ],
+      "entidades": [
+        "anthropic",
+        "ipos",
+        "grand",
+        "theft",
+        "auto",
+        "vi"
+      ],
+      "urls": [
+        "https://www.theguardian.com/games/2026/nov/25/the-secret-to-grand-theft-auto-vi-routine-rockstar-games",
+        "https://techcrunch.com/2026/11/26/as-anthropic-ipos-grand-theft-auto-vi-proves-why-efficiency-isnt-a-virtue"
+      ]
+    },
     {
       "slug": "procuradores-estaduais-tentam-barrar-leilao-de-conversas-de-usuarios-20261126",
       "titulo": "Procuradores estaduais tentam barrar leilão de conversas de usuários pela Character.AI",

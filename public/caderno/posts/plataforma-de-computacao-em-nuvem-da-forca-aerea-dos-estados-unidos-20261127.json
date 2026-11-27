@@ -1,0 +1,70 @@
+{
+  "versao": 1,
+  "slug": "plataforma-de-computacao-em-nuvem-da-forca-aerea-dos-estados-unidos-20261127",
+  "titulo": "Plataforma de computação em nuvem da Força Aérea dos Estados Unidos sofre invasão cibernética",
+  "subtitulo": "O incidente no ambiente Cloud One integra uma série recente de ataques digitais contra órgãos federais norte-americanos, incluindo FBI e CIA.",
+  "resumo": "A plataforma Cloud One da Força Aérea dos Estados Unidos foi alvo de uma invasão cibernética descoberta durante uma atualização de sistema. O ataque ocorre em meio a uma onda de incidentes recentes envolvendo agências federais do país e ferramentas automatizadas por inteligência artificial.",
+  "categoria": "seguranca",
+  "tags": [
+    "segurança",
+    "nuvem",
+    "cibersegurança",
+    "governo",
+    "ia"
+  ],
+  "publicadoEm": "2026-11-27T17:04:42.694Z",
+  "atualizadoEm": "2026-11-27T17:04:42.694Z",
+  "tempoLeitura": 2,
+  "palavras": 375,
+  "pontosChave": [
+    "Invasão atingiu a plataforma de nuvem Cloud One da Força Aérea dos EUA.",
+    "Falha foi descoberta durante a atualização do sistema no último mês.",
+    "Autoridades ainda investigam se houve roubo de dados ou a extensão total do ataque.",
+    "Ocorrência sucede invasões recentes a agências como FBI, CIA e o Departamento do Tesouro."
+  ],
+  "secoes": [
+    {
+      "titulo": "Falha em nuvem militar",
+      "paragrafos": [
+        "A principal plataforma de computação em nuvem da Força Aérea dos Estados Unidos, conhecida como Cloud One, foi alvo de uma invasão cibernética. O incidente foi descoberto no último mês durante um processo de atualização dos sistemas, o que provocou interrupções em migrações de aplicações e atualizações de software em andamento.",
+        "Lançada em 2017 para centralizar necessidades de tecnologia da informação do comando militar, a infraestrutura hospeda dados de pessoal, logística, pagamentos e manutenção. O ambiente utiliza os serviços de quatro grandes gerenciadores de nuvem, que incluem Microsoft, Amazon, Oracle e Alphabet, além de dar suporte a sistemas de comando e controle."
+      ]
+    },
+    {
+      "titulo": "Investigação e impacto incerto",
+      "paragrafos": [
+        "Até o momento, fontes indicam que invasores exploraram uma vulnerabilidade de software não identificada para alcançar o sistema de controle da plataforma. A brecha pode colocar em risco dados sensíveis sobre operações táticas, logística e pessoal, embora a extensão exata da invasão e a possível subtração de informações continuem desconhecidas.",
+        "O Comando Cibernético dos Estados Unidos foi acionado para avaliar os danos decorrentes da intrusão. A Força Aérea norte-americana declarou que adota medidas contínuas de proteção para resguardar suas capacidades de missão e sistemas, sem comentar o status operacional específico das redes afetadas."
+      ]
+    },
+    {
+      "titulo": "Onda de ataques federais",
+      "paragrafos": [
+        "O episódio na Força Aérea soma-se a uma sequência recente de incidentes de segurança cibernética reportados em diversas agências e departamentos do governo dos Estados Unidos. Nas últimas semanas, foram registradas ocorrências envolvendo o FBI, o Departamento do Tesouro por meio da FinCEN e sistemas de análise de inteligência da CIA e do Escritório do Diretor de Inteligência Nacional.",
+        "Ainda não há confirmação oficial se os diferentes ataques cibernéticos revelados ao longo do período estão conectados entre si. No entanto, o cenário ocorre em um momento em que autoridades federais alertam para o avanço no uso de plataformas automatizadas de testes de penetração impulsionadas por inteligência artificial em campanhas de ameaças globais."
+      ]
+    }
+  ],
+  "porQueImporta": "O incidente evidencia a vulnerabilidade de infraestruturas digitais críticas operadas por governos e grandes corporações, demonstrando que mesmo plataformas de nuvem altamente centralizadas e estruturadas por múltiplos fornecedores de tecnologia podem ser penetradas por explorações de software. Para profissionais de tecnologia e segurança da informação, o caso reforça a urgência de monitoramento contínuo, correção rápida de falhas e adoção de defesas adaptativas contra ameaças automatizadas por inteligência artificial.",
+  "fontes": [
+    {
+      "nome": "The Guardian",
+      "url": "https://www.theguardian.com/technology/2026/nov/27/hackers-breach-us-air-force-cloud-computing",
+      "titulo": "Hackers reportedly breach US Air Force’s flagship cloud computing platform",
+      "publicadoEm": "2026-11-27T14:50:15.000Z",
+      "idioma": "en"
+    },
+    {
+      "nome": "BleepingComputer",
+      "url": "https://www.bleepingcomputer.com/news/security/us-air-force-cloud-platform-reportedly-hacked-in-latest-federal-breach",
+      "titulo": "US Air Force cloud platform reportedly hacked in latest federal breach",
+      "publicadoEm": "2026-11-27T15:09:40.000Z",
+      "idioma": "en"
+    }
+  ],
+  "geracao": {
+    "modelo": "gemini-3.5-flash-lite",
+    "metodo": "ia-a-partir-de-fontes",
+    "geradoEm": "2026-11-27T17:04:42.694Z"
+  }
+}

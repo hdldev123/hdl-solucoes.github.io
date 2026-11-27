@@ -1,0 +1,65 @@
+{
+  "versao": 1,
+  "slug": "nintendo-switch-e-o-novo-switch-2-disputam-atencao-com-precos-e-20261126",
+  "titulo": "Nintendo Switch e o novo Switch 2 disputam atenção com preços e promoções na Black Friday",
+  "subtitulo": "Enquanto o console original se mantém relevante pela biblioteca vasta e custo acessível em 2026, a nova geração atinge seu menor preço histórico em oferta promocional.",
+  "resumo": "Análise sobre a relevância do Nintendo Switch original em 2026 frente ao lançamento do Nintendo Switch 2, detalhando preços, desempenho, retrocompatibilidade e ofertas recentes durante o período de Black Week.",
+  "categoria": "hardware",
+  "tags": [
+    "nintendo",
+    "switch",
+    "videogames",
+    "black friday",
+    "hardware"
+  ],
+  "publicadoEm": "2026-11-27T00:08:33.791Z",
+  "atualizadoEm": "2026-11-27T00:08:33.791Z",
+  "tempoLeitura": 2,
+  "palavras": 364,
+  "pontosChave": [
+    "Nintendo Switch original completa quase dez anos com forte catálogo de jogos e preços acessíveis.",
+    "Nintendo Switch 2 atinge o menor preço histórico de R$ 3.519,91 em oferta na Amazon durante a Black Week.",
+    "Novo console oferece tela de 7,9 polegadas, suporte a 4K na dock e retrocompatibilidade com o modelo anterior.",
+    "Desempenho gráfico do primeiro Switch é datado, mas o aparelho continua vantajoso pelo custo-benefício."
+  ],
+  "secoes": [
+    {
+      "titulo": "O panorama do Nintendo Switch original perto dos dez anos",
+      "paragrafos": [
+        "O primeiro console híbrido da Nintendo continua ativo no mercado e desperta dúvidas nos consumidores sobre a viabilidade de aquisição. A grande vantagem mantida pelo dispositivo reside em sua imensa biblioteca de jogos, que abrange desde grandes franquias exclusivas da marca até títulos independentes consolidados. A diversidade de opções garante entretenimento contínuo para os usuários.",
+        "Outro fator determinante para a permanência do hardware nas preferências do público é o custo atrativo. Os modelos padrão, Lite e OLED são encontrados com facilidade no comércio por valores significativamente inferiores aos dos consoles de nova geração. Bundles promocionais que incluem jogos populares e assinaturas agregam ainda mais valor à compra para quem busca economia.",
+        "Em contrapartida, o desempenho técnico representa o ponto mais frágil da plataforma. O poder de processamento e os gráficos antiquados geram limitações evidentes em lançamentos mais exigentes, resultando em quedas de fluidez e qualidade visual inferior quando comparado aos padrões tecnológicos atuais."
+      ]
+    },
+    {
+      "titulo": "A chegada e as ofertas do Nintendo Switch 2",
+      "paragrafos": [
+        "Para os consumidores dispostos a investir em tecnologia recente, o Nintendo Switch 2 apresenta especificações robustas. O aparelho vem equipado com tela LCD de 7,9 polegadas com taxa de atualização de 120 Hz, chip Nvidia T239, 12 GB de memória RAM e 256 GB de espaço interno expansível. Na modalidade de mesa, o console suporta resolução de até 4K por meio da dock inclusa.",
+        "Durante os eventos promocionais da Black Week, o novo dispositivo registrou seu menor preço histórico na Amazon, sendo comercializado por R$ 3.519,91 no Pix com a aplicação de um cupom de desconto. O pacote promocional inclui uma versão digital do jogo EA FC 27. O modelo também se destaca pelas inovações nos controles Joy-Con 2, que podem funcionar como mouse em jogos de tiro e estratégia.",
+        "A transição entre gerações é facilitada pela retrocompatibilidade nativa, permitindo que os usuários aproveitem a biblioteca anterior com eventuais melhorias de desempenho. Além disso, a manutenção de contas e assinaturas suaviza o salto geracional para os fãs da marca."
+      ]
+    }
+  ],
+  "porQueImporta": "A coexistência das duas gerações de consoles da Nintendo no mercado brasileiro oferece aos consumidores diferentes patamares de escolha entre investimento financeiro e desempenho técnico, permitindo que tanto jogadores focados em custo-benefício quanto entusiastas de tecnologia encontrem opções adequadas aos seus perfis.",
+  "fontes": [
+    {
+      "nome": "Canaltech",
+      "url": "https://canaltech.com.br/games/nintendo-switch-original-ainda-vale-a-pena-comprar-2026",
+      "titulo": "Ainda vale a pena comprar um Nintendo Switch 1 em 2026?",
+      "publicadoEm": "2026-11-26T22:30:00.000Z",
+      "idioma": "pt"
+    },
+    {
+      "nome": "Tecnoblog",
+      "url": "https://tecnoblog.net/achados/black-week-nintendo-switch-2-tem-uma-das-melhores-ofertas-ate-hoje-na-amazon",
+      "titulo": "Black Week: Nintendo Switch 2 tem melhor oferta até hoje na Amazon",
+      "publicadoEm": "2026-11-25T19:03:24.000Z",
+      "idioma": "pt"
+    }
+  ],
+  "geracao": {
+    "modelo": "gemini-3.5-flash-lite",
+    "metodo": "ia-a-partir-de-fontes",
+    "geradoEm": "2026-11-27T00:08:33.791Z"
+  }
+}
