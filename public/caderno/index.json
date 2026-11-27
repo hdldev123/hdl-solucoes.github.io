@@ -1,8 +1,64 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-27T09:06:56.793Z",
-  "proximaAtualizacao": "2026-11-27T13:23:00.000Z",
+  "atualizadoEm": "2026-11-27T13:06:56.799Z",
+  "proximaAtualizacao": "2026-11-27T17:23:00.000Z",
   "posts": [
+    {
+      "slug": "malware-remus-instala-extensao-falsa-para-roubar-e-mails-do-gmail-20261127",
+      "titulo": "Malware Remus instala extensão falsa para roubar e-mails do Gmail",
+      "subtitulo": "Pesquisadores de cibersegurança revelam que uma ameaça direcionada a sistemas Windows utiliza uma extensão maliciosa disfarçada de Planilhas Google para monitorar caixas de entrada.",
+      "resumo": "Uma nova ameaça cibernética ligada ao malware Remus utiliza uma extensão falsa do Planilhas Google no navegador Chrome para monitorar caixas de entrada do Gmail, interceptando mensagens e dados confidenciais.",
+      "categoria": "seguranca",
+      "tags": [
+        "seguranca",
+        "malware",
+        "gmail",
+        "google chrome",
+        "ciberseguranca"
+      ],
+      "publicadoEm": "2026-11-27T13:06:56.799Z",
+      "tempoLeitura": 3,
+      "destaque": 9.99,
+      "fontes": [
+        {
+          "nome": "Canaltech",
+          "url": "https://canaltech.com.br/seguranca/extensao-falsa-do-planilhas-google-e-usada-para-espionar-e-roubar-e-mails-do-gmail"
+        },
+        {
+          "nome": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/remus-malware-steals-gmail-messages-via-fake-google-sheets-extension"
+        }
+      ],
+      "chave": [
+        "gmail",
+        "google",
+        "remus",
+        "malware",
+        "steals",
+        "messages",
+        "fake",
+        "sheets",
+        "extension",
+        "extensao",
+        "falsa",
+        "planilhas",
+        "usada",
+        "espionar",
+        "roubar",
+        "e-mails"
+      ],
+      "entidades": [
+        "gmail",
+        "google",
+        "sheets",
+        "planilhas",
+        "remus"
+      ],
+      "urls": [
+        "https://canaltech.com.br/seguranca/extensao-falsa-do-planilhas-google-e-usada-para-espionar-e-roubar-e-mails-do-gmail",
+        "https://www.bleepingcomputer.com/news/security/remus-malware-steals-gmail-messages-via-fake-google-sheets-extension"
+      ]
+    },
     {
       "slug": "samsung-reduz-o-preco-do-galaxy-tab-s10-fe-plus-na-black-friday-20261127",
       "titulo": "Samsung reduz o preço do Galaxy Tab S10 FE Plus na Black Friday",
