@@ -1,0 +1,71 @@
+{
+  "versao": 1,
+  "slug": "samsung-reduz-o-preco-do-galaxy-tab-s10-fe-plus-na-black-friday-20261127",
+  "titulo": "Samsung reduz o preço do Galaxy Tab S10 FE Plus na Black Friday",
+  "subtitulo": "O modelo intermediário da Samsung com tela ampla e S Pen inclusa atinge nova mínima de valor no comércio eletrônico brasileiro",
+  "resumo": "O tablet Galaxy Tab S10 FE Plus da Samsung chega ao menor valor histórico no Mercado Livre às vésperas da Black Friday de 2026, acompanhado de acessórios na caixa.",
+  "categoria": "hardware",
+  "tags": [
+    "samsung",
+    "tablet",
+    "black friday",
+    "mercado livre",
+    "hardware"
+  ],
+  "publicadoEm": "2026-11-27T09:06:56.793Z",
+  "atualizadoEm": "2026-11-27T09:06:56.793Z",
+  "tempoLeitura": 3,
+  "palavras": 459,
+  "pontosChave": [
+    "Preço reduzido no Pix com o uso de cupons promocionais",
+    "Tela ampla de 13,1 polegadas com atualização de 90 Hz",
+    "Acessórios como S Pen e capa já vêm inclusos na caixa",
+    "Compromisso de atualizações prolongadas pelo fabricante"
+  ],
+  "secoes": [
+    {
+      "titulo": "Desconto expressivo no comércio eletrônico",
+      "paragrafos": [
+        "O mercado de tecnologia brasileiro registra uma nova retração no valor cobrado pelo dispositivo portátil avançado da fabricante sul-coreana. A oferta promocional observada no Mercado Livre posiciona o equipamento com um abatimento expressivo sobre o patamar original estipulado pelo fabricante. A aquisição mediante pagamento instantâneo via Pix, associada à aplicação de códigos de desconto específicos divulgados por portais especializados, resulta na menor cotação histórica mapeada para a edição equipada com conectividade móvel e capacidade interna padrão.",
+        "A movimentação de preços ocorre durante o período comercial que antecede o evento anual de liquidações em solo nacional. Comparações com registros anteriores de monitoramento de mercado apontam que os valores praticados superam economias anteriores identificadas em plataformas concorrentes ao longo do ano, tornando o produto mais acessível para o consumidor que aguardava o momento oportuno de compra."
+      ]
+    },
+    {
+      "titulo": "Especificações técnicas e recursos integrados",
+      "paragrafos": [
+        "Projetado para atender demandas de produtividade e consumo de mídia, o aparelho incorpora um visor de grandes dimensões baseado em tecnologia LCD, operando com frequência de atualização voltada para maior fluidez visual. A área útil estendida facilita a visualização simultânea de múltiplos aplicativos, edição de textos e análise de planilhas eletrônicas corporativas.",
+        "O desempenho interno é sustentado por um processador proprietário acompanhado de memória volátil adequada para rotinas multitarefa cotidianas. A fabricante pontua que o conjunto suporta softwares de edição gráfica e suítes de produtividade com inteligência artificial embarcada para recursos de busca e cálculos. Além disso, a estrutura conta com certificação oficial contra infiltrações de líquidos e partículas sólidas, conferindo maior robustez física ao corpo do eletrônico.",
+        "Um dos atrativos centrais do pacote comercial é a presença de itens adicionais que habitualmente são comercializados de forma isolada. A caneta digital sensível à pressão e uma capa de proteção contra impactos já acompanham o item principal na embalagem de fábrica, eliminando custos extras para estudantes e profissionais que necessitam de ferramentas para esboços e assinaturas digitais."
+      ]
+    },
+    {
+      "titulo": "Autonomia energética e suporte de software",
+      "paragrafos": [
+        "Para garantir longas jornadas de utilização longe das tomadas, o dispositivo abriga um componente energético de grande capacidade nominal. A fabricante indica que a bateria suporta dezenas de horas contínuas de reprodução de arquivos visuais, contando ainda com suporte a padrões de reposição energética acelerada por fio para reduzir o tempo de espera conectado à rede elétrica.",
+        "No aspecto voltado à longevidade digital, a linha recebe garantias de longevidade operacional com ciclos prolongados de pacotes de correção e novas versões do sistema operacional móvel, assegurando a permanência do equipamento atualizado contra vulnerabilidades cibernéticas por vários anos consecutivos."
+      ]
+    }
+  ],
+  "porQueImporta": "A queda no valor de comercialização do Galaxy Tab S10 FE Plus representa uma oportunidade vantajosa para profissionais liberais, estudantes e usuários brasileiros que buscam um dispositivo de tela ampla para tarefas diárias de escritório, estudos e consumo multimídia sem precisar arcar com o custo de acessórios avulsos como a caneta digital.",
+  "fontes": [
+    {
+      "nome": "Canaltech",
+      "url": "https://canaltech.com.br/tablet/samsung-derruba-preco-do-galaxy-tab-s10-fe-com-tela-de-13-polegadas",
+      "titulo": "Samsung derruba preço do Galaxy Tab S10 FE+ com tela de 13 polegadas",
+      "publicadoEm": "2026-11-27T01:43:23.000Z",
+      "idioma": "pt"
+    },
+    {
+      "nome": "Tecnoblog",
+      "url": "https://tecnoblog.net/achados/vespera-da-black-galaxy-tab-s10-fe-plus-5g-sai-pelo-menor-preco-que-ja-vimos",
+      "titulo": "Véspera da Black: Galaxy Tab S10 FE Plus 5G sai pelo menor preço que já vimos",
+      "publicadoEm": "2026-11-26T21:08:45.000Z",
+      "idioma": "pt"
+    }
+  ],
+  "geracao": {
+    "modelo": "gemini-3.5-flash-lite",
+    "metodo": "ia-a-partir-de-fontes",
+    "geradoEm": "2026-11-27T09:06:56.793Z"
+  }
+}

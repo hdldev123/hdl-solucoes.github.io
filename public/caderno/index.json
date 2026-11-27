@@ -1,8 +1,68 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-27T00:08:33.791Z",
-  "proximaAtualizacao": "2026-11-27T09:23:00.000Z",
+  "atualizadoEm": "2026-11-27T09:06:56.793Z",
+  "proximaAtualizacao": "2026-11-27T13:23:00.000Z",
   "posts": [
+    {
+      "slug": "samsung-reduz-o-preco-do-galaxy-tab-s10-fe-plus-na-black-friday-20261127",
+      "titulo": "Samsung reduz o preço do Galaxy Tab S10 FE Plus na Black Friday",
+      "subtitulo": "O modelo intermediário da Samsung com tela ampla e S Pen inclusa atinge nova mínima de valor no comércio eletrônico brasileiro",
+      "resumo": "O tablet Galaxy Tab S10 FE Plus da Samsung chega ao menor valor histórico no Mercado Livre às vésperas da Black Friday de 2026, acompanhado de acessórios na caixa.",
+      "categoria": "hardware",
+      "tags": [
+        "samsung",
+        "tablet",
+        "black friday",
+        "mercado livre",
+        "hardware"
+      ],
+      "publicadoEm": "2026-11-27T09:06:56.793Z",
+      "tempoLeitura": 3,
+      "destaque": 8.9,
+      "fontes": [
+        {
+          "nome": "Canaltech",
+          "url": "https://canaltech.com.br/tablet/samsung-derruba-preco-do-galaxy-tab-s10-fe-com-tela-de-13-polegadas"
+        },
+        {
+          "nome": "Tecnoblog",
+          "url": "https://tecnoblog.net/achados/vespera-da-black-galaxy-tab-s10-fe-plus-5g-sai-pelo-menor-preco-que-ja-vimos"
+        }
+      ],
+      "chave": [
+        "galaxy",
+        "tab",
+        "s10",
+        "fe",
+        "preco",
+        "vespera",
+        "black",
+        "plus",
+        "5g",
+        "sai",
+        "pelo",
+        "menor",
+        "vimos",
+        "samsung",
+        "derruba",
+        "tela",
+        "13",
+        "polegadas"
+      ],
+      "entidades": [
+        "black",
+        "galaxy",
+        "tab",
+        "s10",
+        "fe",
+        "plus",
+        "5g"
+      ],
+      "urls": [
+        "https://canaltech.com.br/tablet/samsung-derruba-preco-do-galaxy-tab-s10-fe-com-tela-de-13-polegadas",
+        "https://tecnoblog.net/achados/vespera-da-black-galaxy-tab-s10-fe-plus-5g-sai-pelo-menor-preco-que-ja-vimos"
+      ]
+    },
     {
       "slug": "nintendo-switch-e-o-novo-switch-2-disputam-atencao-com-precos-e-20261126",
       "titulo": "Nintendo Switch e o novo Switch 2 disputam atenção com preços e promoções na Black Friday",
