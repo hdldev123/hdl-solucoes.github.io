@@ -1,8 +1,66 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-27T17:04:42.694Z",
-  "proximaAtualizacao": "2026-11-27T21:23:00.000Z",
+  "atualizadoEm": "2026-11-27T21:05:31.221Z",
+  "proximaAtualizacao": "2026-11-28T01:23:00.000Z",
   "posts": [
+    {
+      "slug": "openai-processa-apple-por-roubo-de-segredos-comerciais-e-pressao-20261127",
+      "titulo": "OpenAI processa Apple por roubo de segredos comerciais e pressão sobre fornecedores",
+      "subtitulo": "Contraofensiva jurídica intensifica a disputa entre as companhias pelo desenvolvimento de novos dispositivos com inteligência artificial.",
+      "resumo": "A OpenAI abriu um processo contra a Apple em tribunal federal, acusando a empresa de roubar segredos industriais, coagir fornecedores conjuntos e adotar práticas predatórias de contratação para blindar o mercado de hardware.",
+      "categoria": "ia",
+      "tags": [
+        "openai",
+        "apple",
+        "inteligencia artificial",
+        "hardware",
+        "disputa judicial"
+      ],
+      "publicadoEm": "2026-11-27T21:05:31.221Z",
+      "tempoLeitura": 3,
+      "destaque": 12.89,
+      "fontes": [
+        {
+          "nome": "g1 Tecnologia",
+          "url": "https://g1.globo.com/tecnologia/noticia/2026/11/27/open-ai-apple-ia-segredo-processo.ghtml"
+        },
+        {
+          "nome": "Olhar Digital",
+          "url": "https://olhardigital.com.br/2026/11/27/pro/openai-contra-ataca-e-acusa-apple-de-roubar-segredos-comerciais"
+        },
+        {
+          "nome": "Engadget",
+          "url": "https://www.engadget.com/2329747/openai-countersues-apple-and-accuses-it-of-stealing-trade-secrets"
+        }
+      ],
+      "chave": [
+        "openai",
+        "apple",
+        "acusa",
+        "roubar",
+        "segredos",
+        "comerciais",
+        "countersues",
+        "accuses",
+        "stealing",
+        "trade",
+        "secrets",
+        "contra-ataca",
+        "processa",
+        "empresa",
+        "bloquear",
+        "fornecedores"
+      ],
+      "entidades": [
+        "openai",
+        "apple"
+      ],
+      "urls": [
+        "https://g1.globo.com/tecnologia/noticia/2026/11/27/open-ai-apple-ia-segredo-processo.ghtml",
+        "https://olhardigital.com.br/2026/11/27/pro/openai-contra-ataca-e-acusa-apple-de-roubar-segredos-comerciais",
+        "https://www.engadget.com/2329747/openai-countersues-apple-and-accuses-it-of-stealing-trade-secrets"
+      ]
+    },
     {
       "slug": "plataforma-de-computacao-em-nuvem-da-forca-aerea-dos-estados-unidos-20261127",
       "titulo": "Plataforma de computação em nuvem da Força Aérea dos Estados Unidos sofre invasão cibernética",
