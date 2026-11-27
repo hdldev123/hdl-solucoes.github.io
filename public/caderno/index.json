@@ -1,8 +1,62 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-27T13:06:56.799Z",
-  "proximaAtualizacao": "2026-11-27T17:23:00.000Z",
+  "atualizadoEm": "2026-11-27T17:04:42.694Z",
+  "proximaAtualizacao": "2026-11-27T21:23:00.000Z",
   "posts": [
+    {
+      "slug": "plataforma-de-computacao-em-nuvem-da-forca-aerea-dos-estados-unidos-20261127",
+      "titulo": "Plataforma de computação em nuvem da Força Aérea dos Estados Unidos sofre invasão cibernética",
+      "subtitulo": "O incidente no ambiente Cloud One integra uma série recente de ataques digitais contra órgãos federais norte-americanos, incluindo FBI e CIA.",
+      "resumo": "A plataforma Cloud One da Força Aérea dos Estados Unidos foi alvo de uma invasão cibernética descoberta durante uma atualização de sistema. O ataque ocorre em meio a uma onda de incidentes recentes envolvendo agências federais do país e ferramentas automatizadas por inteligência artificial.",
+      "categoria": "seguranca",
+      "tags": [
+        "segurança",
+        "nuvem",
+        "cibersegurança",
+        "governo",
+        "ia"
+      ],
+      "publicadoEm": "2026-11-27T17:04:42.694Z",
+      "tempoLeitura": 2,
+      "destaque": 10.71,
+      "fontes": [
+        {
+          "nome": "The Guardian",
+          "url": "https://www.theguardian.com/technology/2026/nov/27/hackers-breach-us-air-force-cloud-computing"
+        },
+        {
+          "nome": "BleepingComputer",
+          "url": "https://www.bleepingcomputer.com/news/security/us-air-force-cloud-platform-reportedly-hacked-in-latest-federal-breach"
+        }
+      ],
+      "chave": [
+        "reportedly",
+        "breach",
+        "us",
+        "air",
+        "force",
+        "cloud",
+        "platform",
+        "hackers",
+        "flagship",
+        "computing",
+        "hacked",
+        "latest",
+        "federal"
+      ],
+      "entidades": [
+        "air",
+        "force",
+        "forca",
+        "aerea",
+        "estados",
+        "unidos"
+      ],
+      "urls": [
+        "https://www.theguardian.com/technology/2026/nov/27/hackers-breach-us-air-force-cloud-computing",
+        "https://www.bleepingcomputer.com/news/security/us-air-force-cloud-platform-reportedly-hacked-in-latest-federal-breach"
+      ]
+    },
     {
       "slug": "malware-remus-instala-extensao-falsa-para-roubar-e-mails-do-gmail-20261127",
       "titulo": "Malware Remus instala extensão falsa para roubar e-mails do Gmail",
