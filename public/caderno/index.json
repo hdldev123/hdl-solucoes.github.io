@@ -1,8 +1,42 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-28T09:11:11.448Z",
-  "proximaAtualizacao": "2026-11-28T13:23:00.000Z",
+  "atualizadoEm": "2026-11-28T13:06:43.973Z",
+  "proximaAtualizacao": "2026-11-28T17:23:00.000Z",
   "posts": [
+    {
+      "slug": "incidente-cibernetico-forca-governo-a-tirar-do-ar-sistemas-de-pensoes-20261128",
+      "titulo": "Incidente cibernético força governo a tirar do ar sistemas de pensões e benefícios",
+      "subtitulo": "Departamento de Trabalho e Pensões do Reino Unido interrompe portais online de forma preventiva após alerta de segurança digital",
+      "resumo": "Serviços online de pensões e benefícios do governo britânico foram tirados do ar após um incidente cibernético, gerando preocupações sobre a segurança de sistemas legados e impactos para os cidadãos.",
+      "categoria": "seguranca",
+      "tags": [
+        "seguranca",
+        "ciberseguranca",
+        "governo",
+        "tecnologia"
+      ],
+      "publicadoEm": "2026-11-28T13:06:43.973Z",
+      "tempoLeitura": 2,
+      "destaque": 5.99,
+      "fontes": [
+        {
+          "nome": "BBC Technology",
+          "url": "https://www.bbc.co.uk/news/articles/cm1wrgqyq4d8o?at_medium=RSS&at_campaign=rss"
+        }
+      ],
+      "chave": [
+        "pensions",
+        "benefits",
+        "services",
+        "still",
+        "cyber",
+        "incident"
+      ],
+      "entidades": [],
+      "urls": [
+        "https://www.bbc.co.uk/news/articles/cm1wrgqyq4d8o?at_medium=RSS&at_campaign=rss"
+      ]
+    },
     {
       "slug": "robos-de-inteligencia-artificial-geram-caos-e-forcam-restaurantes-20261128",
       "titulo": "Robôs de inteligência artificial geram caos e forçam restaurantes britânicos a voltarem ao telefone",
