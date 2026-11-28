@@ -1,8 +1,61 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-27T21:05:31.221Z",
-  "proximaAtualizacao": "2026-11-28T01:23:00.000Z",
+  "atualizadoEm": "2026-11-28T01:06:40.739Z",
+  "proximaAtualizacao": "2026-11-28T09:23:00.000Z",
   "posts": [
+    {
+      "slug": "openai-testa-integracao-profunda-do-chatgpt-com-funcoes-nativas-do-20261127",
+      "titulo": "OpenAI testa integração profunda do ChatGPT com funções nativas do Android",
+      "subtitulo": "Novas linhas de código revelam que o aplicativo do ChatGPT poderá realizar ligações, ler SMS, controlar mídia e interpretar dados da tela no sistema operacional.",
+      "resumo": "Análise de código da versão recente do aplicativo do ChatGPT para Android aponta que a OpenAI planeja expandir o acesso a funções básicas do sistema, aproximando a ferramenta de recursos do Gemini.",
+      "categoria": "ia",
+      "tags": [
+        "chatgpt",
+        "android",
+        "openai",
+        "gemini",
+        "inteligencia artificial"
+      ],
+      "publicadoEm": "2026-11-28T01:06:40.739Z",
+      "tempoLeitura": 3,
+      "destaque": 9.18,
+      "fontes": [
+        {
+          "nome": "Tecnoblog",
+          "url": "https://tecnoblog.net/noticias/chatgpt-quer-assumir-ligacoes-e-outras-funcoes-basicas-no-android"
+        },
+        {
+          "nome": "Canaltech",
+          "url": "https://canaltech.com.br/inteligencia-artificial/chatgpt-quer-tomar-vaga-do-gemini-no-android-fazendo-ligacoes-e-lendo-a-tela"
+        }
+      ],
+      "chave": [
+        "chatgpt",
+        "quer",
+        "ligacoes",
+        "android",
+        "assumir",
+        "outras",
+        "funcoes",
+        "basicas",
+        "tomar",
+        "vaga",
+        "gemini",
+        "fazendo",
+        "lendo",
+        "tela"
+      ],
+      "entidades": [
+        "chatgpt",
+        "android",
+        "gemini",
+        "openai"
+      ],
+      "urls": [
+        "https://tecnoblog.net/noticias/chatgpt-quer-assumir-ligacoes-e-outras-funcoes-basicas-no-android",
+        "https://canaltech.com.br/inteligencia-artificial/chatgpt-quer-tomar-vaga-do-gemini-no-android-fazendo-ligacoes-e-lendo-a-tela"
+      ]
+    },
     {
       "slug": "openai-processa-apple-por-roubo-de-segredos-comerciais-e-pressao-20261127",
       "titulo": "OpenAI processa Apple por roubo de segredos comerciais e pressão sobre fornecedores",
