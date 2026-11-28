@@ -1,8 +1,49 @@
 {
   "versao": 1,
-  "atualizadoEm": "2026-11-28T01:06:40.739Z",
-  "proximaAtualizacao": "2026-11-28T09:23:00.000Z",
+  "atualizadoEm": "2026-11-28T09:11:11.448Z",
+  "proximaAtualizacao": "2026-11-28T13:23:00.000Z",
   "posts": [
+    {
+      "slug": "robos-de-inteligencia-artificial-geram-caos-e-forcam-restaurantes-20261128",
+      "titulo": "Robôs de inteligência artificial geram caos e forçam restaurantes britânicos a voltarem ao telefone",
+      "subtitulo": "Com a chegada do assistente Muse, da Meta, ao Reino Unido, estabelecimentos enfrentam enxurradas de reservas automatizadas e optam por métodos tradicionais para manter o controle",
+      "resumo": "O lançamento do assistente de inteligência artificial Muse, desenvolvido pela Meta, está provocando transtornos no setor de restaurantes no Reino Unido. Sistemas automatizados realizam reservas em massa, levando proprietários a abandonarem plataformas online e resgatarem o atendimento telefônico.",
+      "categoria": "ia",
+      "tags": [
+        "inteligência artificial",
+        "meta",
+        "muse",
+        "restaurantes",
+        "tecnologia"
+      ],
+      "publicadoEm": "2026-11-28T09:11:11.448Z",
+      "tempoLeitura": 3,
+      "destaque": 5.84,
+      "fontes": [
+        {
+          "nome": "The Guardian",
+          "url": "https://www.theguardian.com/business/2026/nov/28/ai-bots-wreak-havoc-uk-restaurant-bookings-meta-muse"
+        }
+      ],
+      "chave": [
+        "told",
+        "never",
+        "call",
+        "me",
+        "again",
+        "ai",
+        "bots",
+        "wreak",
+        "havoc",
+        "uk",
+        "restaurant",
+        "bookings"
+      ],
+      "entidades": [],
+      "urls": [
+        "https://www.theguardian.com/business/2026/nov/28/ai-bots-wreak-havoc-uk-restaurant-bookings-meta-muse"
+      ]
+    },
     {
       "slug": "openai-testa-integracao-profunda-do-chatgpt-com-funcoes-nativas-do-20261127",
       "titulo": "OpenAI testa integração profunda do ChatGPT com funções nativas do Android",
